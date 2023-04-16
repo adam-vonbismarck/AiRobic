@@ -1,0 +1,103 @@
+.App {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+}
+
+/* Heading 1 */
+h1 {
+    font-family: 'Muli';
+    font-size: 80pt;
+    font-weight: normal;
+    line-height: 1;
+}
+
+/* Heading 2 */
+h2 {
+    font-family: 'Muli';
+    font-size: 24pt;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+/* Subhead 01 */
+.subhead-01 {
+    font-family: 'Muli';
+    font-size: 22pt;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+#backgroundVideo {
+    left: 50%;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.menu {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    left: 0;
+    padding: 50px;
+    position: absolute;
+    top: 0;
+    width: 25%;
+}
+
+
+.logo {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.menu-items {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+.description {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+
+.social-icons img {
+    height: 30px;
+    margin: 0 10px;
+}
