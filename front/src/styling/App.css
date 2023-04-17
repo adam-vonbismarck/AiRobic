@@ -55,7 +55,9 @@ h2 {
 }
 
 .menu {
-    background-color: rgba(49, 57, 60, 0.85);
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+    background-color: rgba(49, 57, 60, 0.75);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -158,4 +160,54 @@ button {
 
 .social-icons img:hover {
     filter: brightness(0) saturate(100%) invert(1) sepia(100%) hue-rotate(110deg) brightness(95%) contrast(101%); /* change the color on hover */
+}
+
+.menu-container {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.content-wrapper-404 {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+    text-align: center;
+}
+
+.content-wrapper-404 h2 {
+    color: #f38418;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.content-button {
+    background-color: #f38418;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    height: auto;
+    padding: 10px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: auto;
+}
+
+.content-button:hover {
+    background-color: #fff;
+    color: #f38418;
+}
+
+.not-found-container {
+    background-image: url("/assets/images/GettyImages-1170269618-2.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    overflow: hidden;
 }
