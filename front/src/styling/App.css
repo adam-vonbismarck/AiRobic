@@ -70,12 +70,12 @@ h2 {
 
 
 .logo {
-    align-items: center;
+    /*position: absolute;*/
+    align-items: flex-end;
+    /*left: 50px;*/
     display: flex;
-    justify-content: flex-end; /* Updated */
-    margin-bottom: 50px;
-    padding: 0 20px; /* Added */
-    width: 100%;
+    justify-content: flex-end;
+    top: 50px;
 }
 
 .logo img {
@@ -89,8 +89,8 @@ h2 {
     flex-direction: column;
     font-style: inherit;
     justify-content: space-between;
-    margin-bottom: 70px; /* Updated */
-    margin-top: 50px; /* Added */
+    margin-bottom: auto; /* Updated */
+    margin-top: 100px; /* Added */
     width: 100%;
 }
 
@@ -135,7 +135,7 @@ button {
 
 
 .description {
-    margin-bottom: 100px;
+    margin-bottom: 200px;
     text-align: right;
 }
 
@@ -144,13 +144,18 @@ button {
     display: flex;
     justify-content: space-between; /* Updated */
     margin: 0 auto; /* Added */
+    transition: all 0.3s ease;
     width: 90%; /* Updated */
 }
 
 .social-icons img {
     flex: 1; /* Updated */
-    /* Remove margin: 0 10px; */
     height: 30px;
     margin: 0 10px; /* Added */
     max-width: 80px; /* Added */
+    transition: all 0.3s ease;
+}
+
+.social-icons img:hover {
+    filter: brightness(0) saturate(100%) invert(1) sepia(100%) hue-rotate(110deg) brightness(95%) contrast(101%); /* change the color on hover */
 }
