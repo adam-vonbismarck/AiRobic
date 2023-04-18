@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.models.markov;
 
+import edu.brown.cs.student.main.RandomGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,19 +22,26 @@ public class MarkovModel {
     for (HiddenState key : this.states) {
       double currProb = this.startDistribution.get(key);
       if (currProb < 0) {
-        throw new InvalidDistributionException("The probability associated "
+        throw new InvalidDistributionException("The start probability associated "
             + "with the hidden state " + key + " was negative.", this.startDistribution);
       }
       sum += currProb;
     }
     if (sum != 1) {
-      throw new InvalidDistributionException("Distribution probabilities did not sum to 1.",
+      throw new InvalidDistributionException("Start distribution probabilities did not sum to 1.",
           this.startDistribution);
     }
   }
 
+  private void checkStateDistributions() {
+    for (HiddenState state : this.states) {
+      if (!this.states.equals(state.potentialStates())) {
+      }
+    }
+  }
+
   private HiddenState generateStartState() throws InvalidDistributionException {
-    double randDouble = 0.5; // use random generator
+    double randDouble = RandomGenerator.getRandomPositiveDouble(0, 1);
     double currSum = 0;
     for (HiddenState key : this.states) {
       currSum += this.startDistribution.get(key);
@@ -41,7 +49,7 @@ public class MarkovModel {
         return key;
       }
     }
-    throw new InvalidDistributionException("Distribution probabilities did not sum to 1.",
+    throw new InvalidDistributionException("Start distribution probabilities summed to more than 1.",
         this.startDistribution);
   }
 

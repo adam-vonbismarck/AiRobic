@@ -1,8 +1,6 @@
 package edu.brown.cs.student.main.models.markov;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * The FactoryFailureException is thrown when a given row cannot be converted to a specified new
