@@ -37,20 +37,27 @@ h2 {
 }
 
 /* Subhead 01 */
-.subhead-01 {
+h3 {
+    color: #ebe9e9;
     font-family: 'Muli';
     font-size: 22pt;
     font-weight: bold;
     line-height: 1.2;
 }
 
+h4 {
+    color: #ebe9e9;
+    font-family: 'Muli';
+    font-size: 18pt;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
 #backgroundVideo {
-    left: 50%;
-    min-height: 100%;
-    min-width: 100%;
+    height: 100vh;
+    object-fit: cover;
     position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    width: 100vw;
     z-index: -1;
 }
 
@@ -64,7 +71,8 @@ h2 {
     height: 100%;
     justify-content: space-between;
     left: 0;
-    padding: 50px;
+    overflow-y: auto;
+    padding: 2.5%;
     position: absolute;
     top: 0;
     width: 25%;
@@ -74,15 +82,14 @@ h2 {
 .logo {
     /*position: absolute;*/
     align-items: flex-end;
-    /*left: 50px;*/
     display: flex;
     justify-content: flex-end;
-    top: 50px;
+    top: 10%;
 }
 
 .logo img {
-    height: 60px;
-    max-width: 100%; /* Updated */
+    height: 30%;
+    max-width: 90%; /* Updated */
 }
 
 .menu-items {
@@ -92,7 +99,7 @@ h2 {
     font-style: inherit;
     justify-content: space-between;
     margin-bottom: auto; /* Updated */
-    margin-top: 100px; /* Added */
+    margin-top: 20%; /* Added */
     width: 100%;
 }
 
@@ -112,7 +119,7 @@ button {
     font-size: 24pt;
     font-weight: bold;
     line-height: 1.2;
-    margin: 25px 0; /* Updated */
+    margin: 10% 0; /* Updated */
     transition: all 0.3s ease;
 }
 
@@ -137,7 +144,7 @@ button {
 
 
 .description {
-    margin-bottom: 200px;
+    margin-bottom: 0.5vh;
     text-align: right;
 }
 
@@ -152,7 +159,7 @@ button {
 
 .social-icons img {
     flex: 1; /* Updated */
-    height: 30px;
+    height: 35%;
     margin: 0 10px; /* Added */
     max-width: 80px; /* Added */
     transition: all 0.3s ease;
