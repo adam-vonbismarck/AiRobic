@@ -3,22 +3,22 @@ package edu.brown.cs.student.main.models.exceptions;
 import java.util.HashMap;
 
 /**
- * The FactoryFailureException is thrown when a given row cannot be converted to a specified new
- * datatype by the create method in a class implementing the CreatorFromRow interface.
+ * The InvalidDistributionException is thrown when a model or hidden state is produced with an
+ * invalid probability distribution (probabilities don't sum to 1 and/or negative probabilities).
  */
 public class InvalidDistributionException extends Exception {
   final Object distribution;
 
   /**
-   * The constructor for the FactoryFailureException, which takes in a message and the row that
-   * could not be converted.
+   * The constructor for the InvalidDistributionException, which takes in a message and the distribution
+   * that was invalid.
    *
    * @param message The message to be displayed upon error
-   * @param row The row that could not be converted (leading to this error)
+   * @param dist The invalid distribution (leading to this error)
    */
-  public InvalidDistributionException(String message, HashMap row) {
+  public InvalidDistributionException(String message, HashMap dist) {
     super(message);
-    this.distribution = row.clone();
+    this.distribution = dist.clone();
   }
 }
 

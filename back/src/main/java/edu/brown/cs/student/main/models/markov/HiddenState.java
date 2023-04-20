@@ -6,6 +6,9 @@ import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Still ironing out details of Emission class and HiddenState class.
+ */
 public class HiddenState {
 
   private final HashMap<HiddenState, Double> transitionDistribution;

@@ -1,8 +1,10 @@
 package edu.brown.cs.student.main.models.markov;
 
 import com.squareup.moshi.Json;
-import java.time.Duration;
 
+/**
+ * Still ironing out details of Emission class and HiddenState class.
+ */
 public abstract class Emission {
 
   public Emission(@Json(name = "workout") String workout,
