@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styling/App.css";
+import "../styling/NotFound.css";
 
 function NotFound() {
   return (
@@ -10,9 +10,7 @@ function NotFound() {
       {/*</div>*/}
       <div className="content-wrapper-404">
         <Link to="/">
-          <div className="logo">
-            <img src="/assets/logos/logo-light.svg" alt="Logo" />
-          </div>
+          <img src="/assets/logos/logo-light.svg" alt="Logo" />
         </Link>
         <h1>Sorry, this page doesn’t exist.</h1>
         {/*<h2>*/}
