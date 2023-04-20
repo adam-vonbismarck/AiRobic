@@ -8,12 +8,14 @@ public abstract class Emission {
   public Emission(@Json(name = "workout") String workout,
       @Json(name="minutes") double time,
       @Json(name="completion") boolean completed,
-      @Json(name="heartrate") double heartRate,
+      @Json(name="HR") double heartRate,
       @Json(name="RPE") int rpe) {
 
   }
+
+  public abstract Emission copy();
+
   //getWorkout
   //getTotalTime
-  //reroll
   //etc.
 }

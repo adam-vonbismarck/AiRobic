@@ -9,11 +9,14 @@ public class HiddenState {
 
   private final HashMap<HiddenState, Double> transitionDistribution;
   private final HashMap<Emission, Double> emissionDistribution;
+  private final String name;
 
-  public HiddenState(@Json(name = "transitions") HashMap<HiddenState, Double> transitionDistribution,
+  public HiddenState(@Json(name="category") String name,
+      @Json(name = "transitions") HashMap<HiddenState, Double> transitionDistribution,
       @Json(name = "emissions") HashMap<Emission, Double> emissionDistribution) throws InvalidDistributionException {
     this.transitionDistribution = transitionDistribution;
     this.emissionDistribution = emissionDistribution;
+    this.name = name;
     RandomGenerator.validateDistribution(HiddenState.class, transitionDistribution);
     RandomGenerator.validateDistribution(Emission.class, emissionDistribution);
   }

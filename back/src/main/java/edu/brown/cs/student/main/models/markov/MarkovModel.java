@@ -1,6 +1,10 @@
 package edu.brown.cs.student.main.models.markov;
 
+import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.models.DefaultFormatter;
+import edu.brown.cs.student.main.models.EmissionFormatter;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +14,7 @@ public class MarkovModel {
   private final Set<HiddenState> states;
   private final HashMap<HiddenState, Double> startDistribution;
 
-  public MarkovModel(HashMap<HiddenState, Double> startDistribution) throws InvalidDistributionException {
+  public MarkovModel(@Json(name="startdist") HashMap<HiddenState, Double> startDistribution) throws InvalidDistributionException {
     this.states = startDistribution.keySet();
     this.startDistribution = startDistribution;
     RandomGenerator.validateDistribution(HiddenState.class, startDistribution);
@@ -27,7 +31,12 @@ public class MarkovModel {
     }
   }
 
-  public List<Emission> generateRandomSequence(int len) throws InvalidDistributionException {
+  public <T> T generateFormattedEmissions(int len, EmissionFormatter<T> formatter)
+      throws InvalidDistributionException {
+    return formatter.formatEmissions(this.generateRandomSequence(len));
+  }
+
+  private List<Emission> generateRandomSequence(int len) throws InvalidDistributionException {
     HiddenState currState = RandomGenerator.generateRandomFromDistribution(HiddenState.class,
         this.startDistribution);
     List<Emission> sequence = List.of();
