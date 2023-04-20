@@ -81,6 +81,15 @@
       <scope>test</scope>
     </dependency>
 
+    <!--
+           Firebase is a database used for the project.
+    -->
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>9.1.1</version>
+    </dependency>
+
   </dependencies>
   <build>
 
