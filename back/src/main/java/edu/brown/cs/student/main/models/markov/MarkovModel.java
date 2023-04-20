@@ -2,9 +2,9 @@ package edu.brown.cs.student.main.models.markov;
 
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.RandomGenerator;
-import edu.brown.cs.student.main.models.DefaultFormatter;
-import edu.brown.cs.student.main.models.EmissionFormatter;
-import java.util.Formatter;
+import edu.brown.cs.student.main.models.formatters.EmissionFormatter;
+import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
+import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +32,7 @@ public class MarkovModel {
   }
 
   public <T> T generateFormattedEmissions(int len, EmissionFormatter<T> formatter)
-      throws InvalidDistributionException {
+      throws InvalidDistributionException, FormatterFailureException {
     return formatter.formatEmissions(this.generateRandomSequence(len));
   }
 

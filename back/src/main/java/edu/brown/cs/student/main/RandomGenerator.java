@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.models.markov.HiddenState;
-import edu.brown.cs.student.main.models.markov.InvalidDistributionException;
+import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 

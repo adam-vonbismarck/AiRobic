@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.models.markov;
 
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
 import java.util.Set;
 
