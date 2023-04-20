@@ -1,5 +1,8 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.models.markov.HiddenState;
+import edu.brown.cs.student.main.models.markov.InvalidDistributionException;
+import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -40,4 +43,42 @@ public class RandomGenerator {
     }
     return sb.toString();
   }
+
+  /**
+   *
+   */
+  public static <T> T generateRandomFromDistribution(Class<T> type, HashMap<T, Double> distribution)
+      throws InvalidDistributionException {
+    double randDouble = RandomGenerator.getRandomPositiveDouble(0, 1);
+    double currSum = 0;
+    for (T key : distribution.keySet()) {
+      currSum += distribution.get(key);
+      if (randDouble < currSum) {
+        return key;
+      }
+    }
+    throw new InvalidDistributionException("Start distribution probabilities summed to more than 1.",
+        distribution);
+  }
+
+  /**
+   *
+   */
+  public static <T> void validateDistribution(Class<T> type, HashMap<T, Double> distribution)
+      throws InvalidDistributionException {
+    double sum = 0;
+    for (T key : distribution.keySet()) {
+      double currProb = distribution.get(key);
+      if (currProb < 0) {
+        throw new InvalidDistributionException("The start probability associated "
+            + "with the hidden state " + key + " was negative.", distribution);
+      }
+      sum += currProb;
+    }
+    if (sum != 1) {
+      throw new InvalidDistributionException("Start distribution probabilities did not sum to 1.",
+          distribution);
+    }
+  }
+
 }

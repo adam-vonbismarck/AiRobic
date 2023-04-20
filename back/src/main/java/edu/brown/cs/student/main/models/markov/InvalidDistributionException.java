@@ -7,7 +7,7 @@ import java.util.HashMap;
  * datatype by the create method in a class implementing the CreatorFromRow interface.
  */
 public class InvalidDistributionException extends Exception {
-  final HashMap<HiddenState, Double> distribution;
+  final Object distribution;
 
   /**
    * The constructor for the FactoryFailureException, which takes in a message and the row that
@@ -16,12 +16,9 @@ public class InvalidDistributionException extends Exception {
    * @param message The message to be displayed upon error
    * @param row The row that could not be converted (leading to this error)
    */
-  public InvalidDistributionException(String message, HashMap<HiddenState, Double> row) {
+  public InvalidDistributionException(String message, HashMap row) {
     super(message);
-    this.distribution = new HashMap<>();
-    for (HiddenState key : row.keySet()) {
-      this.distribution.put(key, row.get(key));
-    }
+    this.distribution = row.clone();
   }
 }
 
