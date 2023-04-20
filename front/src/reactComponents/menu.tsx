@@ -26,13 +26,27 @@ function Menu({ description }: MenuProps) {
       </div>
       <h2 className="description">{description}</h2>
       <div className="social-icons">
-        <a href="https://www.tiktok.com/@scottycockle">
+        <a
+          className="link"
+          href="https://www.tiktok.com/@scottycockle"
+          target="_blank"
+        >
           <img src="/assets/icons/instagram.svg" alt="Instagram" />
         </a>
-        <a href="https://www.tiktok.com/@scottycockle">
+
+        <a
+          className="link"
+          href="https://www.tiktok.com/@scottycockle"
+          target="_blank"
+        >
           <img src="/assets/icons/twitter.svg" alt="Twitter" />
         </a>
-        <a href="https://www.tiktok.com/@scottycockle">
+
+        <a
+          className="link"
+          href="https://www.tiktok.com/@scottycockle"
+          target="_blank"
+        >
           <img src="/assets/icons/facebook.svg" alt="Facebook" />
         </a>
       </div>

@@ -144,29 +144,31 @@ button {
 
 
 .description {
-    margin-bottom: 0.5vh;
+    margin-bottom: auto;
     text-align: right;
+    margin-top: auto;
 }
 
 .social-icons {
-    align-items: flex-end; /* Added */
+    /*align-items: flex-end; !* Added *!*/
     display: flex;
     justify-content: space-between; /* Updated */
-    margin: 0 auto; /* Added */
+    margin: 0 0.25%; /* Added */
     transition: all 0.3s ease;
     width: 90%; /* Updated */
 }
 
 .social-icons img {
-    flex: 1; /* Updated */
-    height: 35%;
-    margin: 0 10px; /* Added */
+    flex: auto; /* Updated */
+    height: 40px;
+    margin: auto 10%; /* Added */
     max-width: 80px; /* Added */
     transition: all 0.3s ease;
 }
 
 .social-icons img:hover {
-    filter: brightness(0) saturate(100%) invert(1) sepia(100%) hue-rotate(110deg) brightness(95%) contrast(101%); /* change the color on hover */
+    transform: translateY(-5%);
+
 }
 
 .menu-container {
@@ -217,4 +219,7 @@ button {
     background-size: cover;
     height: 100vh;
     overflow: hidden;
+}
+.link{
+    height: auto;
 }
