@@ -1,45 +1,41 @@
 package edu.brown.cs.student.main.database;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 public class DatabaseCommands {
 
+  private final String DATABASE = "'https://cs32airobic-default-rtdb.firebaseio.com/";
+  private final String END = ".json'";
 
-  private String PUT = "curl -X PUT -d '";
-  private String UPDATE = "curl -X PATCH -d '";
-  private String DELETE = "curl -X DELETE ";
-  private String GET = "curl ";
-  private String DATABASE = "'https://cs32airobic-default-rtdb.firebaseio.com/";
-  private String END = ".json'";
+  // https://console.firebase.google.com/u/1/project/cs32airobic/database/cs32airobic-default-rtdb/data/~2F
 
 
   public void put (String data, String where) throws IOException, InterruptedException {
-    String s = PUT + data + "' " + DATABASE + where + END;
+    String PUT = "curl -X PUT -d '";
+    String s = PUT + data + "' " + this.DATABASE + where + this.END;
     System.out.println(s);
-    new TerminalCommand(PUT + data + "' " + DATABASE + where + END);
+    new TerminalCommand(PUT + data + "' " + this.DATABASE + where + this.END).run();
   }
 
   public void update (String data, String where) throws IOException, InterruptedException {
-    String s = UPDATE + data + "' " + DATABASE + where + END;
+    String UPDATE = "curl -X PATCH -d '";
+    String s = UPDATE + data + "' " + this.DATABASE + where + this.END;
     System.out.println(s);
-    new TerminalCommand(UPDATE + data + "' " + DATABASE + where + END);
+    new TerminalCommand(UPDATE + data + "' " + this.DATABASE + where + this.END).run();
   }
 
   public void delete (String where) throws IOException, InterruptedException {
-    String s = DELETE + DATABASE + where + END;
+    String DELETE = "curl -X DELETE ";
+    String s = DELETE + this.DATABASE + where + this.END;
     System.out.println(s);
-    new TerminalCommand(DELETE + DATABASE + where + END);
+    new TerminalCommand(DELETE + this.DATABASE + where + this.END).run();
   }
 
   public String get (String where) throws IOException, InterruptedException {
-    String s = GET + DATABASE + where + END;
+    String GET = "curl ";
+    String s = GET + this.DATABASE + where + this.END;
     System.out.println(s);
-    new TerminalCommand(GET + DATABASE + where + END);
-    BufferedReader reader = new BufferedReader(
-        new InputStreamReader(System.in));
-    return reader.readLine();
+    return new TerminalCommand(GET + this.DATABASE + where + this.END).get();
   }
 }
 
