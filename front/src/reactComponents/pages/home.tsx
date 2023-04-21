@@ -1,6 +1,6 @@
 import React from "react";
-import "../styling/App.css";
-import Menu from "./menu";
+import "../../styling/App.css";
+import LoggedOutMenu from "../elements/loggedOutMenu";
 
 function Home() {
   return (
@@ -11,7 +11,7 @@ function Home() {
           type="video/mp4"
         />
       </video>
-      <Menu description="The exercise program generator for your fitness journey." />
+      <LoggedOutMenu description="The exercise program generator for your fitness journey." />
     </div>
   );
 }

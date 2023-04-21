@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./home";
-import About from "./about";
-import NotFound from "./NotFound";
-import WorkoutCalendar from "./calendar";
+import Home from "./pages/home";
+import About from "./pages/about";
+import NotFound from "./pages/NotFound";
+import WorkoutCalendar from "./elements/calendar";
 
 function App() {
   return (

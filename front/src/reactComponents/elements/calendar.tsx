@@ -72,6 +72,7 @@ const WorkoutCalendar: React.FC = () => {
         selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
+        firstDay={1}
         events={workouts}
         select={handleDateSelect}
       />

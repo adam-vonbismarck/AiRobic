@@ -5,7 +5,7 @@ interface MenuProps {
   description: string;
 }
 
-function Menu({ description }: MenuProps) {
+function LoggedOutMenu({ description }: MenuProps) {
   return (
     <div className="menu">
       <Link to="/">
@@ -14,9 +14,9 @@ function Menu({ description }: MenuProps) {
         </div>
       </Link>
       <div className="menu-items">
-        <Link to="/about">
-          <button className="menu-button"> ABOUT</button>
-        </Link>
+        {/*<Link to="/about">*/}
+        {/*  <button className="menu-button"> ABOUT</button>*/}
+        {/*</Link>*/}
         <Link to="/register">
           <button className="menu-button">REGISTER</button>
         </Link>
@@ -54,4 +54,4 @@ function Menu({ description }: MenuProps) {
   );
 }
 
-export default Menu;
+export default LoggedOutMenu;

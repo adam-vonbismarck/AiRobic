@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styling/NotFound.css";
+import "../../styling/notFound.css";
 
 function NotFound() {
   return (
     <div className={"not-found-container"}>
       {/*<div className="menu-container">*/}
-      {/*  <Menu description="The exercise program generator for your fitness journey." />*/}
+      {/*  <LoggedOutMenu description="The exercise program generator for your fitness journey." />*/}
       {/*</div>*/}
       <div className="content-wrapper-404">
         <Link to="/">

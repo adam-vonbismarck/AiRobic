@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../styling/App.css";
-import Menu from "./menu";
+import LoggedOutMenu from "./elements/loggedOutMenu";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -15,13 +15,12 @@ const login = useGoogleLogin({
 </button>;
 */
 
-
 /**
  * https://www.youtube.com/watch?v=roxC8SMs7HU
  * google oauth for react 2023
  */
 function Register() {
-    return <Menu description={"Register page"} />;
+  return <LoggedOutMenu description={"Register page"} />;
 }
 
 <GoogleLogin
@@ -33,4 +32,4 @@ function Register() {
   }}
 />;
 
-export default Register
+export default Register;
