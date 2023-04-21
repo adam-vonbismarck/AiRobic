@@ -17,24 +17,50 @@ public class HiddenState {
 
   public HiddenState(@Json(name="category") String name,
       @Json(name = "transitions") HashMap<HiddenState, Double> transitionDistribution,
-      @Json(name = "emissions") HashMap<Emission, Double> emissionDistribution) throws InvalidDistributionException {
+      @Json(name = "emissions") HashMap<Emission, Double> emissionDistribution) {
     this.transitionDistribution = transitionDistribution;
     this.emissionDistribution = emissionDistribution;
     this.name = name;
-    RandomGenerator.validateDistribution(HiddenState.class, transitionDistribution);
-    RandomGenerator.validateDistribution(Emission.class, emissionDistribution);
   }
 
   public Emission emit() throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(Emission.class, this.emissionDistribution);
     return RandomGenerator.generateRandomFromDistribution(Emission.class, this.emissionDistribution);
   }
 
   public HiddenState transition() throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(HiddenState.class, this.transitionDistribution);
     return RandomGenerator.generateRandomFromDistribution(HiddenState.class, this.transitionDistribution);
   }
 
   public Set<HiddenState> potentialStates() {
     return this.transitionDistribution.keySet();
+  }
+
+  public void addTransition(HiddenState state, Double prob) {
+    this.transitionDistribution.put(state, prob);
+  }
+
+  public void fillTransitions(HashMap<HiddenState, Double> transitions)
+      throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(HiddenState.class, transitions);
+    this.transitionDistribution.clear();
+    for (HiddenState key : transitions.keySet()) {
+      this.transitionDistribution.put(key, transitions.get(key));
+    }
+  }
+
+  public void addEmission(Emission emission, Double prob) {
+    this.emissionDistribution.put(emission, prob);
+  }
+
+  public void fillEmissions(HashMap<Emission, Double> emissions)
+      throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(Emission.class, emissions);
+    this.emissionDistribution.clear();
+    for (Emission key : emissions.keySet()) {
+      this.emissionDistribution.put(key, emissions.get(key));
+    }
   }
 
 }
