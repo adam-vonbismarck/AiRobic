@@ -56,7 +56,7 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
     }
     for (Week week : this.schedule.weeks()) {
       for (Day day : week.days()) {
-        day.workouts().add(emissions.remove(0));
+        day.addWorkout(emissions.remove(0));
       }
     }
     return this.schedule;
