@@ -4,6 +4,7 @@ import About from "./pages/about";
 import NotFound from "./pages/NotFound";
 import WorkoutCalendar from "./elements/calendar";
 import Register from "./pages/register";
+import Signin from "./pages/signin";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/calendar" element={<WorkoutCalendar />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/signin" element={<Signin />} />
       </Routes>
     </Router>
   );
