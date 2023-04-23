@@ -265,17 +265,13 @@ button {
 }
 
 .sign-in-button {
-    background-color: #f38418;
     border: none;
-    border-radius: 5px;
-    color: #fff;
     cursor: pointer;
-    padding: 10px 20px;
     text-align: center;
     text-transform: uppercase;
     transition: background-color 0.3s ease, color 0.3s ease;
-    width: auto;
-    position: relative;
-    top: 50%;
+    
+    position: absolute;
+    bottom: 50%;
     left: 50%;
 }

@@ -4,6 +4,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
+import { login } from "../GoogleLogin";
+
+
 
 
 
@@ -12,34 +15,32 @@ import { useGoogleLogin } from "@react-oauth/google";
  * google oauth for react 2023
  */
 
-// const login = useGoogleLogin({
-//   onSuccess: async(tokenResponse) => console.log(tokenResponse), //invalid hook call??
-//   flow: "auth-code",
-// });
+
 
 function Register() {
   return (
     <div className="register-window">
-      <GoogleOAuthProvider clientId="20770065062-amdbsjkao5gag2g7m0b7o4pn411akg80">
+      <div className="sign-in-button">
+      <GoogleOAuthProvider clientId="20770065062-amdbsjkao5gag2g7m0b7o4pn411akg80.apps.googleusercontent.com">
+        
         ...
         <GoogleLogin
           onSuccess={(credentialResponse) => {
             console.log(credentialResponse);
+            console.log("test")
           }}
           onError={() => {
             console.log("Login Failed");
           }}
+          
         />
-        {/* <button onClick={() => login()}
-        className="sign-in-button">
+        {/* <button onClick={() => login()}       //TODO invalid hook ?????
+        className="sign-in-button">               
           Sign in with Google 🚀{" "}
           
         </button> */}
-        <button onClick={() => console.log("login")} className="sign-in-button">
-          Sign in with Google 🚀{" "}
-        </button>
-        ;
       </GoogleOAuthProvider>
+      </div>
       <LoggedOutMenu description={"register page"} />
       <h5>Register below.</h5>
     </div>
