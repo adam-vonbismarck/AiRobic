@@ -4,7 +4,8 @@ import About from "./pages/about";
 import NotFound from "./pages/NotFound";
 import WorkoutCalendar from "./elements/calendar";
 import Register from "./pages/register";
-import Signin from "./pages/signin";
+import SignIn from "./pages/signin";
+import WorkoutDisplay from "./pages/workoutDisplay";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/calendar" element={<WorkoutCalendar />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/plan" element={<WorkoutDisplay />} />
       </Routes>
     </Router>
   );

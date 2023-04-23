@@ -213,7 +213,6 @@ button {
     margin-right: 10%;
     margin-top: 5%;
     text-align: center;
-
 }
 
 .content-wrapper-404 h1 {
@@ -246,6 +245,32 @@ button {
     align-items: center;
     justify-content: center;
     z-index: 1000;
+}
+
+.content-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 35%;
+    margin-right: 10%;
+    margin-top: 5%;
+    text-align: center;
+}
+
+.calendar-container {
+    width: 100%; /* Adjust this value to set the desired width */
+    max-width: 1200px; /* Adjust this value to set the maximum width */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+.content-container {
+    background-image: url("/assets/images/IMG_0248-2.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .register-button {
