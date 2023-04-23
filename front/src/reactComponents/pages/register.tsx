@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
-import "../styling/App.css";
-import LoggedOutMenu from "./elements/loggedOutMenu";
+import LoggedOutMenu from "../elements/loggedOutMenu";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
+import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
-const login = useGoogleLogin({
-  onSuccess: (tokenResponse) => console.log(tokenResponse),
-});
+// const login = useGoogleLogin({
+//   onSuccess: (tokenResponse) => console.log(tokenResponse),
+// });
 
 /* custom button
 <button onClick={() => login()}>
   Sign in with Google 🚀{" "}
-</button>;
+</button>;r
 */
 
 /**
@@ -20,16 +20,24 @@ const login = useGoogleLogin({
  * google oauth for react 2023
  */
 function Register() {
-  return <LoggedOutMenu description={"Register page"} />;
+  return (
+    <div className="register-window">
+      <LoggedOutMenu description={"register page"} />
+      <h5>Register below.</h5>
+      <Link to="/">
+        <button className="register-button">Register with google</button>
+      </Link>
+    </div>
+  );
 }
 
-<GoogleLogin
+{/* <GoogleLogin
   onSuccess={(credentialResponse) => {
     console.log(credentialResponse);
   }}
   onError={() => {
     console.log("Login Failed");
   }}
-/>;
+/>; */}
 
 export default Register;
