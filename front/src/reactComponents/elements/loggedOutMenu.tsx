@@ -17,10 +17,10 @@ function LoggedOutMenu({ description }: MenuProps) {
         {/*<Link to="/about">*/}
         {/*  <button className="menu-button"> ABOUT</button>*/}
         {/*</Link>*/}
-        <Link to="/register">
+        <Link to="/register" className={"menu-links"}>
           <button className="menu-button">REGISTER</button>
         </Link>
-        <Link to="/signin">
+        <Link to="/signin" className={"menu-links"}>
           <button className="menu-button">SIGN IN</button>
         </Link>
       </div>

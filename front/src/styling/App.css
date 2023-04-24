@@ -5,6 +5,12 @@
     width: 100vw;
 }
 
+a:-webkit-any-link {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
 @font-face {
     font-family: 'Muli';
     src: url('/assets/fonts/muli/Muli.ttf') format('truetype');
@@ -76,6 +82,7 @@ h4 {
     position: absolute;
     top: 0;
     width: 25%;
+    text-align: right;
 }
 
 
@@ -97,17 +104,31 @@ h4 {
     display: flex;
     flex-direction: column;
     font-style: inherit;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: auto; /* Updated */
     margin-top: 20%; /* Added */
     width: 100%;
+    text-align: right;
 }
 
+.menu-links {
+    align-items: flex-end; /* Updated */
+    display: flex;
+    flex-direction: column;
+    font-style: inherit;
+    justify-content: space-between;
+    margin-bottom: auto; /* Updated */
+    /*margin-top: 20%; !* Added *!*/
+    width: 100%;
+    text-align: right;
+    margin-left: auto;
+}
 
 .menu-button {
     /* ... existing button styles ... */
     overflow: hidden;
     position: relative;
+    text-align: right;
 }
 
 button {
@@ -119,29 +140,37 @@ button {
     font-size: 24pt;
     font-weight: bold;
     line-height: 1.2;
-    margin: 10% 0; /* Updated */
+    margin: 5% 0; /* Updated */
     transition: all 0.3s ease;
-}
-
-.menu-button::before {
-    content: '';
-    height: 100%;
-    left: -100%;
-    position: absolute;
-    top: 0;
-    transition: all 0.3s ease;
-    /*background: linear-gradient(90deg, transparent, rgba(255, 165, 0, 0.5), transparent);*/
-    width: 100%;
+    text-align: right;
 }
 
 .menu-button:hover {
     color: #f38418;
 }
 
-.menu-button:hover::before {
-    left: 100%;
+.name {
+    align-items: center; /* align the icon and text vertically */
+    margin-bottom: 10%; /* add some space between this and the next menu item */
+    text-align: right;
+    width: 100%;
+    justify-content: space-between;
 }
 
+.name img {
+    height: 24px; /* set a specific height for the icon */
+    margin-right: 10px; /* add some space between the icon and text */
+}
+
+.name span {
+    color: #f38418;
+    font-family: 'Muli-Bold';
+    font-size: 24pt;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-left: auto; /* Added */
+    text-align: right; /* Added */
+}
 
 .description {
     margin-bottom: auto;

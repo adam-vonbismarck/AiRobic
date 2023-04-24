@@ -14,15 +14,18 @@ function LoggedOutMenu({ description }: MenuProps) {
         </div>
       </Link>
       <div className="menu-items">
-        <Link to="/about">
-          <button className="menu-button"> ABOUT</button>
+        <div className="name">
+          <img src="/assets/icons/person.svg" alt="Person Icon" />
+          <span>{"John Doe"}</span>
+        </div>
+
+        <Link to="/register" className={"menu-links"}>
+          <button className="menu-button">WORKOUT PLAN</button>
         </Link>
-        <Link to="/register">
-          <button className="menu-button">REGISTER</button>
+        <Link to="/" className={"menu-links"}>
+          <button className="menu-button">CREATE NEW SCHEDULE</button>
         </Link>
-        <Link to="/signin">
-          <button className="menu-button">SIGN IN</button>
-        </Link>
+        <button className="menu-button">SIGN OUT</button>
       </div>
       <h2 className="description">{description}</h2>
     </div>
