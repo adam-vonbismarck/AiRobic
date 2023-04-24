@@ -248,14 +248,15 @@ button {
 }
 
 .content-wrapper {
-    align-items: center;
+    /*align-items: center;*/
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     margin-left: 35%;
     margin-right: 10%;
-    margin-top: 5%;
+    /*margin-top: 5%;*/
     text-align: center;
+    padding-bottom: 5%;
 }
 
 .calendar-container {
@@ -295,7 +296,6 @@ button {
     text-align: center;
     text-transform: uppercase;
     transition: background-color 0.3s ease, color 0.3s ease;
-    
     position: absolute;
     bottom: 50%;
     left: 50%;
