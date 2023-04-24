@@ -17,16 +17,19 @@ public class ScheduleBuilder {
     long numHighIntensity = Math.floorDiv(highIntensity, 60);
     long lowIntensityWorkoutLength = Math.min(60, lowIntensity/(10 - numHighIntensity));
     long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
-    return this.workouts(numHighIntensity + numLowIntensity, numWeeks);
+    return this.workouts(numHighIntensity, numLowIntensity, numWeeks);
   }
 
-  public Schedule workouts(long workouts, int numWeeks) {
+  public Schedule workouts(long highIntensity, long lowIntensity, int numWeeks) {
+    long workouts = highIntensity + lowIntensity;
+    int dayCounter = 0;
     ArrayList<Week> weeks = new ArrayList<>();
     for (int i = 0; i < numWeeks; i++) {
       Week newWeek = new Week("week", new ArrayList<>());
       weeks.add(newWeek);
       for (int j = 0; j < NUM_DAYS; j++) {
-        newWeek.days().add(new Day("day", new ArrayList<>(), 0));
+        newWeek.days().add(new Day("day", new ArrayList<>(), 0, dayCounter));
+        dayCounter++;
       }
 
       if (workouts <= 0) {

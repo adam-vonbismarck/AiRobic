@@ -13,12 +13,16 @@ public class Day {
   private final List<Emission> workouts;
   private Integer numberOfWorkouts;
 
+  private final Integer dayNum;
+
   public Day(@Json(name="type") String type,
       @Json(name="workouts") List<Emission> workouts,
-      @Json(name="num") Integer numberOfWorkouts) {
+      @Json(name="num") Integer numberOfWorkouts,
+      @Json(name="daynumber") Integer dayNum) {
     this.type = type;
     this.workouts = workouts;
     this.numberOfWorkouts = numberOfWorkouts;
+    this.dayNum = dayNum;
   }
 
   public void incrementNumWorkouts() {
@@ -31,6 +35,10 @@ public class Day {
 
   public Integer numberOfWorkouts() {
     return this.numberOfWorkouts;
+  }
+
+  public Integer dayNumber() {
+    return this.dayNum;
   }
 
 }
