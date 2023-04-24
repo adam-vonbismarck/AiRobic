@@ -153,12 +153,12 @@ const WorkoutCalendar: React.FC = () => {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
-          left: "prev,next today",
+          left: "prev,next",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
+          right: "today",
         }}
         initialView="dayGridMonth"
-        editable={true}
+        // editable={true}
         selectable={true}
         selectMirror={true}
         dayMaxEvents={true}

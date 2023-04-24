@@ -79,7 +79,7 @@ h4 {
     left: 0;
     overflow-y: auto;
     padding: 2.5%;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 25%;
     text-align: right;
@@ -196,7 +196,7 @@ button {
 }
 
 .social-icons img:hover {
-    transform: translateY(-5%);
+    transform: translateY(-8%);
 
 }
 
@@ -292,14 +292,63 @@ button {
     width: 100%; /* Adjust this value to set the desired width */
     max-width: 1200px; /* Adjust this value to set the maximum width */
     margin: 0 auto; /* Center the container horizontally */
+    background-color: rgba(0, 0, 0, 0.24);
+    padding: 5px;
+    border-radius: 10px;
+}
+/* change the color of the dates and events */
+.fc-daygrid-event, .fc-daygrid-event-dot {
+    background-color: #f38418;
+    border-color: #f38418;
+}
+
+/* change the color of the title */
+.fc-toolbar-title {
+    color: #f38418;
+}
+
+.fc-today-bg-color, .fc-button-group, .fc-button {
+    background-color: #f38418;
+}
+.fc-daygrid-day-top{
+    background-color: rgba(0, 0, 0, 0.24);
+}
+
+.fc-col-header, .fc-daygrid-day-number {
+    color: #ebe9e9;
+}
+
+
+:root {
+    --fc-border-color: #ebe9e9;
+    --fc-button-text-color: #008cff;
+    --fc-button-bg-color: #ebe9e9;
+    --fc-button-border-color: #ebe9e9;
+    --fc-button-hover-bg-color: #f38418;
+    --fc-button-hover-border-color: #f38418;
+    --fc-button-active-bg-color: #33A1FD;
+    --fc-button-active-border-color: #33A1FD;
+    --fc-event-bg-color: #33A1FD;
+    --fc-event-border-color: #33A1FD;
+    --fc-event-text-color: #fff;
+    --fc-event-selected-overlay-color: rgb(255, 0, 0);
+    --fc-more-link-bg-color: #33A1FD;
+    --fc-more-link-text-color: #33A1FD;
+    --fc-event-resizer-thickness: 8px;
+    --fc-event-resizer-dot-total-width: 8px;
+    --fc-event-resizer-dot-border-width: 1px;
+    --fc-non-business-color: hsla(0, 0%, 84%, .3);
+    --fc-bg-event-color: #33A1FD;
+    --fc-bg-event-opacity: 0.3;
+    --fc-highlight-color: rgba(188, 232, 241, .3);
+    --fc-today-bg-color: rgba(243, 132, 24, 0.32);
+    --fc-now-indicator-color: #33A1FD;
 }
 
 .content-container {
-    background-image: url("/assets/images/IMG_0248-2.jpg");
     background-position: center;
     background-size: cover;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
     overflow-y: auto;
 }
 

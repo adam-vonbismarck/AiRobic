@@ -16,7 +16,7 @@ function LoggedOutMenu({ description }: MenuProps) {
       <div className="menu-items">
         <div className="name">
           <img src="/assets/icons/person.svg" alt="Person Icon" />
-          <span>{"John Doe"}</span>
+          <span>{"Adam von Bismarck"}</span>
         </div>
 
         <Link to="/register" className={"menu-links"}>
