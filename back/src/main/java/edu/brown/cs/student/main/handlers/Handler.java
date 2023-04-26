@@ -12,11 +12,11 @@ import okio.BufferedSource;
 public interface Handler {
 
   /** serializeMap() uses Moshi to create JSON files*/
-  default String serializeMap(Map<String, Object> csvMap) {
+  default String serialize(Map<String, Object> map) {
     Moshi moshi = new Builder().build();
     Type type = Types.newParameterizedType(Map.class, String.class, Object.class);
     JsonAdapter<Map<String, Object>> adapter = moshi.adapter(type);
-    return adapter.toJson(csvMap);
+    return adapter.toJson(map);
   }
 
   /**
