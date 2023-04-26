@@ -203,6 +203,7 @@ button {
 .menu-container {
     display: inline-block;
     vertical-align: top;
+    transition: filter 0.5s ease;
 }
 
 .content-button {
@@ -263,17 +264,27 @@ button {
 
 /* WorkoutCalendar.css */
 .workout-details {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    margin-left: 35%;
+    padding: 10px;
+    /*backdrop-filter: blur(1000px);*/
+}
+
+.workout-calendar{
+    background-color: rgba(0, 0, 0, 0.24);
+    padding: 5px;
+    width: 100%;
+    border-radius: 10px;
 }
 
 .content-wrapper {
@@ -292,9 +303,6 @@ button {
     width: 100%; /* Adjust this value to set the desired width */
     max-width: 1200px; /* Adjust this value to set the maximum width */
     margin: 0 auto; /* Center the container horizontally */
-    background-color: rgba(0, 0, 0, 0.24);
-    padding: 5px;
-    border-radius: 10px;
 }
 /* change the color of the dates and events */
 .fc-daygrid-event, .fc-daygrid-event-dot {
@@ -305,6 +313,7 @@ button {
 /* change the color of the title */
 .fc-toolbar-title {
     color: #f38418;
+    font-family: 'Muli';
 }
 
 .fc-today-bg-color, .fc-button-group, .fc-button {
@@ -316,6 +325,7 @@ button {
 
 .fc-col-header, .fc-daygrid-day-number {
     color: #ebe9e9;
+    font-family: 'Muli';
 }
 
 
@@ -343,6 +353,10 @@ button {
     --fc-highlight-color: rgba(188, 232, 241, .3);
     --fc-today-bg-color: rgba(243, 132, 24, 0.32);
     --fc-now-indicator-color: #33A1FD;
+}
+
+.blur {
+    filter: blur(5px);
 }
 
 .content-container {
@@ -377,4 +391,8 @@ button {
     position: absolute;
     bottom: 50%;
     left: 50%;
+}
+
+body.show-workout-details:not(.workout-details) {
+    filter: blur(3px);
 }

@@ -13,7 +13,7 @@ function WorkoutDisplay() {
           <LoggedInMenu description="Click on a day for more detials and to record your data." />
         </div>
         <div className="content-wrapper">
-          <h1>Workout Plan</h1>
+          <h1>Your Workout Plan</h1>
           <div className="calendar-container">
             <WorkoutCalendar />
           </div>

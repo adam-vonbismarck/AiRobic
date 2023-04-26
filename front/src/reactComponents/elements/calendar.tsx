@@ -1,22 +1,10 @@
-// WorkoutCalendar.tsx
-import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-// import "@fullcalendar/core/main.css";
-// import "@fullcalendar/daygrid/main.css";
-// import "./WorkoutCalendar.css";
-
-interface Workout {
-  title: string;
-  date: string;
-  duration: number;
-  description: string;
-  caloriesBurned: number;
-  distance?: number;
-  perceivedEffort?: number;
-}
+import { renderWorkoutDetails } from "./workoutDetails";
+import { Workout } from "./types";
+import { useState } from "react";
 
 const WorkoutCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -71,104 +59,74 @@ const WorkoutCalendar: React.FC = () => {
     setSelectedDate(null);
   };
 
-  const renderWorkoutDetails = () => {
-    if (!selectedDate) {
-      return null;
-    }
-
-    const workoutsForSelectedDate = workoutDetails.filter(
-      (workout) => workout.date === selectedDate
-    );
-
-    const updateWorkout = (updatedWorkout: Workout, index: number) => {
-      const updatedWorkoutDetails = [...workoutDetails];
-      updatedWorkoutDetails[index] = updatedWorkout;
-      setWorkoutDetails(updatedWorkoutDetails);
-
-      // Update workouts
-      const workoutIndex = workouts.findIndex(
-        (w) =>
-          w.date === updatedWorkout.date && w.title === updatedWorkout.title
-      );
-      if (workoutIndex > -1) {
-        const updatedWorkouts = [...workouts];
-        updatedWorkouts[workoutIndex] = updatedWorkout;
-        setWorkouts(updatedWorkouts);
-      }
-    };
-
+  if (!selectedDate) {
     return (
-      <div className="workout-details">
-        <h2>{selectedDate}</h2>
-        {workoutsForSelectedDate.map((workout, index) => (
-          <div key={index}>
-            <h3>{workout.title}</h3>
-            <p>
-              <strong>Duration:</strong> {workout.duration} minutes
-            </p>
-            <p>
-              <strong>Description:</strong> {workout.description}
-            </p>
-            <p>
-              <strong>Calories Burned:</strong> {workout.caloriesBurned}
-            </p>
-            <label>
-              Distance (meters):
-              <input
-                type="number"
-                step="1"
-                min="0"
-                value={workout.distance || ""}
-                onChange={(event) => {
-                  const distance = parseInt(event.target.value);
-                  const updatedWorkout = { ...workout, distance };
-                  updateWorkout(updatedWorkout, index);
-                }}
-              />
-            </label>
-            <label>
-              Perceived Effort (1-10):
-              <input
-                type="range"
-                min="1"
-                max="10"
-                value={workout.perceivedEffort || 5}
-                onChange={(event) => {
-                  const perceivedEffort = parseInt(event.target.value);
-                  const updatedWorkout = { ...workout, perceivedEffort };
-                  updateWorkout(updatedWorkout, index);
-                }}
-              />
-              {workout.perceivedEffort}
-            </label>
-          </div>
-        ))}
-        <button onClick={closeFullscreen}>Close</button>
+      <div className="workout-calendar">
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: "prev,next",
+            center: "title",
+            right: "today",
+          }}
+          initialView="dayGridMonth"
+          // editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          firstDay={1}
+          events={workouts}
+          select={handleDateSelect}
+        />
       </div>
     );
-  };
+  } else {
+    return (
+      <div>
+        {renderWorkoutDetails({
+          selectedDate,
+          workoutDetails,
+          setWorkoutDetails,
+          workouts,
+          setWorkouts,
+          closeFullscreen,
+        })}
+      </div>
+    );
+  }
 
-  return (
-    <div className="workout-calendar">
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        headerToolbar={{
-          left: "prev,next",
-          center: "title",
-          right: "today",
-        }}
-        initialView="dayGridMonth"
-        // editable={true}
-        selectable={true}
-        selectMirror={true}
-        dayMaxEvents={true}
-        firstDay={1}
-        events={workouts}
-        select={handleDateSelect}
-      />
-      {renderWorkoutDetails()}
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <div className="workout-calendar">
+  //       <FullCalendar
+  //         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+  //         headerToolbar={{
+  //           left: "prev,next",
+  //           center: "title",
+  //           right: "today",
+  //         }}
+  //         initialView="dayGridMonth"
+  //         // editable={true}
+  //         selectable={true}
+  //         selectMirror={true}
+  //         dayMaxEvents={true}
+  //         firstDay={1}
+  //         events={workouts}
+  //         select={handleDateSelect}
+  //       />
+  //     </div>
+  //     <div>
+  //       {renderWorkoutDetails({
+  //         selectedDate,
+  //         workoutDetails,
+  //         setWorkoutDetails,
+  //         workouts,
+  //         setWorkouts,
+  //         closeFullscreen,
+  //       })}
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default WorkoutCalendar;
