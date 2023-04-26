@@ -21,13 +21,12 @@ public class DeleteUser implements Handler, Route {
     if (username == null) {
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: No filepath");
-      return this.serializeMap(output);
     }
     else{
       new DatabaseCommands().delete(username + "/");
       output.put("result", "success");
       output.put("message", "Successfully deleted" + username);
-      return this.serializeMap(output);
     }
+    return this.serialize(output);
   }
 }

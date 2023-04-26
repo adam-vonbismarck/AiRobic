@@ -1,11 +1,8 @@
 package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
-
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.handlers.AddNewUser;
+import edu.brown.cs.student.main.handlers.DeleteUser;
 import java.io.IOException;
 import spark.Spark;
 
@@ -19,21 +16,8 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, InterruptedException {
 
-    // Doesn't work for shit
-    //FirebaseOptions options = FirebaseOptions.builder()
-    //    .setCredentials(GoogleCredentials.getApplicationDefault())
-    //    .setDatabaseUrl("https://cs32airobic-default-rtdb.firebaseio.com/")
-    //    .build();
-    //FirebaseApp.initializeApp(options);
-
     // Set the port number for the server to listen on.
     Spark.port(3235);
-
-    // Just testing something here but it clearly doesn't work
-    String s = "{ \"alanisawesome\": { \"name\": \"Alan Turing\", \"birthday\": \"June 23, 1912\" } }";
-    new DatabaseCommands().put(s, "");
-    String a = "alanisawesome/name";
-    new DatabaseCommands().get(a);
 
     // Set the headers for cross-origin resource sharing (CORS) to allow any origin and any method.
     after(
@@ -41,6 +25,15 @@ public class Server {
           response.header("Access-Control-Allow-Origin", "*");
           response.header("Access-Control-Allow-Methods", "*");
         });
+
+    Spark.get("adduser", new AddNewUser());
+    // localhost:3232/adduser?username=alexfake
+    Spark.get("deleteuser", new DeleteUser());
+    // localhost:3232/deleteuser?username=alexfake
+    //Spark.get("updateuser", new UpdateUser());
+    // localhost:3232/updateuser?username=alexfake&preferences=blabla
+    //Spark.get("getuserworkout", new GetUserWorkout());
+    // localhost:3232/updateuser?username=alexfake&date=25apr2023
 
     // Initialize and start the Spark server.
     Spark.init();

@@ -8,8 +8,7 @@ public class DatabaseCommands {
   private final String END = ".json'";
 
   // https://console.firebase.google.com/u/1/project/cs32airobic/database/cs32airobic-default-rtdb/data/~2F
-
-
+  
   public void put (String data, String where) throws IOException, InterruptedException {
     String PUT = "curl -X PUT -d '";
     String s = PUT + data + "' " + this.DATABASE + where + this.END;
