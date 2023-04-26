@@ -83,6 +83,10 @@ public class ModelBuilder {
     return new MarkovModel(new HashMap<>());
   }
 
+  public MarkovModel build() throws InvalidDistributionException {
+    return new MarkovModel(this.startDist);
+  }
+
   public HiddenState generateNewState(String name) {
     HiddenState state = new HiddenState(name, new HashMap<>(), new HashMap<>());
     this.states.add(state);
@@ -149,6 +153,17 @@ public class ModelBuilder {
 
   public void addStartProbability(HiddenState state, Double prob) {
     this.startDist.put(state, prob);
+  }
+
+  public void addLinearTransitions() throws InvalidDistributionException {
+    for (int i = 0; i < this.states.size() - 1; i++) {
+      HashMap<HiddenState, Double> transitionMat = new HashMap<>();
+      transitionMat.put(this.states.get(i + 1), 1.0);
+      this.states.get(i).fillTransitions(transitionMat);
+    }
+    HashMap<HiddenState, Double> endTransitionMat = new HashMap<>();
+    endTransitionMat.put(this.states.get(0), 1.0);
+    this.states.get(this.states.size() - 1).fillTransitions(endTransitionMat);
   }
 
 }
