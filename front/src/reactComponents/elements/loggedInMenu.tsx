@@ -5,7 +5,12 @@ interface MenuProps {
   description: string;
 }
 
-function LoggedOutMenu({ description }: MenuProps) {
+function logOut() {
+  localStorage.clear();
+  window.location.reload();
+}
+
+function LoggedInMenu({ description }: MenuProps) {
   return (
     <div className="menu">
       <Link to="/">
@@ -16,7 +21,7 @@ function LoggedOutMenu({ description }: MenuProps) {
       <div className="menu-items">
         <div className="name">
           <img src="/assets/icons/person.svg" alt="Person Icon" />
-          <span>{"Adam von Bismarck"}</span>
+          <span>{localStorage.getItem("givenName")}</span>
         </div>
 
         <Link to="/register" className={"menu-links"}>
@@ -25,11 +30,16 @@ function LoggedOutMenu({ description }: MenuProps) {
         <Link to="/" className={"menu-links"}>
           <button className="menu-button">CREATE NEW SCHEDULE</button>
         </Link>
-        <button className="menu-button">SIGN OUT</button>
+        <Link to="/" className="menu-links">
+          <button className="menu-button"
+          onClick={logOut}
+          
+          >SIGN OUT</button>
+        </Link>
       </div>
       <h2 className="description">{description}</h2>
     </div>
   );
 }
 
-export default LoggedOutMenu;
+export default LoggedInMenu;

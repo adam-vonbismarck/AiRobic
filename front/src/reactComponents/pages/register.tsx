@@ -5,13 +5,17 @@ import { GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { login } from "../GoogleLogin";
+import { useNavigate } from "react-router-dom";
 
 /**
  * https://www.youtube.com/watch?v=roxC8SMs7HU
  * google oauth for react 2023
  */
 
+
+
 function Register() {
+  const navigate = useNavigate();
   return (
     <div className="register-window">
       <div className="sign-in-button">
@@ -28,9 +32,11 @@ function Register() {
                   console.log(loginToken.sub);
                   localStorage.setItem("userID", loginToken.sub);
                   localStorage.setItem("givenName", loginToken.given_name); //---> TODO remove upon logout: localStorage.clear()
+                  localStorage.setItem("loggedIn","true")
                   console.log(loginToken.family_name);
                   console.log(loginToken.given_name); // ---> TODO
                   //TODO switch to logged in state
+                  navigate('/', { replace: true });
 
                 console.log(localStorage);
         }
