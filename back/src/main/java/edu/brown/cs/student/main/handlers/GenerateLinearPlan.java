@@ -17,7 +17,8 @@ public class GenerateLinearPlan implements Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = builder.minutes(420, 4, 0.2);
+    Schedule toBuild = builder.minutes(420, 4, 0.2,
+        "Monday", "Friday", "2k", "UT2");
     MarkovModel model = new LinearModelBuilder().build(toBuild, "start");
     model.generateFormattedEmissions(1, new ScheduleFormatter(toBuild));
 

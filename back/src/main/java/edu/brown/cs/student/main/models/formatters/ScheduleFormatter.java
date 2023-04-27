@@ -30,12 +30,12 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
 
     for (Week week : this.schedule.weeks()) {
       for (Day day : week.days()) {
-        if (day.numberOfWorkouts() == null) {
+        if (day.getNumberOfWorkouts() == null) {
           throw new InvalidScheduleException("All days must have a number of workouts pre-listed, "
               + "but " + day + " does not.",
               this.schedule);
         }
-        this.workoutCount += day.numberOfWorkouts();
+        this.workoutCount += day.getNumberOfWorkouts();
       }
     }
   }

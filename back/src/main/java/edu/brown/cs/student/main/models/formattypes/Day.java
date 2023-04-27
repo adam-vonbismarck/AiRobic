@@ -12,20 +12,20 @@ public class Day {
   private final String type;
   private final List<Emission> workouts;
   private Integer numberOfWorkouts;
-  private final Integer dayNum;
+  private final String name;
   private List<String> intensity;
   private List<String> subCategory;
 
   public Day(@Json(name="type") String type,
       @Json(name="workouts") List<Emission> workouts,
       @Json(name="num") Integer numberOfWorkouts,
-      @Json(name="daynumber") Integer dayNum,
+      @Json(name="name") String name,
       @Json(name="intensity") List<String> intensity,
       @Json(name="subcategory") List<String> subCategory) {
     this.type = type;
     this.workouts = workouts;
     this.numberOfWorkouts = numberOfWorkouts;
-    this.dayNum = dayNum;
+    this.name = name;
     this.intensity = intensity;
     this.subCategory = subCategory;
   }
@@ -38,12 +38,12 @@ public class Day {
     this.workouts.add(toAdd);
   }
 
-  public Integer numberOfWorkouts() {
+  public Integer getNumberOfWorkouts() {
     return this.numberOfWorkouts;
   }
 
-  public Integer dayNumber() {
-    return this.dayNum;
+  public String getName() {
+    return this.name;
   }
 
   public boolean verifyDay() {
@@ -54,5 +54,7 @@ public class Day {
   public List<String> getIntensity() {
     return this.intensity;
   }
+  public void addFirstIntensity(String toAdd) { this.intensity.add(0, toAdd); }
+  public int getIntensityLength() { return this.intensity.size(); }
 
 }

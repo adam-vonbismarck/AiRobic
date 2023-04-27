@@ -61,28 +61,6 @@ public class ModelBuilder {
     this.startDist = new HashMap<>();
   }
 
-  public MarkovModel generateDefaultModel(int minutes, int numWeeks, int intensityPercentage) throws InvalidDistributionException {
-
-    Schedule schedule = new ScheduleBuilder().minutes(minutes, numWeeks, intensityPercentage);
-
-
-    for (Week week : schedule.weeks()) {
-      for (Day day : week.days()) {
-        this.generateNewState(day.dayNumber().toString());
-      }
-    }
-
-    for (Week week : schedule.weeks()) {
-      for (Day day : week.days()) {
-        this.addTransition(day.dayNumber().toString(),
-            Integer.toString(day.dayNumber() + 1),
-            1.0);
-      }
-    }
-
-    return new MarkovModel(new HashMap<>());
-  }
-
   public MarkovModel build() throws InvalidDistributionException {
     return new MarkovModel(this.startDist);
   }
