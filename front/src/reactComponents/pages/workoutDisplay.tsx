@@ -14,9 +14,7 @@ function WorkoutDisplay() {
         </div>
         <div className="content-wrapper">
           <h1>Your Workout Plan</h1>
-          <div className="calendar-container">
-            <WorkoutCalendar />
-          </div>
+          <WorkoutCalendar />
         </div>
       </div>
     </Parallax>

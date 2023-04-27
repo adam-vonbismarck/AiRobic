@@ -204,6 +204,7 @@ button {
     display: inline-block;
     vertical-align: top;
     transition: filter 0.5s ease;
+    width: 25%;
 }
 
 .content-button {
@@ -262,49 +263,6 @@ button {
     width: 250px;
 }
 
-/* WorkoutCalendar.css */
-.workout-details {
-    /*position: fixed;*/
-    top: 0;
-    left: 0;
-    width: auto;
-    height: auto;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    margin-left: 35%;
-    padding: 10px;
-    /*backdrop-filter: blur(1000px);*/
-}
-
-.workout-calendar{
-    background-color: rgba(0, 0, 0, 0.24);
-    padding: 5px;
-    width: 100%;
-    border-radius: 10px;
-}
-
-.content-wrapper {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-left: 35%;
-    margin-right: 10%;
-    /*margin-top: 5%;*/
-    text-align: center;
-    padding-bottom: 5%;
-}
-
-.calendar-container {
-    width: 100%; /* Adjust this value to set the desired width */
-    max-width: 1200px; /* Adjust this value to set the maximum width */
-    margin: auto auto; /* Center the container horizontally */
-    justify-content: center;
-}
 /* change the color of the dates and events */
 .fc-daygrid-event, .fc-daygrid-event-dot {
     background-color: #f38418;
@@ -356,15 +314,55 @@ button {
     --fc-now-indicator-color: #33A1FD;
 }
 
-.blur {
-    filter: blur(5px);
+.content-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    /*text-align: center;*/
+    padding-bottom: 5%;
+    padding-left: 2.5%;
+    width: 70%;
 }
 
 .content-container {
-    background-position: center;
-    background-size: cover;
+    /*background-position: center;*/
+    /*background-size: cover;*/
     min-height: 100vh;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
+    display: flex;
+    flex-direction: row;
+
+    /*padding-right: 5%;*/
+}
+
+.workout-details {
+    background: rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-calendar{
+    background-color: rgba(0, 0, 0, 0.24);
+    padding: 5px;
+    border-radius: 10px;
+    /*display: flex;*/
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.workout-details__split {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /*width: auto;*/
+    /*height: auto;*/
+    padding: 10px;
+    /*margin-left: 35%;*/
+    /*z-index: 1000;*/
 }
 
 .register-button {
@@ -394,37 +392,8 @@ button {
     left: 50%;
 }
 
-.workout-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.24);
-
-    width: auto;
-    height: auto;
-    padding: 10px;
-    margin-left: 35%;
-}
-
-.workout-detials__split {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: auto;
-    padding: 100px;
-    margin-left: 35%;
-    /*z-index: 1000;*/
-}
-
-.workout-container {
-    margin-bottom: 20px;
-}
-
 .custom-textfield {
-    margin-bottom: 10px;
+    margin-bottom: 100px;
 }
 
 .custom-textfield .MuiInputBase-input {

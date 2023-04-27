@@ -100,12 +100,12 @@ export const renderWorkoutDetails = ({
   };
 
   return (
-    <div className="workout-detail">
+    <div className="workout-details">
       <h2>
         {"Workouts for " + moment(selectedDate).format("dddd, Do MMMM YYYY")}
       </h2>
       {workoutsForSelectedDate.map((workout, index) => (
-        <div className="workout-container" key={index}>
+        <div key={index}>
           <h3>{workout.title}</h3>
           <p>
             <strong>Duration:</strong> {workout.duration} minutes

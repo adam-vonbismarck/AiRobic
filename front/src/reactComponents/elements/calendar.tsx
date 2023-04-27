@@ -83,7 +83,7 @@ const WorkoutCalendar: React.FC = () => {
     );
   } else {
     return (
-      <div className={"workout-details"}>
+      <div>
         {renderWorkoutDetails({
           selectedDate,
           workoutDetails,
