@@ -19,17 +19,20 @@ function Register() {
           ...
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              console.log(credentialResponse);
+              fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token="+credentialResponse.credential)
+              .then((response: Response) => response.json())
+              .then((loginToken) => {
+                if (!isLoginResponse(loginToken)) {
+                  console.log("Login Failed")
+                } else {
+                  console.log(loginToken.sub);
+                  localStorage.setItem("userID", loginToken.sub);
+                  localStorage.setItem("givenName", loginToken.given_name); //---> TODO remove upon logout: localStorage.clear()
+                  console.log(loginToken.family_name);
+                  console.log(loginToken.given_name); // ---> TODO
+                  //TODO switch to logged in state
 
-              console.log("test");
-              
-    fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token="+credentialResponse.credential)
-      .then((response: Response) => response.json())
-      .then((loginToken) => {
-        if (!isLoginResponse(loginToken)) {
-          console.log("Login Failed")
-        } else {
-          console.log(loginToken.sub)
+                console.log(localStorage);
         }
       });
 
@@ -46,25 +49,16 @@ function Register() {
         </GoogleOAuthProvider>
       </div>
       <LoggedOutMenu description={"register page"} />
-      <h5>Register below.</h5>
     </div>
   );
 }
 
-{
-  /* <GoogleLogin
-  onSuccess={(credentialResponse) => {
-    console.log(credentialResponse);
-  }}
-  onError={() => {
-    console.log("Login Failed");
-  }}
-/>; */
-}
 
 interface LoginResponse {
   sub: string;
   email: string;
+  family_name: string;
+  given_name: string;
 }
 
 function isLoginResponse(rjson: any): rjson is LoginResponse {
