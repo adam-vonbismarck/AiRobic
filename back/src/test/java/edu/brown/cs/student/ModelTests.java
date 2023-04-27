@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 public class ModelTests {
 
+
+
   @Test
   public void testBadStartDistLow() {
     HashMap<HiddenState, Double> start = new HashMap<>();

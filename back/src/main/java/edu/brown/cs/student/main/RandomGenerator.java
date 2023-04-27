@@ -44,10 +44,19 @@ public class RandomGenerator {
   }
 
   /**
+   * This static method generates a random object of type T from a probability distribution stored
+   * in a HashMap (T to probability as a double). Chooses a random number between 0
+   * and 1 and finds what outcome that number corresponds to on the cumulative distribution function.
    *
+   * @param type - the type of the outputs of the distribution
+   * @param distribution - the probability distribution of outputs, stored as a HashMap
+   * @return the randomly generated object of type T
+   * @param <T> the type of the object to be randomly generated (and in the distribution keys)
+   * @throws InvalidDistributionException if the distribution is not valid.
    */
   public static <T> T generateRandomFromDistribution(Class<T> type, HashMap<T, Double> distribution)
       throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(type, distribution);
     double randDouble = RandomGenerator.getRandomPositiveDouble(0, 1);
     double currSum = 0;
     for (T key : distribution.keySet()) {
@@ -61,7 +70,13 @@ public class RandomGenerator {
   }
 
   /**
+   * This method validates a probability distribution stored as a HashMap by ensuring its probabilities
+   * sum to 1 and are all non-negative.
    *
+   * @param type - the type of the objects in the keys of the distribution
+   * @param distribution - the distribution to be validated
+   * @param <T> - the type of the objects in the keys of the distribution
+   * @throws InvalidDistributionException if the distribution is invalid
    */
   public static <T> void validateDistribution(Class<T> type, HashMap<T, Double> distribution)
       throws InvalidDistributionException {
