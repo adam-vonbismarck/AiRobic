@@ -1,15 +1,15 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.server.Serializer;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 
-public class DeleteUser implements Handler, Route {
+public class DeleteUser implements Route {
 
   public DeleteUser() throws IOException, InterruptedException {
   }
@@ -17,7 +17,7 @@ public class DeleteUser implements Handler, Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     String username = request.queryParams("username");
-    Map<String, Object> output = new HashMap<>();
+    HashMap<String, Object> output = new HashMap<>();
     if (username == null) {
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: No filepath");
@@ -27,6 +27,6 @@ public class DeleteUser implements Handler, Route {
       output.put("result", "success");
       output.put("message", "Successfully deleted" + username);
     }
-    return this.serialize(output);
+    return Serializer.serialize(output);
   }
 }

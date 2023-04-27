@@ -26,9 +26,9 @@ public class DatabaseUnit {
 
   // Test for adding new users and their information
   @Test
-  public void testPut() throws IOException, InterruptedException {
+  public void testUpdate() throws IOException, InterruptedException {
     String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
-    this.database.put(s, "");
+    this.database.update(s, "");
     Thread.sleep(2000);
     String expected = "{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}";
     String actual = this.database.get("test");
@@ -39,7 +39,7 @@ public class DatabaseUnit {
   @Test
   public void testGet() throws IOException, InterruptedException {
     String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
-    this.database.put(s, "");
+    this.database.update(s, "");
     Thread.sleep(2000);
     String expected1 = "\"June 23, 1912\"";
     String actual1 = this.database.get("test/alanisawesome/birthday");
@@ -53,7 +53,7 @@ public class DatabaseUnit {
   @Test
   public void testDelete() throws IOException, InterruptedException {
     String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
-    this.database.put(s, "");
+    this.database.update(s, "");
     Thread.sleep(2000);
     this.database.delete("test");
     Thread.sleep(2000);
@@ -65,7 +65,7 @@ public class DatabaseUnit {
   @Test
   public void testDeleteSpecific() throws IOException, InterruptedException {
     String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
-    this.database.put(s, "");
+    this.database.update(s, "");
     Thread.sleep(2000);
     this.database.delete("test/alanisawesome/name");
     Thread.sleep(2000);

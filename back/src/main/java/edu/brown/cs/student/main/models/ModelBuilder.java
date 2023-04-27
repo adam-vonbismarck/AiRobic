@@ -61,26 +61,8 @@ public class ModelBuilder {
     this.startDist = new HashMap<>();
   }
 
-  public MarkovModel generateDefaultModel(int minutes, int numWeeks, int intensityPercentage) throws InvalidDistributionException {
-
-    Schedule schedule = new ScheduleBuilder().minutes(minutes, numWeeks, intensityPercentage);
-
-
-    for (Week week : schedule.weeks()) {
-      for (Day day : week.days()) {
-        this.generateNewState(day.dayNumber().toString());
-      }
-    }
-
-    for (Week week : schedule.weeks()) {
-      for (Day day : week.days()) {
-        this.addTransition(day.dayNumber().toString(),
-            Integer.toString(day.dayNumber() + 1),
-            1.0);
-      }
-    }
-
-    return new MarkovModel(new HashMap<>());
+  public MarkovModel build() throws InvalidDistributionException {
+    return new MarkovModel(this.startDist);
   }
 
   public HiddenState generateNewState(String name) {
@@ -149,6 +131,17 @@ public class ModelBuilder {
 
   public void addStartProbability(HiddenState state, Double prob) {
     this.startDist.put(state, prob);
+  }
+
+  public void addLinearTransitions() throws InvalidDistributionException {
+    for (int i = 0; i < this.states.size() - 1; i++) {
+      HashMap<HiddenState, Double> transitionMat = new HashMap<>();
+      transitionMat.put(this.states.get(i + 1), 1.0);
+      this.states.get(i).fillTransitions(transitionMat);
+    }
+    HashMap<HiddenState, Double> endTransitionMat = new HashMap<>();
+    endTransitionMat.put(this.states.get(0), 1.0);
+    this.states.get(this.states.size() - 1).fillTransitions(endTransitionMat);
   }
 
 }
