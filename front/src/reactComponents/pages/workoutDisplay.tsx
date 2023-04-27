@@ -7,7 +7,10 @@ import { Parallax } from "react-parallax";
 
 function WorkoutDisplay() {
   return (
-    <Parallax bgImage={"/assets/images/IMG_0248-2.jpg"} strength={500}>
+    <Parallax
+      bgImage={"/assets/images/NaomiBaker_WRCHAMPSD7__13.jpg"}
+      strength={500}
+    >
       <div className={"content-container"}>
         <div className="menu-container">
           <LoggedInMenu description="Click on a day for more detials and to record your data." />

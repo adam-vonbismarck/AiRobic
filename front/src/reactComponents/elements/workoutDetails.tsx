@@ -105,7 +105,7 @@ export const renderWorkoutDetails = ({
         {"Workouts for " + moment(selectedDate).format("dddd, Do MMMM YYYY")}
       </h2>
       {workoutsForSelectedDate.map((workout, index) => (
-        <div key={index}>
+        <div className={"specific-workout"} key={index}>
           <h3>{workout.title}</h3>
           <p>
             <strong>Duration:</strong> {workout.duration} minutes
@@ -153,8 +153,8 @@ export const renderWorkoutDetails = ({
               variant="outlined"
             />
           </div>
-          <label className="slider-container">
-            Perceived Effort (1-10):
+          <div className="slider-container">
+            <h5> RPE (1-10):</h5>
             <Slider
               className="custom-slider"
               aria-label="Default"
@@ -170,9 +170,20 @@ export const renderWorkoutDetails = ({
                 const updatedWorkout = { ...workout, perceivedEffort };
                 updateWorkout(updatedWorkout, index);
               }}
+              sx={{
+                "& .MuiSlider-thumb": {
+                  color: "#f38418",
+                },
+                "& .MuiSlider-track": {
+                  backgroundImage:
+                    "linear-gradient(90deg, rgba(0,204,13,1) 0%, rgba(209,221,22,1) 50%, rgba(255,0,0,1) 100%)",
+                },
+                "& .MuiSlider-valueLabel": {
+                  color: "#fff",
+                },
+              }}
             />
-            {workout.perceivedEffort}
-          </label>
+          </div>
         </div>
       ))}
       <button className={"content-button"} onClick={closeFullscreen}>
