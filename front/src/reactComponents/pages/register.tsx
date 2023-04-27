@@ -29,7 +29,14 @@ function Register() {
         if (!isLoginResponse(loginToken)) {
           console.log("Login Failed")
         } else {
-          console.log(loginToken.sub)
+          console.log(loginToken.sub);
+          localStorage.setItem("userID", loginToken.sub);
+          localStorage.setItem("givenName", loginToken.given_name); //---> TODO remove upon logout: localStorage.clear()
+          console.log(loginToken.family_name);
+          console.log(loginToken.given_name); // ---> TODO
+          //TODO switch to logged in state
+
+          console.log(localStorage);
         }
       });
 
@@ -65,6 +72,8 @@ function Register() {
 interface LoginResponse {
   sub: string;
   email: string;
+  family_name: string;
+  given_name: string;
 }
 
 function isLoginResponse(rjson: any): rjson is LoginResponse {
