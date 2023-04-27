@@ -143,6 +143,7 @@ button {
     margin: 5% 0; /* Updated */
     transition: all 0.3s ease;
     text-align: right;
+    width: auto;
 }
 
 .menu-button:hover {
@@ -218,7 +219,6 @@ button {
     text-align: center;
     text-transform: uppercase;
     transition: background-color 0.3s ease, color 0.3s ease;
-    width: auto;
 }
 
 .content-button:hover {
@@ -322,6 +322,12 @@ button {
     padding-bottom: 5%;
     padding-left: 2.5%;
     width: 70%;
+
+}
+
+.content-wrapper h1 {
+    color: #ebe9e9;
+    text-align: center;
 }
 
 .content-container {
@@ -336,15 +342,38 @@ button {
 }
 
 .workout-details {
-    background: rgba(0, 0, 0, 0.24);
+    background: rgba(0, 0, 0, 0.5);
+    background: white;
     border-radius: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
+.workout-details h2 {
+    font-family: 'Muli';
+    color: #f38418;
+    text-align: center;
+}
+
+.workout-details p {
+    font-family: 'Muli';
+    color: #ebe9e9;
+    padding-right: 16px;
+    /*white-space: nowrap;*/
+}
+
+.workout-details h5 {
+    font-family: 'Muli';
+    color: #ebe9e9;
+    padding-right: 16px;
+    white-space: nowrap;
+}
+
+
 .workout-calendar{
-    background-color: rgba(0, 0, 0, 0.24);
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 5px;
     border-radius: 10px;
     /*display: flex;*/
@@ -357,9 +386,9 @@ button {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    /*width: auto;*/
-    /*height: auto;*/
+    justify-content: space-between;
+    width: auto;
+    height: auto;
     padding: 10px;
     /*margin-left: 35%;*/
     /*z-index: 1000;*/
@@ -392,6 +421,10 @@ button {
     left: 50%;
 }
 
+.specific-workout{
+    width: 90%;
+}
+
 .custom-textfield {
     margin-bottom: 100px;
 }
@@ -410,9 +443,12 @@ button {
 
 .slider-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 10px;
+    justify-content: space-around;
+    padding: 15px;
+    width: 75%
 }
 
 .custom-slider {

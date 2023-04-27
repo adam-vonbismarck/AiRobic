@@ -15,9 +15,9 @@ const WorkoutCalendar: React.FC = () => {
       title: "Endurance Row",
       date: "2023-04-21",
       duration: 30,
-      description: "30-minute row at a steady pace to build endurance",
+      description:
+        "30-minute row at a steady pace to build endurance at a low HR sdfgsdfgds",
       caloriesBurned: 300,
-      avgSplit: "",
     },
     {
       title: "Interval Row",
@@ -36,10 +36,25 @@ const WorkoutCalendar: React.FC = () => {
       caloriesBurned: 200,
     },
     {
+      title: "Technique Row",
+      date: "2023-04-22",
+      duration: 60,
+      description:
+        "60-minute row with emphasis on proper rowing technique and form",
+      caloriesBurned: 200,
+    },
+    {
       title: "Power Row",
       date: "2023-04-23",
       duration: 90,
       description: "90-minute row with emphasis on building power and strength",
+      caloriesBurned: 500,
+    },
+    {
+      title: "Endurance Row",
+      date: "2023-04-23",
+      duration: 90,
+      description: "30-minute row with emphasis on building power and strength",
       caloriesBurned: 500,
     },
   ]);
