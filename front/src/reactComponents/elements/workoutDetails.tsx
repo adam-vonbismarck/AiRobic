@@ -121,6 +121,7 @@ export const renderWorkoutDetails = ({
               className="custom-textfield"
               label="Distance (meters)"
               type="text"
+              placeholder={"2000"}
               value={workout.distance || ""}
               InputProps={{
                 inputComponent: NumericFormatCustom as any,
@@ -158,10 +159,11 @@ export const renderWorkoutDetails = ({
             <Slider
               className="custom-slider"
               aria-label="Default"
-              valueLabelDisplay="auto"
+              valueLabelDisplay="on"
               step={1}
               min={0}
               max={10}
+              track={false}
               value={workout.perceivedEffort}
               defaultValue={workout.perceivedEffort}
               onChange={(event) => {
@@ -174,12 +176,20 @@ export const renderWorkoutDetails = ({
                 "& .MuiSlider-thumb": {
                   color: "#f38418",
                 },
-                "& .MuiSlider-track": {
+                "& .MuiSlider-rail": {
                   backgroundImage:
                     "linear-gradient(90deg, rgba(0,204,13,1) 0%, rgba(209,221,22,1) 50%, rgba(255,0,0,1) 100%)",
                 },
                 "& .MuiSlider-valueLabel": {
-                  color: "#fff",
+                  color: "#ebe9e9",
+                  backgroundColor: "#f38418",
+                  borderRadius: "15px",
+                },
+                "& .MuiSlider-thumb:hover": {
+                  boxShadow: "0px 0px 0px 8px rgba(243,132,24,0.16)",
+                },
+                "& .MuiSlider-thumb.Mui-focusVisible": {
+                  boxShadow: "0px 0px 0px 8px rgba(243,132,24,0.24)",
                 },
               }}
             />
