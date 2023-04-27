@@ -6,4 +6,5 @@ export interface Workout {
   caloriesBurned: number;
   distance?: number;
   perceivedEffort?: number;
+  avgSplit?: string;
 }

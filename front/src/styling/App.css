@@ -288,7 +288,7 @@ button {
 }
 
 .content-wrapper {
-    /*align-items: center;*/
+    align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -302,7 +302,8 @@ button {
 .calendar-container {
     width: 100%; /* Adjust this value to set the desired width */
     max-width: 1200px; /* Adjust this value to set the maximum width */
-    margin: 0 auto; /* Center the container horizontally */
+    margin: auto auto; /* Center the container horizontally */
+    justify-content: center;
 }
 /* change the color of the dates and events */
 .fc-daygrid-event, .fc-daygrid-event-dot {
@@ -393,6 +394,59 @@ button {
     left: 50%;
 }
 
-body.show-workout-details:not(.workout-details) {
-    filter: blur(3px);
+.workout-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.24);
+
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin-left: 35%;
 }
+
+.workout-detials__split {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 100px;
+    margin-left: 35%;
+    /*z-index: 1000;*/
+}
+
+.workout-container {
+    margin-bottom: 20px;
+}
+
+.custom-textfield {
+    margin-bottom: 10px;
+}
+
+.custom-textfield .MuiInputBase-input {
+    color: orange;
+}
+
+.custom-textfield .MuiOutlinedInput-notchedOutline {
+    border-color: orange;
+}
+
+.custom-textfield label.Mui-focused {
+    color: orange;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.custom-slider {
+    color: orange;
+}
+

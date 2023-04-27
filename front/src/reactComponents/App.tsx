@@ -6,6 +6,7 @@ import WorkoutCalendar from "./elements/calendar";
 import Register from "./pages/register";
 import SignIn from "./pages/signin";
 import WorkoutDisplay from "./pages/workoutDisplay";
+import FormattedInputs from "./pages/test";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/plan" element={<WorkoutDisplay />} />
+        <Route path="/create" element={<FormattedInputs />} />
       </Routes>
     </Router>
   );

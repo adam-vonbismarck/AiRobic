@@ -17,6 +17,7 @@ const WorkoutCalendar: React.FC = () => {
       duration: 30,
       description: "30-minute row at a steady pace to build endurance",
       caloriesBurned: 300,
+      avgSplit: "",
     },
     {
       title: "Interval Row",
@@ -82,7 +83,7 @@ const WorkoutCalendar: React.FC = () => {
     );
   } else {
     return (
-      <div>
+      <div className={"workout-details"}>
         {renderWorkoutDetails({
           selectedDate,
           workoutDetails,
@@ -94,39 +95,6 @@ const WorkoutCalendar: React.FC = () => {
       </div>
     );
   }
-
-  // return (
-  //   <div>
-  //     <div className="workout-calendar">
-  //       <FullCalendar
-  //         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-  //         headerToolbar={{
-  //           left: "prev,next",
-  //           center: "title",
-  //           right: "today",
-  //         }}
-  //         initialView="dayGridMonth"
-  //         // editable={true}
-  //         selectable={true}
-  //         selectMirror={true}
-  //         dayMaxEvents={true}
-  //         firstDay={1}
-  //         events={workouts}
-  //         select={handleDateSelect}
-  //       />
-  //     </div>
-  //     <div>
-  //       {renderWorkoutDetails({
-  //         selectedDate,
-  //         workoutDetails,
-  //         setWorkoutDetails,
-  //         workouts,
-  //         setWorkouts,
-  //         closeFullscreen,
-  //       })}
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default WorkoutCalendar;
