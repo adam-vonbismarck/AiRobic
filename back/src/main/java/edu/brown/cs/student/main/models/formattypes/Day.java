@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.models.formattypes;
 
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.markov.Emission;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,10 +52,29 @@ public class Day {
         (this.subCategory.size() == 0 || this.subCategory.size() == this.numberOfWorkouts);
   }
 
-  public List<String> getIntensity() {
-    return this.intensity;
+  /**
+   *
+   * @return
+   */
+  public List<String> getIntensityCopy() {
+    ArrayList<String> copy = new ArrayList<>();
+    copy.addAll(this.intensity);
+    return copy;
   }
+
+  /**
+   * This method adds a new workout intensity (standin for a workout). Will likely need to add
+   * verification that the string is in a constant map of our workout data.
+   *
+   * @param toAdd - workout to add (intensity label)
+   */
   public void addFirstIntensity(String toAdd) { this.intensity.add(0, toAdd); }
+
+  /**
+   * This method returns the current number of workouts, according to the intensity list.
+   *
+   * @return - the size of the intensity list.
+   */
   public int getIntensityLength() { return this.intensity.size(); }
 
 }
