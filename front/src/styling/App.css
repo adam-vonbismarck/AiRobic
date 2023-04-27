@@ -83,6 +83,7 @@ h4 {
     top: 0;
     width: 25%;
     text-align: right;
+
 }
 
 
@@ -379,7 +380,7 @@ button {
     /*display: flex;*/
     flex-direction: row;
     width: 100%;
-    max-width: 1200px;
+    max-width: 60vw;
 }
 
 .workout-details__split {
@@ -445,13 +446,9 @@ button {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 10px;
-    justify-content: space-around;
+    /*margin-bottom: 10px;*/
+    /*justify-content: space-around;*/
     padding: 15px;
-    width: 75%
-}
-
-.custom-slider {
-    color: orange;
+    /*width: 75%*/
 }
 
