@@ -3,6 +3,8 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 import edu.brown.cs.student.main.handlers.AddNewUser;
 import edu.brown.cs.student.main.handlers.DeleteUser;
+import edu.brown.cs.student.main.handlers.GetUserWorkouts;
+import edu.brown.cs.student.main.handlers.UpdateUser;
 import java.io.IOException;
 import spark.Spark;
 
@@ -30,9 +32,9 @@ public class Server {
     // localhost:3232/adduser?username=alexfake
     Spark.get("deleteuser", new DeleteUser());
     // localhost:3232/deleteuser?username=alexfake
-    //Spark.get("updateuser", new UpdateUser());
+    Spark.get("updateuser", new UpdateUser());
     // localhost:3232/updateuser?username=alexfake&preferences=blabla
-    //Spark.get("getuserworkout", new GetUserWorkout());
+    Spark.get("getuserworkouts", new GetUserWorkouts());
     // localhost:3232/updateuser?username=alexfake&date=25apr2023
 
     // Initialize and start the Spark server.
