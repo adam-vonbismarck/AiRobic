@@ -22,6 +22,17 @@ function Register() {
               console.log(credentialResponse);
 
               console.log("test");
+              
+    fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token="+credentialResponse.credential)
+      .then((response: Response) => response.json())
+      .then((loginToken) => {
+        if (!isLoginResponse(loginToken)) {
+          console.log("Login Failed")
+        } else {
+          console.log(loginToken.sub)
+        }
+      });
+
             }}
             onError={() => {
               console.log("Login Failed");
@@ -49,6 +60,16 @@ function Register() {
     console.log("Login Failed");
   }}
 />; */
+}
+
+interface LoginResponse {
+  sub: string;
+  email: string;
+}
+
+function isLoginResponse(rjson: any): rjson is LoginResponse {
+  if (!("sub" in rjson) || !("email" in rjson)) return false;
+  return true;
 }
 
 export default Register;
