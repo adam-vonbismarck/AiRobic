@@ -4,6 +4,7 @@ import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -63,4 +64,34 @@ public class HiddenState {
     }
   }
 
+  public void checkDistributions() throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(HiddenState.class, this.transitionDistribution);
+    RandomGenerator.validateDistribution(Emission.class, this.emissionDistribution);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    HiddenState that = (HiddenState) o;
+    return Objects.equals(this.emissionDistribution, that.emissionDistribution)
+        && Objects.equals(this.name, that.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.emissionDistribution, this.name);
+  }
+
+  @Override
+  public String toString() {
+    return "HiddenState{" +
+        ", emissionDistribution=" + this.emissionDistribution.toString() +
+        ", name='" + this.name + '\'' +
+        '}';
+  }
 }

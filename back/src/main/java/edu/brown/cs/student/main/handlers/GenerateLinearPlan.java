@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.models.LinearModelBuilder;
 import edu.brown.cs.student.main.models.ScheduleBuilder;
+import edu.brown.cs.student.main.models.WorkoutDistributionByName;
 import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.MarkovModel;
@@ -19,7 +20,7 @@ public class GenerateLinearPlan implements Route {
     ScheduleBuilder builder = new ScheduleBuilder();
     Schedule toBuild = builder.minutes(420, 4, 0.2,
         "Monday", "Friday", "2k", "UT2");
-    MarkovModel model = new LinearModelBuilder().build(toBuild, "start");
+    MarkovModel model = new LinearModelBuilder(new WorkoutDistributionByName()).build(toBuild, "start");
     model.generateFormattedEmissions(1, new ScheduleFormatter(toBuild));
 
     HashMap<String, Object> results = new HashMap<>();

@@ -97,7 +97,7 @@ public class RandomGeneratorTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "The start probability associated with the hidden state " + this.negDay + " was negative.");
+        "The probability associated with the output " + this.negDay + " was negative.");
   }
 
   /**
@@ -113,7 +113,7 @@ public class RandomGeneratorTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "Start distribution probabilities did not sum to 1.");
+        "Distribution probabilities did not sum to 1.");
   }
 
   /**
@@ -129,7 +129,7 @@ public class RandomGeneratorTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "Start distribution probabilities did not sum to 1.");
+        "Distribution probabilities did not sum to 1.");
   }
 
   /**
@@ -178,7 +178,7 @@ public class RandomGeneratorTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "The start probability associated with the hidden state " + this.negDay + " was negative.");
+        "The probability associated with the output " + this.negDay + " was negative.");
   }
 
   /**
@@ -195,7 +195,7 @@ public class RandomGeneratorTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "Start distribution probabilities did not sum to 1.");
+        "Distribution probabilities did not sum to 1.");
   }
 
   /**
@@ -212,7 +212,7 @@ public class RandomGeneratorTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "Start distribution probabilities did not sum to 1.");
+        "Distribution probabilities did not sum to 1.");
   }
 
 }
