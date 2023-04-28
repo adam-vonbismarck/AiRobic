@@ -4,11 +4,13 @@ import LoggedInMenu from "../elements/loggedInMenu";
 import { Parallax } from "react-parallax";
 import TextField from "@mui/material/TextField";
 import {
+  Fade,
   FormControl,
   FormControlLabel,
   FormLabel,
   IconButton,
   InputLabel,
+  makeStyles,
   MenuItem,
   Radio,
   RadioGroup,
@@ -45,21 +47,45 @@ function NewSchedule() {
   const renderTextField = () => {
     if (selectedOption === "model3") {
       return (
-        <div className="select-field">
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Goal</InputLabel>
-            <Select
-              labelId="goal-select-dropdown"
-              id="goal-select"
-              value={goal}
-              label="Goal"
-              onChange={handleGoalChange}
-            >
-              <MenuItem value={2000}>2000m Test</MenuItem>
-              <MenuItem value={5000}>5000m Test</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <Fade in={true} timeout={500} unmountOnExit>
+          <div className="select-field">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Goal</InputLabel>
+              <Select
+                className="custom-select"
+                labelId="goal-select-dropdown"
+                id="goal-select"
+                value={goal}
+                label="Goal"
+                onChange={handleGoalChange}
+              >
+                <MenuItem value={2000}>2000m Test</MenuItem>
+                <MenuItem value={5000}>5000m Test</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </Fade>
+      );
+    } else {
+      return (
+        <Fade in={false} timeout={500} unmountOnExit>
+          <div className="select-field">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Goal</InputLabel>
+              <Select
+                className="custom-select"
+                labelId="goal-select-dropdown"
+                id="goal-select"
+                value={goal}
+                label="Goal"
+                onChange={handleGoalChange}
+              >
+                <MenuItem value={2000}>2000m Test</MenuItem>
+                <MenuItem value={5000}>5000m Test</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </Fade>
       );
     }
   };
@@ -97,13 +123,21 @@ function NewSchedule() {
             </div>
             <div className="form-row radios">
               <div className="radio-group-container">
-                <label>Options</label>
+                {/*<label>Options</label>*/}
                 <div className="radio-group">
                   <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">
-                      Model with which to create schedule
+                    <FormLabel
+                      style={{
+                        fontFamily: "Muli",
+                        fontSize: "12pt",
+                        color: "#ebe9e9",
+                      }}
+                      id="demo-row-radio-buttons-group-label"
+                    >
+                      Choose the model for your workout plan
                     </FormLabel>
                     <RadioGroup
+                      className={"radio-group"}
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
@@ -112,7 +146,18 @@ function NewSchedule() {
                     >
                       <FormControlLabel
                         value="model1"
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              "&, &.Mui-checked": {
+                                color: "#f38418",
+                              },
+                              "&, &.Mui-unchecked": {
+                                color: "#ebe9e9",
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <div className="radio-label">
                             Standard Model{" "}
@@ -123,7 +168,7 @@ function NewSchedule() {
                               progressive improvement in intensity."
                             >
                               <IconButton className="info-icon">
-                                <InfoIcon />
+                                <InfoIcon sx={{ color: "#ebe9e9" }} />
                               </IconButton>
                             </Tooltip>
                           </div>
@@ -132,7 +177,18 @@ function NewSchedule() {
                       />
                       <FormControlLabel
                         value="model2"
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              "&, &.Mui-checked": {
+                                color: "#f38418",
+                              },
+                              "&, &.Mui-unchecked": {
+                                color: "#ebe9e9",
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <div className="radio-label">
                             Variable Model{" "}
@@ -143,7 +199,7 @@ function NewSchedule() {
                                the intensity of the workouts continues to challenge the individual and promote growth"
                             >
                               <IconButton className="info-icon">
-                                <InfoIcon />
+                                <InfoIcon sx={{ color: "#ebe9e9" }} />
                               </IconButton>
                             </Tooltip>
                           </div>
@@ -152,7 +208,18 @@ function NewSchedule() {
                       />
                       <FormControlLabel
                         value="model3"
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              "&, &.Mui-checked": {
+                                color: "#f38418",
+                              },
+                              "&, &.Mui-unchecked": {
+                                color: "#ebe9e9",
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <div className="radio-label">
                             Goal Oriented{" "}
@@ -164,7 +231,7 @@ function NewSchedule() {
                               to enhance overall fitness and performance."
                             >
                               <IconButton className="info-icon">
-                                <InfoIcon />
+                                <InfoIcon sx={{ color: "#ebe9e9" }} />
                               </IconButton>
                             </Tooltip>
                           </div>
@@ -177,11 +244,23 @@ function NewSchedule() {
               </div>
             </div>
             <div className="form-row dropdown">
+              <div className="number-container">
+                <div className="number-field-container">
+                  <TextField
+                    className="custom-textfield"
+                    id="number-field"
+                    type="number"
+                    label="Hours/Week"
+                    placeholder={"2.5"}
+                  />
+                </div>
+              </div>
               <div className="select-container">
                 <div className="select-field">
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Sport</InputLabel>
                     <Select
+                      className="custom-select"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={age}
@@ -193,19 +272,11 @@ function NewSchedule() {
                   </FormControl>
                 </div>
               </div>
-              <div className="number-container">
-                <div className="number-field-container">
-                  <TextField
-                    id="number-field"
-                    type="number"
-                    label="Number of Hours"
-                    placeholder={"Enter a number"}
-                  />
-                </div>
-              </div>
               <div className={"select-container"}>{renderTextField()}</div>
             </div>
-            <button className={"content-button"}>Get Workout Plan</button>
+            <div className="button-row">
+              <button className={"content-button"}>Get Workout Plan</button>
+            </div>
           </form>
         </div>
       </div>

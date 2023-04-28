@@ -2,10 +2,6 @@
     width: 90%;
 }
 
-.custom-textfield {
-    margin-bottom: 100px;
-}
-
 .custom-textfield .MuiInputBase-input {
     color: #ebe9e9 !important;
 }
@@ -20,6 +16,7 @@
 
 .custom-textfield label {
     color: rgba(235, 233, 233, 0.8) !important;
+    font-family: 'Muli', sans-serif;
 }
 
 .custom-textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {

@@ -1,18 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LoggedOutMenu from "../elements/loggedOutMenu";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GoogleLogin } from "@react-oauth/google";
-import { Link } from "react-router-dom";
-import { useGoogleLogin } from "@react-oauth/google";
-import { login } from "../GoogleLogin";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 
 /**
  * https://www.youtube.com/watch?v=roxC8SMs7HU
  * google oauth for react 2023
  */
-
-
 
 function Register() {
   const navigate = useNavigate();
@@ -23,25 +17,27 @@ function Register() {
           ...
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token="+credentialResponse.credential)
-              .then((response: Response) => response.json())
-              .then((loginToken) => {
-                if (!isLoginResponse(loginToken)) {
-                  console.log("Login Failed")
-                } else {
-                  console.log(loginToken.sub);
-                  localStorage.setItem("userID", loginToken.sub);
-                  localStorage.setItem("givenName", loginToken.given_name); //---> TODO remove upon logout: localStorage.clear()
-                  localStorage.setItem("loggedIn","true")
-                  console.log(loginToken.family_name);
-                  console.log(loginToken.given_name); // ---> TODO
-                  //TODO switch to logged in state
-                  navigate('/', { replace: true });
+              fetch(
+                "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" +
+                  credentialResponse.credential
+              )
+                .then((response: Response) => response.json())
+                .then((loginToken) => {
+                  if (!isLoginResponse(loginToken)) {
+                    console.log("Login Failed");
+                  } else {
+                    console.log(loginToken.sub);
+                    localStorage.setItem("userID", loginToken.sub);
+                    localStorage.setItem("givenName", loginToken.given_name); //---> TODO remove upon logout: localStorage.clear()
+                    localStorage.setItem("loggedIn", "true");
+                    console.log(loginToken.family_name);
+                    console.log(loginToken.given_name); // ---> TODO
+                    //TODO switch to logged in state
+                    navigate("/", { replace: true });
 
-                console.log(localStorage);
-        }
-      });
-
+                    console.log(localStorage);
+                  }
+                });
             }}
             onError={() => {
               console.log("Login Failed");
@@ -58,7 +54,6 @@ function Register() {
     </div>
   );
 }
-
 
 interface LoginResponse {
   sub: string;
