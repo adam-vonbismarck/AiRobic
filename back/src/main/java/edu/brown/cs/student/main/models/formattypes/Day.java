@@ -4,6 +4,7 @@ import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.markov.Emission;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Still ironing out format of these records.
@@ -87,5 +88,25 @@ public class Day {
         ", intensity=" + this.intensity +
         ", subCategory=" + this.subCategory +
         '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    Day day = (Day) o;
+    return Objects.equals(this.type, day.type) && Objects.equals(this.workouts,
+        day.workouts) && Objects.equals(this.numberOfWorkouts, day.numberOfWorkouts)
+        && Objects.equals(this.name, day.name) && Objects.equals(this.intensity,
+        day.intensity) && Objects.equals(this.subCategory, day.subCategory);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.type, this.workouts, this.numberOfWorkouts, this.name, this.intensity, this.subCategory);
   }
 }

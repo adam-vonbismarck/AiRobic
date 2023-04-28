@@ -5,7 +5,7 @@ import com.squareup.moshi.Json;
 /**
  * Still ironing out details of Emission class and HiddenState class.
  */
-public abstract class Emission {
+public class Emission {
 
   public Emission(@Json(name = "workout") String workout,
       @Json(name="minutes") double time,
@@ -15,7 +15,9 @@ public abstract class Emission {
 
   }
 
-  public abstract Emission copy();
+  public Emission copy() {
+    return null;
+  }
 
   //getWorkout
   //getTotalTime

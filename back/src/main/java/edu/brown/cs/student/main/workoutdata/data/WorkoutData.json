@@ -1,0 +1,84 @@
+{
+  "categories" : [
+    {
+      "name": "2k",
+      "distribution": [
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        }
+      ]
+    },
+    {
+      "name": "30r20",
+      "distribution": [
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        },
+        {
+          "emission": {
+            "workout": "2000m erg test with warmup and cooldown",
+            "minutes": 60
+          },
+          "probability": 0.01
+        }
+      ]
+    }
+  ]
+}
