@@ -14,8 +14,8 @@ public class Day {
   private final List<Emission> workouts;
   private Integer numberOfWorkouts;
   private final String name;
-  private List<String> intensity;
-  private List<String> subCategory;
+  private final List<String> intensity;
+  private final List<String> subCategory;
 
   public Day(@Json(name="type") String type,
       @Json(name="workouts") List<Emission> workouts,
@@ -77,4 +77,15 @@ public class Day {
    */
   public int getIntensityLength() { return this.intensity.size(); }
 
+  @Override
+  public String toString() {
+    return "Day{" +
+        "type='" + this.type + '\'' +
+        ", workouts=" + this.workouts +
+        ", numberOfWorkouts=" + this.numberOfWorkouts +
+        ", name='" + this.name + '\'' +
+        ", intensity=" + this.intensity +
+        ", subCategory=" + this.subCategory +
+        '}';
+  }
 }

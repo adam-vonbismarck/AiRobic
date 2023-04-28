@@ -40,8 +40,8 @@ public class ScheduleBuilder {
       String highIntensityLabel, String lowIntensityLabel) {
     long highIntensity = Math.round(Math.max(highPercent*minutes, 60));
     long lowIntensity = minutes - highIntensity;
-    long numHighIntensity = Math.max(Math.floorDiv(highIntensity, 60), 4);
-    long lowIntensityWorkoutLength = Math.min(60, lowIntensity/(10 - numHighIntensity));
+    long numHighIntensity = Math.min(Math.floorDiv(highIntensity, 60), 4);
+    long lowIntensityWorkoutLength = Math.max(60, lowIntensity/(10 - numHighIntensity));
     long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
     return this.workouts(numHighIntensity, numLowIntensity, numWeeks, startDay, endDay, highIntensityLabel, lowIntensityLabel);
   }
@@ -72,7 +72,7 @@ public class ScheduleBuilder {
   private void distributeWorkouts(ArrayList<Day> days, long workouts) {
     for (int j = 0; j < NUM_DAYS; j++) {
       days.add(new Day("day", new ArrayList<>(), 0, intsToDays.get(j),
-          List.of(), List.of()));
+          new ArrayList<>(), new ArrayList<>()));
     }
 
     if (workouts <= 0) {
@@ -90,9 +90,14 @@ public class ScheduleBuilder {
       return;
     }
 
-    for (int w = 0; w < NUM_WORKOUT_DAYS; w += Math.floorDiv(NUM_WORKOUT_DAYS, workouts)) {
+    int w = 0;
+    long remainingWorkouts = workouts;
+    float cumulativeCounter = 0;
+    while (w < NUM_WORKOUT_DAYS) {
       days.get(w).incrementNumWorkouts();
       workouts--;
+      cumulativeCounter += ((float) NUM_WORKOUT_DAYS/remainingWorkouts);
+      w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
     assert(workouts == 0);
@@ -118,9 +123,14 @@ public class ScheduleBuilder {
       return;
     }
 
-    for (int w = 0; w < NUM_WORKOUT_DAYS; w += Math.floorDiv(NUM_WORKOUT_DAYS, highIntensity)) {
+    int w = 0;
+    long remainingHighInt = highIntensity;
+    float cumulativeCounter = 0;
+    while (w < NUM_WORKOUT_DAYS) {
       days.get(w).addFirstIntensity(highIntensityLabel);
       highIntensity--;
+      cumulativeCounter += ((float) NUM_WORKOUT_DAYS/remainingHighInt);
+      w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
     this.fillInLow(days, lowIntensityLabel);
@@ -128,7 +138,10 @@ public class ScheduleBuilder {
 
   private void fillInLow(List<Day> days, String lowIntensityLabel) {
     for (Day day : days) {
-      for (int i = 0; i < day.getNumberOfWorkouts() - day.getIntensityLength(); i++) {
+      if (day.getNumberOfWorkouts() <= day.getIntensityLength()) {
+        continue;
+      }
+      for (int i = 0; i <= day.getNumberOfWorkouts() - day.getIntensityLength(); i++) {
         day.addFirstIntensity(lowIntensityLabel);
       }
     }

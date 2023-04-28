@@ -27,6 +27,17 @@ public class ModelTests {
   }
 
   @Test
+  public void floatingPoint() {
+    int w = 0;
+    float cumulativeCounter = 0;
+    while (w < 6) {
+      System.out.println(w);
+      cumulativeCounter += ((float) 6/4);
+      w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
+    }
+  }
+
+  @Test
   public void testBadStartDistHigh() {
     HashMap<HiddenState, Double> start = new HashMap<>();
     start.put(new HiddenState("hello", new HashMap<>(), new HashMap<>()), 1.1);
