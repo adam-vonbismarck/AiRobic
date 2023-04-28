@@ -67,26 +67,6 @@ h4 {
     z-index: -1;
 }
 
-.menu {
-    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
-    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
-    background-color: rgba(49, 57, 60, 0.75);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-    left: 0;
-    overflow-y: auto;
-    padding: 2.5%;
-    position: fixed;
-    top: 0;
-    width: 25%;
-    text-align: right;
-
-}
-
-
 .logo {
     /*position: absolute;*/
     align-items: flex-end;
@@ -98,38 +78,6 @@ h4 {
 .logo img {
     height: 30%;
     max-width: 90%; /* Updated */
-}
-
-.menu-items {
-    align-items: flex-end; /* Updated */
-    display: flex;
-    flex-direction: column;
-    font-style: inherit;
-    justify-content: flex-end;
-    margin-bottom: auto; /* Updated */
-    margin-top: 20%; /* Added */
-    width: 100%;
-    text-align: right;
-}
-
-.menu-links {
-    align-items: flex-end; /* Updated */
-    display: flex;
-    flex-direction: column;
-    font-style: inherit;
-    justify-content: space-between;
-    margin-bottom: auto; /* Updated */
-    /*margin-top: 20%; !* Added *!*/
-    width: 100%;
-    text-align: right;
-    margin-left: auto;
-}
-
-.menu-button {
-    /* ... existing button styles ... */
-    overflow: hidden;
-    position: relative;
-    text-align: right;
 }
 
 button {
@@ -147,59 +95,10 @@ button {
     width: auto;
 }
 
-.menu-button:hover {
-    color: #f38418;
-}
-
-.name {
-    align-items: center; /* align the icon and text vertically */
-    margin-bottom: 10%; /* add some space between this and the next menu item */
-    text-align: right;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.name img {
-    height: 24px; /* set a specific height for the icon */
-    margin-right: 10px; /* add some space between the icon and text */
-}
-
-.name span {
-    color: #f38418;
-    font-family: 'Muli-Bold';
-    font-size: 24pt;
-    font-weight: bold;
-    line-height: 1.2;
-    margin-left: auto; /* Added */
-    text-align: right; /* Added */
-}
-
 .description {
     margin-bottom: auto;
     text-align: right;
     margin-top: auto;
-}
-
-.social-icons {
-    /*align-items: flex-end; !* Added *!*/
-    display: flex;
-    justify-content: space-between; /* Updated */
-    margin: 0 0.25%; /* Added */
-    transition: all 0.3s ease;
-    width: 90%; /* Updated */
-}
-
-.social-icons img {
-    flex: auto; /* Updated */
-    height: 40px;
-    margin: auto 10%; /* Added */
-    max-width: 80px; /* Added */
-    transition: all 0.3s ease;
-}
-
-.social-icons img:hover {
-    transform: translateY(-8%);
-
 }
 
 .menu-container {
@@ -225,94 +124,6 @@ button {
 .content-button:hover {
     background-color: #fff;
     color: #f38418;
-}
-
-.not-found-container {
-    background-image: url("/assets/images/8O5A6424.jpg");
-    background-position: center;
-    background-size: cover;
-    height: 100vh;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
-.content-wrapper-404 {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 5%;
-    text-align: center;
-}
-
-.content-wrapper-404 h1 {
-    color: #ebe9e9;
-    /*font-size: 100pt;*/
-    /*font-weight: bold;*/
-    margin-top: auto;
-}
-
-.content-wrapper-404 h2 {
-    color: #f38418;
-    margin-left: 20%;
-    margin-right: 20%;
-}
-
-.content-wrapper-404 img{
-    width: 250px;
-}
-
-/* change the color of the dates and events */
-.fc-daygrid-event, .fc-daygrid-event-dot {
-    background-color: #f38418;
-    border-color: #f38418;
-}
-
-/* change the color of the title */
-.fc-toolbar-title {
-    color: #f38418;
-    font-family: 'Muli';
-}
-
-.fc-today-bg-color, .fc-button-group, .fc-button {
-    background-color: #f38418;
-}
-.fc-daygrid-day-top{
-    background-color: rgba(0, 0, 0, 0.24);
-}
-
-.fc-col-header, .fc-daygrid-day-number {
-    color: #ebe9e9;
-    font-family: 'Muli';
-}
-
-
-:root {
-    --fc-border-color: #ebe9e9;
-    --fc-button-text-color: #008cff;
-    --fc-button-bg-color: #ebe9e9;
-    --fc-button-border-color: #ebe9e9;
-    --fc-button-hover-bg-color: #f38418;
-    --fc-button-hover-border-color: #f38418;
-    --fc-button-active-bg-color: #33A1FD;
-    --fc-button-active-border-color: #33A1FD;
-    --fc-event-bg-color: #33A1FD;
-    --fc-event-border-color: #33A1FD;
-    --fc-event-text-color: #fff;
-    --fc-event-selected-overlay-color: rgb(255, 0, 0);
-    --fc-more-link-bg-color: #33A1FD;
-    --fc-more-link-text-color: #33A1FD;
-    --fc-event-resizer-thickness: 8px;
-    --fc-event-resizer-dot-total-width: 8px;
-    --fc-event-resizer-dot-border-width: 1px;
-    --fc-non-business-color: hsla(0, 0%, 84%, .3);
-    --fc-bg-event-color: #33A1FD;
-    --fc-bg-event-opacity: 0.3;
-    --fc-highlight-color: rgba(188, 232, 241, .3);
-    --fc-today-bg-color: rgba(243, 132, 24, 0.32);
-    --fc-now-indicator-color: #33A1FD;
 }
 
 .content-wrapper {
@@ -342,38 +153,6 @@ button {
     /*padding-right: 5%;*/
 }
 
-.workout-details {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
-    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
-}
-
-.workout-details h2 {
-    font-family: 'Muli';
-    color: #f38418;
-    text-align: center;
-}
-
-.workout-details p {
-    font-family: 'Muli';
-    color: #ebe9e9;
-    padding-right: 16px;
-    /*white-space: nowrap;*/
-}
-
-.workout-details h5 {
-    font-family: 'Muli';
-    color: #ebe9e9;
-    padding-right: 16px;
-    white-space: nowrap;
-}
-
-
 .workout-calendar{
     background-color: rgba(0, 0, 0, 0.5);
     padding: 5px;
@@ -384,18 +163,6 @@ button {
     max-width: 60vw;
     -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
     backdrop-filter: blur(7px); /* add a slight blur effect to the background */
-}
-
-.workout-details__split {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: auto;
-    height: auto;
-    padding: 10px;
-    /*margin-left: 35%;*/
-    /*z-index: 1000;*/
 }
 
 .register-button {
@@ -423,112 +190,5 @@ button {
     position: absolute;
     bottom: 50%;
     left: 50%;
-}
-
-.specific-workout{
-    width: 90%;
-}
-
-.custom-textfield {
-    margin-bottom: 100px;
-}
-
-.custom-textfield .MuiInputBase-input {
-    color: #ebe9e9;
-}
-
-.custom-textfield .MuiOutlinedInput-notchedOutline {
-    border-color: #ebe9e9;
-}
-
-.custom-textfield label.Mui-focused {
-    color: #ebe9e9;
-}
-
-.custom-textfield label {
-    color: rgba(235, 233, 233, 0.8);
-}
-
-.custom-textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: #f38418;
-}
-
-.custom-textfield .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #f38418;
-}
-
-.custom-textfield .MuiFormLabel-root.Mui-focused {
-    color: #ebe9e9;
-}
-
-.slider-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    /*margin-bottom: 10px;*/
-    /*justify-content: space-around;*/
-    padding: 15px;
-    /*width: 75%*/
-}
-
-/* Styles for the form */
-.form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    background: white;
-    padding: 16px;
-    border-radius: 10px;
-}
-
-.form-row {
-    display: flex;
-    gap: 16px;
-}
-
-.form-row.datepickers {
-    justify-content: space-between;
-}
-
-.form-row.radios {
-    align-items: center;
-    margin-top: 16px;
-}
-
-.form-row.dropdown {
-    margin-top: 16px;
-}
-
-/* Styles for the radio buttons */
-.form-control {
-    margin-right: 16px;
-}
-
-/* Styles for the tooltip icon */
-.info-icon {
-    margin-left: 8px;
-}
-
-/* Styles for the select dropdown */
-.select-container {
-    min-width: 120px;
-}
-
-/* Styles for the labels */
-label.MuiInputLabel-root {
-    color: #000000;
-}
-
-.Mui-focused.MuiInputLabel-root {
-    color: #000000;
-}
-
-/* Styles for the select menu items */
-.MuiMenuItem-root {
-    color: #000000;
-}
-
-.Mui-selected {
-    background-color: #e0e0e0;
 }
 

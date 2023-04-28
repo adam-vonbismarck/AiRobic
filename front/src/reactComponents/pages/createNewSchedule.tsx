@@ -6,11 +6,12 @@ import TextField from "@mui/material/TextField";
 import {
   FormControl,
   FormControlLabel,
-  Icon,
+  FormLabel,
   IconButton,
   InputLabel,
   MenuItem,
   Radio,
+  RadioGroup,
   Tooltip,
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -19,6 +20,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InfoIcon from "@mui/icons-material/Info";
+import "../../styling/GenerateWorkout.css";
 
 function NewSchedule() {
   const [selectedOption, setSelectedOption] = useState("option1");
@@ -30,9 +32,36 @@ function NewSchedule() {
   };
 
   const [age, setAge] = React.useState("");
+  const [goal, setGoal] = React.useState("");
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleSportChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
+  };
+
+  const handleGoalChange = (event: SelectChangeEvent) => {
+    setGoal(event.target.value as string);
+  };
+
+  const renderTextField = () => {
+    if (selectedOption === "model3") {
+      return (
+        <div className="select-field">
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Goal</InputLabel>
+            <Select
+              labelId="goal-select-dropdown"
+              id="goal-select"
+              value={goal}
+              label="Goal"
+              onChange={handleGoalChange}
+            >
+              <MenuItem value={2000}>2000m Test</MenuItem>
+              <MenuItem value={5000}>5000m Test</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+      );
+    }
   };
 
   return (
@@ -70,33 +99,80 @@ function NewSchedule() {
               <div className="radio-group-container">
                 <label>Options</label>
                 <div className="radio-group">
-                  <Tooltip title="Tooltip for Option 1">
-                    <FormControlLabel
-                      value="option1"
-                      control={<Radio />}
-                      label="Option 1"
-                      className={"form-control"}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Tooltip for Option 2">
-                    <FormControlLabel
-                      value="option2"
-                      control={<Radio />}
-                      label="Option 2"
-                      className={"form-control"}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Additional information" arrow>
-                    <IconButton className="info-icon">
-                      <InfoIcon />
-                    </IconButton>
-                  </Tooltip>
-                </div>
-              </div>
-              <div className="number-container">
-                <label htmlFor="number-field">Number</label>
-                <div className="number-field-container">
-                  <TextField id="number-field" type="number" />
+                  <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Model with which to create schedule
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      defaultValue={"model1"}
+                      onChange={handleOptionChange}
+                    >
+                      <FormControlLabel
+                        value="model1"
+                        control={<Radio />}
+                        label={
+                          <div className="radio-label">
+                            Standard Model{" "}
+                            <Tooltip
+                              title="This training algorithm sets the standard by creating a
+                              comprehensive week-long plan, serving as the foundation for future weeks.
+                              Subsequent plans gradually intensify based on the initial week, ensuring
+                              progressive improvement in intensity."
+                            >
+                              <IconButton className="info-icon">
+                                <InfoIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
+                        }
+                        className={"form-control"}
+                      />
+                      <FormControlLabel
+                        value="model2"
+                        control={<Radio />}
+                        label={
+                          <div className="radio-label">
+                            Variable Model{" "}
+                            <Tooltip
+                              title="Unlike the standard training algorithm, this model generates
+                             a unique plan every week, tailored to the individual's progress and needs.
+                              By adapting the plan to their changing abilities, the model ensures that
+                               the intensity of the workouts continues to challenge the individual and promote growth"
+                            >
+                              <IconButton className="info-icon">
+                                <InfoIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
+                        }
+                        className={"form-control"}
+                      />
+                      <FormControlLabel
+                        value="model3"
+                        control={<Radio />}
+                        label={
+                          <div className="radio-label">
+                            Goal Oriented{" "}
+                            <Tooltip
+                              title="Tailored towards a specific goal, such as a 2000m test,
+                            this model generates a plan that focuses on the relevant skills and techniques
+                             needed to achieve that goal. By emphasizing these areas of development, the plan
+                             provides a clear path towards success, while also incorporating progressive challenges
+                              to enhance overall fitness and performance."
+                            >
+                              <IconButton className="info-icon">
+                                <InfoIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
+                        }
+                        className={"form-control"}
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </div>
               </div>
             </div>
@@ -104,21 +180,30 @@ function NewSchedule() {
               <div className="select-container">
                 <div className="select-field">
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Sport</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={age}
-                      label="Age"
-                      onChange={handleChange}
+                      label="Sport"
+                      onChange={handleSportChange}
                     >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      <MenuItem value={"Rowing"}>Rowing</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
               </div>
+              <div className="number-container">
+                <div className="number-field-container">
+                  <TextField
+                    id="number-field"
+                    type="number"
+                    label="Number of Hours"
+                    placeholder={"Enter a number"}
+                  />
+                </div>
+              </div>
+              <div className={"select-container"}>{renderTextField()}</div>
             </div>
             <button className={"content-button"}>Get Workout Plan</button>
           </form>

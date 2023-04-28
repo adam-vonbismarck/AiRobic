@@ -1,0 +1,64 @@
+/* Styles for the form */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 16px;
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row.datepickers {
+    justify-content: space-between;
+}
+
+.form-row.radios {
+    align-items: center;
+    margin-top: 16px;
+}
+
+.form-row.dropdown {
+    margin-top: 16px;
+    /*justify-content: space-between;*/
+    align-items: center;
+}
+
+/* Styles for the radio buttons */
+.form-control {
+    margin-right: 16px;
+}
+
+/* Styles for the tooltip icon */
+.info-icon {
+    margin-left: 8px;
+}
+
+/* Styles for the select dropdown */
+.select-container {
+    min-width: 120px;
+}
+
+/* Styles for the labels */
+label.MuiInputLabel-root {
+    color: #f38418;
+}
+
+.Mui-focused.MuiInputLabel-root {
+    color: #ebe9e9;
+}
+
+/* Styles for the select menu items */
+.MuiMenuItem-root {
+    color: #000000;
+}
+
+.Mui-selected {
+    background-color: #e0e0e0;
+}

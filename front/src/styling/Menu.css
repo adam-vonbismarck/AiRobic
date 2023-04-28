@@ -1,0 +1,98 @@
+.menu {
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+    background-color: rgba(49, 57, 60, 0.75);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    left: 0;
+    overflow-y: auto;
+    padding: 2.5%;
+    position: fixed;
+    top: 0;
+    width: 25%;
+    text-align: right;
+}
+
+.menu-items {
+    align-items: flex-end; /* Updated */
+    display: flex;
+    flex-direction: column;
+    font-style: inherit;
+    justify-content: flex-end;
+    margin-bottom: auto; /* Updated */
+    margin-top: 20%; /* Added */
+    width: 100%;
+    text-align: right;
+}
+
+.menu-links {
+    align-items: flex-end; /* Updated */
+    display: flex;
+    flex-direction: column;
+    font-style: inherit;
+    justify-content: space-between;
+    margin-bottom: auto; /* Updated */
+    /*margin-top: 20%; !* Added *!*/
+    width: 100%;
+    text-align: right;
+    margin-left: auto;
+}
+
+.menu-button {
+    /* ... existing button styles ... */
+    overflow: hidden;
+    position: relative;
+    text-align: right;
+}
+
+.menu-button:hover {
+    color: #f38418;
+}
+
+.name {
+    align-items: center; /* align the icon and text vertically */
+    margin-bottom: 10%; /* add some space between this and the next menu item */
+    text-align: right;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.name img {
+    height: 24px; /* set a specific height for the icon */
+    margin-right: 10px; /* add some space between the icon and text */
+}
+
+.name span {
+    color: #f38418;
+    font-family: 'Muli-Bold';
+    font-size: 24pt;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-left: auto; /* Added */
+    text-align: right; /* Added */
+}
+
+.social-icons {
+    /*align-items: flex-end; !* Added *!*/
+    display: flex;
+    justify-content: space-between; /* Updated */
+    margin: 0 0.25%; /* Added */
+    transition: all 0.3s ease;
+    width: 90%; /* Updated */
+}
+
+.social-icons img {
+    flex: auto; /* Updated */
+    height: 40px;
+    margin: auto 10%; /* Added */
+    max-width: 80px; /* Added */
+    transition: all 0.3s ease;
+}
+
+.social-icons img:hover {
+    transform: translateY(-8%);
+
+}

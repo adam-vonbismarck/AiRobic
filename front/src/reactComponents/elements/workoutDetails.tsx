@@ -5,7 +5,7 @@ import { Workout } from "./types";
 import { Slider } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import moment from "moment";
-
+import "../../styling/WorkoutDetails.css";
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
@@ -129,11 +129,11 @@ export const renderWorkoutDetails = ({
                   name: "distance",
                 },
               }}
-              sx={{
-                "& ::placeholder": {
-                  color: "green",
-                },
-              }}
+              // sx={{
+              //   "& ::placeholder": {
+              //     color: "green",
+              //   },
+              // }}
               onChange={(event) => {
                 const distance = parseInt(event.target.value);
                 const updatedWorkout = { ...workout, distance };

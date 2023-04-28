@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styling/Menu.css";
 
 interface MenuProps {
   description: string;

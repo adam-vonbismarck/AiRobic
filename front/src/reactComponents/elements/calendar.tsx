@@ -5,6 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { renderWorkoutDetails } from "./workoutDetails";
 import { Workout } from "./types";
 import { useState } from "react";
+import "../../styling/Calendar.css";
 
 const WorkoutCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
