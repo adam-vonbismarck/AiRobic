@@ -129,6 +129,11 @@ export const renderWorkoutDetails = ({
                   name: "distance",
                 },
               }}
+              sx={{
+                "& ::placeholder": {
+                  color: "green",
+                },
+              }}
               onChange={(event) => {
                 const distance = parseInt(event.target.value);
                 const updatedWorkout = { ...workout, distance };
