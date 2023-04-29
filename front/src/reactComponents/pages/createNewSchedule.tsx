@@ -10,16 +10,11 @@ import {
   FormLabel,
   IconButton,
   InputLabel,
-  makeStyles,
   MenuItem,
   Radio,
   RadioGroup,
   Tooltip,
 } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InfoIcon from "@mui/icons-material/Info";
 import "../../styling/GenerateWorkout.css";
@@ -42,6 +37,31 @@ function NewSchedule() {
 
   const handleGoalChange = (event: SelectChangeEvent) => {
     setGoal(event.target.value as string);
+  };
+
+  const [hoursPerWeek, setHoursPerWeek] = useState("");
+  const [hoursPerWeekError, setHoursPerWeekError] = useState("");
+
+  const validateHoursPerWeek = (value: string | number) => {
+    if (value < 3.0) {
+      setHoursPerWeekError("Minimum 3 hours per week");
+    } else if (value > 30.0) {
+      setHoursPerWeekError("Maximum 30 hours per week");
+    } else {
+      setHoursPerWeekError("");
+    }
+  };
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [dateError, setDateError] = useState("");
+
+  const validateDate = (start: string, end: string) => {
+    if (start > end && start !== "" && end !== "") {
+      setDateError("Start date must be before end date");
+    } else {
+      setDateError("");
+    }
   };
 
   const renderTextField = () => {
@@ -99,28 +119,6 @@ function NewSchedule() {
         <div className={"content-wrapper"}>
           <h1>Create a New Workout Plan</h1>
           <form className="form-container">
-            <div className="form-row datepickers">
-              <div className="date-container">
-                <label htmlFor="start-date">Start Date</label>
-                <div className="datepicker-container">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DatePicker"]}>
-                      <DatePicker />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </div>
-              </div>
-              <div className="date-container">
-                <label htmlFor="basic-date">Basic Date Picker</label>
-                <div className="datepicker-container">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DatePicker"]}>
-                      <DatePicker />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </div>
-              </div>
-            </div>
             <div className="form-row radios">
               <div className="radio-group-container">
                 {/*<label>Options</label>*/}
@@ -252,6 +250,11 @@ function NewSchedule() {
                     type="number"
                     label="Hours/Week"
                     placeholder={"2.5"}
+                    value={hoursPerWeek}
+                    onChange={(event) => setHoursPerWeek(event.target.value)}
+                    onBlur={(event) => validateHoursPerWeek(event.target.value)}
+                    error={Boolean(hoursPerWeekError)}
+                    helperText={hoursPerWeekError}
                   />
                 </div>
               </div>
@@ -273,6 +276,41 @@ function NewSchedule() {
                 </div>
               </div>
               <div className={"select-container"}>{renderTextField()}</div>
+            </div>
+            <div className="form-row datepickers">
+              <div className="date-container">
+                <label htmlFor="start-date">Start Date</label>
+                <div className="datepicker-container">
+                  <TextField
+                    className="custom-textfield"
+                    id="start-date-field"
+                    type="date"
+                    value={startDate}
+                    onChange={(event) => {
+                      setStartDate(event.target.value);
+                      validateDate(event.target.value, endDate);
+                    }}
+                    error={Boolean(dateError)}
+                  />
+                </div>
+              </div>
+              <div className="date-container">
+                <label htmlFor="basic-date">End Date</label>
+                <div className="datepicker-container">
+                  <TextField
+                    className="custom-textfield"
+                    id="end-date-field"
+                    type="date"
+                    value={endDate}
+                    onChange={(event) => {
+                      setEndDate(event.target.value);
+                      validateDate(startDate, event.target.value);
+                    }}
+                    error={Boolean(dateError)}
+                    helperText={dateError}
+                  />
+                </div>
+              </div>
             </div>
             <div className="button-row">
               <button className={"content-button"}>Get Workout Plan</button>

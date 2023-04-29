@@ -18,7 +18,15 @@
 }
 
 .form-row.datepickers {
-    justify-content: space-between;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: auto;
+    height: 72px;
+    justify-content: center;
+    gap: 160px;
+    margin-bottom: 16px;
 }
 
 .form-row.radios {
@@ -27,13 +35,13 @@
 }
 
 .form-row.dropdown {
-    margin-top: 16px;
+    margin-top: 32px;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: auto;
-    height: auto;
+    height: 72px;
 }
 
 .button-row{
@@ -61,7 +69,20 @@
 .number-container {
     width: 160px;
 }
-/* Styles for the labels */
+
+.date-container {
+    min-width: 160px;
+}
+
+.datepicker-container {
+    width: 160px;
+}
+
+.custom-textfield{
+    width: 100%;
+}
+
+    /* Styles for the labels */
 /*label.MuiInputLabel-root {*/
 /*    color: #f38418;*/
 /*}*/
@@ -124,7 +145,11 @@
     color: rgba(235, 233, 233, 0.8) !important;
 }
 
-.select-field label.Mui-focused{
+.select-field icon{
+    color: yellow;
+}
+
+.select-field .MuiSvgIcon-root{
     color: #ebe9e9;
 }
 
@@ -176,4 +201,15 @@
 /* Add custom styles for the DatePicker component */
 .MuiDatePicker-root {
     width: 100%;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+label {
+    font-family: 'Muli', sans-serif;
+    color: rgb(235, 233, 233) !important;
 }
