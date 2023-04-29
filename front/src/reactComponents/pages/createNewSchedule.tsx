@@ -4,6 +4,7 @@ import LoggedInMenu from "../elements/loggedInMenu";
 import { Parallax } from "react-parallax";
 import TextField from "@mui/material/TextField";
 import {
+  CircularProgress,
   Fade,
   FormControl,
   FormControlLabel,
@@ -18,6 +19,7 @@ import {
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InfoIcon from "@mui/icons-material/Info";
 import "../../styling/GenerateWorkout.css";
+import { useNavigate } from "react-router-dom";
 
 function NewSchedule() {
   const [selectedOption, setSelectedOption] = useState("option1");
@@ -55,12 +57,64 @@ function NewSchedule() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [dateError, setDateError] = useState("");
+  const [submitIssue, setSubmitIssue] = useState(false);
 
   const validateDate = (start: string, end: string) => {
     if (start > end && start !== "" && end !== "") {
       setDateError("Start date must be before end date");
     } else {
       setDateError("");
+    }
+  };
+
+  const [submitError, setSubmitError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const generateWorkoutPlan = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+
+    if (dateError || hoursPerWeekError) {
+      setSubmitIssue(true);
+      setSubmitError("Please fix errors before submitting");
+      return;
+    }
+
+    if (
+      hoursPerWeek === "" ||
+      (selectedOption === "model3" && goal === "") ||
+      startDate === "" ||
+      endDate === ""
+    ) {
+      setSubmitError("Please fill out all required fields");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      let apiUrl = `http://localhost:3535/create-plan?model=${selectedOption}&hoursPerWeek=${hoursPerWeek}&sport=${age}&startDate=${startDate}&endDate=${endDate}`;
+
+      if (selectedOption === "model3") {
+        apiUrl += `&goal=${goal}`;
+      }
+
+      const response = await fetch(apiUrl);
+
+      if (response.ok) {
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/plan");
+        }, 5000);
+      } else {
+        setLoading(false);
+        setSubmitError("Error creating workout plan");
+      }
+    } catch (error) {
+      setLoading(false);
+      setSubmitError("Error creating workout plan");
     }
   };
 
@@ -313,8 +367,21 @@ function NewSchedule() {
               </div>
             </div>
             <div className="button-row">
-              <button className={"content-button"}>Get Workout Plan</button>
+              <button
+                className={"content-button"}
+                onClick={(event) => generateWorkoutPlan(event)}
+              >
+                Get Workout Plan
+              </button>
             </div>
+            {loading && submitIssue && (
+              <div className="error-row">
+                <div className="form-error-message">{submitError}</div>
+                <div className="loading-container">
+                  <CircularProgress />
+                </div>
+              </div>
+            )}
           </form>
         </div>
       </div>
