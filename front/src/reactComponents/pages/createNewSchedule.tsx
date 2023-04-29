@@ -4,8 +4,8 @@ import LoggedInMenu from "../elements/loggedInMenu";
 import { Parallax } from "react-parallax";
 import TextField from "@mui/material/TextField";
 import {
+  Alert,
   CircularProgress,
-  Fade,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -20,14 +20,23 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InfoIcon from "@mui/icons-material/Info";
 import "../../styling/GenerateWorkout.css";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 function NewSchedule() {
   const [selectedOption, setSelectedOption] = useState("option1");
+  const [enableGoal, setEnableGoaL] = useState(true);
+
+  const now = dayjs();
 
   const handleOptionChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
     setSelectedOption(event.target.value);
+    if (event.target.value == "model3") {
+      setEnableGoaL(false);
+    } else {
+      setEnableGoaL(true);
+    }
   };
 
   const [age, setAge] = React.useState("");
@@ -56,14 +65,23 @@ function NewSchedule() {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [dateError, setDateError] = useState("");
+  const [StartDateAfterEndError, setStartDateAfterEndError] = useState("");
+  const [dateBeforeTodayError, setDateBeforeTodayError] = useState("");
   const [submitIssue, setSubmitIssue] = useState(false);
 
   const validateDate = (start: string, end: string) => {
     if (start > end && start !== "" && end !== "") {
-      setDateError("Start date must be before end date");
+      setStartDateAfterEndError("Start date must be before end date");
     } else {
-      setDateError("");
+      setStartDateAfterEndError("");
+    }
+  };
+
+  const checkBeforeToday = (dateToCheck: string) => {
+    if (now.isAfter(dateToCheck)) {
+      setDateBeforeTodayError("Start cannot be before today");
+    } else {
+      setDateBeforeTodayError("");
     }
   };
 
@@ -71,12 +89,29 @@ function NewSchedule() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const [hoursPerWeekEmpty, setHoursPerWeekEmpty] = useState(false);
+  const [ageEmpty, setAgeEmpty] = useState(false);
+  const [goalEmpty, setGoalEmpty] = useState(false);
+  const [startDateEmpty, setStartDateEmpty] = useState(false);
+  const [endDateEmpty, setEndDateEmpty] = useState(false);
+
   const generateWorkoutPlan = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
 
-    if (dateError || hoursPerWeekError) {
+    setHoursPerWeekEmpty(hoursPerWeek === "");
+    setAgeEmpty(age === "");
+    setStartDateEmpty(startDate === "");
+    setEndDateEmpty(endDate === "");
+
+    if (selectedOption === "model3") {
+      setGoalEmpty(goal === "");
+    } else {
+      setGoalEmpty(false);
+    }
+
+    if (StartDateAfterEndError || hoursPerWeekError) {
       setSubmitIssue(true);
       setSubmitError("Please fix errors before submitting");
       return;
@@ -88,6 +123,7 @@ function NewSchedule() {
       startDate === "" ||
       endDate === ""
     ) {
+      setSubmitIssue(true);
       setSubmitError("Please fill out all required fields");
       return;
     }
@@ -118,48 +154,21 @@ function NewSchedule() {
     }
   };
 
-  const renderTextField = () => {
-    if (selectedOption === "model3") {
+  const renderButton = () => {
+    if (loading) {
       return (
-        <Fade in={true} timeout={500} unmountOnExit>
-          <div className="select-field">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Goal</InputLabel>
-              <Select
-                className="custom-select"
-                labelId="goal-select-dropdown"
-                id="goal-select"
-                value={goal}
-                label="Goal"
-                onChange={handleGoalChange}
-              >
-                <MenuItem value={2000}>2000m Test</MenuItem>
-                <MenuItem value={5000}>5000m Test</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </Fade>
+        <div className="loading-container">
+          <CircularProgress sx={{ color: "#f38418" }} />
+        </div>
       );
     } else {
       return (
-        <Fade in={false} timeout={500} unmountOnExit>
-          <div className="select-field">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Goal</InputLabel>
-              <Select
-                className="custom-select"
-                labelId="goal-select-dropdown"
-                id="goal-select"
-                value={goal}
-                label="Goal"
-                onChange={handleGoalChange}
-              >
-                <MenuItem value={2000}>2000m Test</MenuItem>
-                <MenuItem value={5000}>5000m Test</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-        </Fade>
+        <button
+          className={"content-button"}
+          onClick={(event) => generateWorkoutPlan(event)}
+        >
+          Get Workout Plan
+        </button>
       );
     }
   };
@@ -175,13 +184,12 @@ function NewSchedule() {
           <form className="form-container">
             <div className="form-row radios">
               <div className="radio-group-container">
-                {/*<label>Options</label>*/}
                 <div className="radio-group">
                   <FormControl>
                     <FormLabel
                       style={{
                         fontFamily: "Muli",
-                        fontSize: "12pt",
+                        fontSize: "13pt",
                         color: "#ebe9e9",
                       }}
                       id="demo-row-radio-buttons-group-label"
@@ -307,7 +315,7 @@ function NewSchedule() {
                     value={hoursPerWeek}
                     onChange={(event) => setHoursPerWeek(event.target.value)}
                     onBlur={(event) => validateHoursPerWeek(event.target.value)}
-                    error={Boolean(hoursPerWeekError)}
+                    error={Boolean(hoursPerWeekError) || hoursPerWeekEmpty}
                     helperText={hoursPerWeekError}
                   />
                 </div>
@@ -323,13 +331,33 @@ function NewSchedule() {
                       value={age}
                       label="Sport"
                       onChange={handleSportChange}
+                      error={ageEmpty}
                     >
                       <MenuItem value={"Rowing"}>Rowing</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
               </div>
-              <div className={"select-container"}>{renderTextField()}</div>
+              <div className={"select-container"}>
+                <div className="select-field">
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Goal</InputLabel>
+                    <Select
+                      className="custom-select"
+                      labelId="goal-select-dropdown"
+                      id="goal-select"
+                      value={goal}
+                      label="Goal"
+                      onChange={handleGoalChange}
+                      disabled={enableGoal}
+                      error={goalEmpty}
+                    >
+                      <MenuItem value={2000}>2000m Test</MenuItem>
+                      <MenuItem value={5000}>5000m Test</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
             </div>
             <div className="form-row datepickers">
               <div className="date-container">
@@ -343,8 +371,15 @@ function NewSchedule() {
                     onChange={(event) => {
                       setStartDate(event.target.value);
                       validateDate(event.target.value, endDate);
+                      checkBeforeToday(event.target.value);
                     }}
-                    error={Boolean(dateError)}
+                    error={
+                      Boolean(StartDateAfterEndError) ||
+                      Boolean(dateBeforeTodayError) ||
+                      startDateEmpty
+                    }
+                    helperText={dateBeforeTodayError}
+                    style={{ width: "100%" }}
                   />
                 </div>
               </div>
@@ -360,25 +395,24 @@ function NewSchedule() {
                       setEndDate(event.target.value);
                       validateDate(startDate, event.target.value);
                     }}
-                    error={Boolean(dateError)}
-                    helperText={dateError}
+                    error={Boolean(StartDateAfterEndError) || endDateEmpty}
+                    helperText={StartDateAfterEndError}
+                    style={{ width: "100%" }}
                   />
                 </div>
               </div>
             </div>
-            <div className="button-row">
-              <button
-                className={"content-button"}
-                onClick={(event) => generateWorkoutPlan(event)}
-              >
-                Get Workout Plan
-              </button>
-            </div>
-            {loading && submitIssue && (
+            <div className="button-row">{renderButton()}</div>
+            {submitIssue && (
               <div className="error-row">
-                <div className="form-error-message">{submitError}</div>
-                <div className="loading-container">
-                  <CircularProgress />
+                <div className="form-error-message">
+                  <Alert
+                    severity="error"
+                    variant="filled"
+                    sx={{ fontFamily: "Muli" }}
+                  >
+                    {submitError}
+                  </Alert>
                 </div>
               </div>
             )}
