@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.database.NonSusDatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class DeleteUser implements Route {
       output.put("message", "ERROR: Invalid input.");
     }
     else{
-      new DatabaseCommands().delete("users/" + username);
+      new NonSusDatabaseCommands().delete("users/" + username);
       output.put("result", "success");
       output.put("message", "Successfully deleted " + username);
     }
