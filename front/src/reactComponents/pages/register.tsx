@@ -29,13 +29,12 @@ function Register() {
                 if (!isLoginResponse(loginToken)) {
                   console.log("Login Failed")
                 } else {
-                  console.log(loginToken.sub);
+                  fetch("")
+
                   localStorage.setItem("userID", loginToken.sub);
-                  localStorage.setItem("givenName", loginToken.given_name); //---> TODO remove upon logout: localStorage.clear()
+                  console.log(loginToken)
+                  localStorage.setItem("givenName", loginToken.given_name);//Can send to back end otherwise and fetch from there
                   localStorage.setItem("loggedIn","true")
-                  console.log(loginToken.family_name);
-                  console.log(loginToken.given_name); // ---> TODO
-                  //TODO switch to logged in state
                   navigate('/', { replace: true });
 
                 console.log(localStorage);
