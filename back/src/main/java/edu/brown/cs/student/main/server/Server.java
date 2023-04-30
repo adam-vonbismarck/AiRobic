@@ -5,7 +5,7 @@ import edu.brown.cs.student.main.handlers.AddNewUser;
 import edu.brown.cs.student.main.handlers.CheckUser;
 import edu.brown.cs.student.main.handlers.DeleteUser;
 import edu.brown.cs.student.main.handlers.GetUserWorkouts;
-import edu.brown.cs.student.main.handlers.UpdateUser;
+import edu.brown.cs.student.main.handlers.CreatePlan;
 import java.io.IOException;
 import spark.Spark;
 
@@ -33,8 +33,8 @@ public class Server {
     // localhost:3235/adduser?username=alexfake
     Spark.get("deleteuser", new DeleteUser());
     // localhost:3235/deleteuser?username=alexfake
-    Spark.get("updateuser", new UpdateUser());
-    // localhost:3235/updateuser?username=alexfake&sport=rowing&startdate=27Apr2023&enddate=29Apr2023&weeklytime=10&model=linear&goal=2k
+    Spark.get("create-plan", new CreatePlan());
+    // localhost:3235/create-plan?username=alexfake&sport=rowing&startDate=27Apr2023&endDate=29Apr2023&hoursPerWeek=10&model=linear&goal=2k
     Spark.get("getuserworkouts", new GetUserWorkouts());
     // localhost:3235/getuserworkouts?username=alexfake
     Spark.get("checkuser", new CheckUser());

@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.handlers;
 import edu.brown.cs.student.main.database.DatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.util.HashMap;
+import java.util.Objects;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -18,10 +19,18 @@ public class AddNewUser implements Route {
       output.put("message", "ERROR: Invalid input.");
     }
     else{
-      String info = "{\"" + username + "\":{\"schedule\":\"\",\"valid\":\"true\"}}";
-      new DatabaseCommands().update(info, "users");
-      output.put("result", "success");
-      output.put("message", "Successfully added " + username);
+      String where = "users/" + username + "/valid";
+      String valid = new DatabaseCommands().get(where);
+      if (Objects.equals(valid, "\"true\"")) {
+        output.put("result", "error_bad_request");
+        output.put("message", "ERROR: User already exists.");
+      }
+      else{
+        String info = "{\"" + username + "\":{\"schedule\":\"\",\"valid\":\"true\"}}";
+        new DatabaseCommands().update(info, "users");
+        output.put("result", "success");
+        output.put("message", "Successfully added " + username);
+      }
     }
     return Serializer.serialize(output);
   }
