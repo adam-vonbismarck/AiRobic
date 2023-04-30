@@ -1,3 +1,8 @@
+/**
+
+ Root component for the application's routing.
+ @return {JSX.Element} The JSX element representing the root component.
+ */
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import About from "./pages/about";
@@ -10,7 +15,7 @@ import CreateNewSchedule from "./pages/createNewSchedule";
 
 function App() {
   return (
-    <Router>
+    <Router aria-label="Application routing">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

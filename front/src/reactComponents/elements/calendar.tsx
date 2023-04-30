@@ -60,6 +60,10 @@ const WorkoutCalendar: React.FC = () => {
     },
   ]);
 
+  /**
+   * Handles the selection of a date on the calendar.
+   * @param selectInfo The information about the selected date.
+   */
   const handleDateSelect = (selectInfo: {
     view: { calendar: any };
     startStr: React.SetStateAction<string | null>;
@@ -72,13 +76,20 @@ const WorkoutCalendar: React.FC = () => {
     calendarApi.unselect();
   };
 
+  /**
+   * Closes the fullscreen workout details view.
+   */
   const closeFullscreen = () => {
     setSelectedDate(null);
   };
 
   if (!selectedDate) {
     return (
-      <div className="workout-calendar">
+      <div
+        className="workout-calendar"
+        role="application"
+        aria-label="Calendar of workout events"
+      >
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
@@ -94,6 +105,9 @@ const WorkoutCalendar: React.FC = () => {
           firstDay={1}
           events={workouts}
           select={handleDateSelect}
+          aria-label="Interactive calendar of workout events"
+          aria-roledescription="Calendar"
+          aria-multiselectable={false}
         />
       </div>
     );
