@@ -197,7 +197,7 @@ function NewSchedule() {
   const renderButton = () => {
     if (loading) {
       return (
-        <div className="loading-container">
+        <div className="loading-container" role="status" aria-label="Loading">
           <CircularProgress sx={{ color: "#f38418" }} />
         </div>
       );
@@ -206,6 +206,8 @@ function NewSchedule() {
         <button
           className={"content-button"}
           onClick={(event) => generateWorkoutPlan(event)}
+          role="button"
+          aria-label="Get Workout Plan"
         >
           Get Workout Plan
         </button>
@@ -227,7 +229,11 @@ function NewSchedule() {
           <h1>Create a New Workout Plan</h1>
           <form className="form-container" aria-label="Workout plan form">
             <div className="form-row radios">
-              <div className="radio-group-container">
+              <div
+                className="radio-group-container"
+                role="radiogroup"
+                aria-label="Radio group container for choosing the model for the workout plan"
+              >
                 <div className="radio-group">
                   <FormControl>
                     <FormLabel
@@ -268,12 +274,15 @@ function NewSchedule() {
                             Standard Model{" "}
                             <Tooltip
                               title="This training algorithm sets the standard by creating a
-                           comprehensive week-long plan, serving as the foundation for future weeks.
-                           Subsequent plans gradually intensify based on the initial week, ensuring
-                           progressive improvement in intensity."
+                       comprehensive week-long plan, serving as the foundation for future weeks.
+                       Subsequent plans gradually intensify based on the initial week, ensuring
+                       progressive improvement in intensity."
                               aria-label="Standard Model: This training algorithm sets the standard by creating a comprehensive week-long plan, serving as the foundation for future weeks. Subsequent plans gradually intensify based on the initial week, ensuring progressive improvement in intensity."
                             >
-                              <IconButton className="info-icon">
+                              <IconButton
+                                className="info-icon"
+                                aria-label="More information about the Standard Model"
+                              >
                                 <InfoIcon sx={{ color: "#ebe9e9" }} />
                               </IconButton>
                             </Tooltip>
@@ -300,9 +309,9 @@ function NewSchedule() {
                             Variable Model{" "}
                             <Tooltip
                               title="Unlike the standard training algorithm, this model generates
-                          a unique plan every week, tailored to the individual's progress and needs.
-                           By adapting the plan to their changing abilities, the model ensures that
-                            the intensity of the workouts continues to challenge the individual and promote growth"
+                      a unique plan every week, tailored to the individual's progress and needs.
+                       By adapting the plan to their changing abilities, the model ensures that
+                        the intensity of the workouts continues to challenge the individual and promote growth"
                               aria-label="Variable Model: Unlike the standard training algorithm, this model generates a unique plan every week, tailored to the individual's progress and needs. By adapting the plan to their changing abilities, the model ensures that the intensity of the workouts continues to challenge the individual and promote growth"
                             >
                               <IconButton className="info-icon">
@@ -317,6 +326,8 @@ function NewSchedule() {
                         value="model3"
                         control={
                           <Radio
+                            role="radio"
+                            aria-checked={true}
                             sx={{
                               "&, &.Mui-checked": {
                                 color: "#f38418",
@@ -332,18 +343,27 @@ function NewSchedule() {
                             Goal Oriented{" "}
                             <Tooltip
                               title="Tailored towards a specific goal, such as a 2000m test,
-                            this model generates a plan that focuses on the relevant skills and techniques
-                             needed to achieve that goal. By emphasizing these areas of development, the plan
-                             provides a clear path towards success, while also incorporating progressive challenges
-                              to enhance overall fitness and performance."
+            this model generates a plan that focuses on the relevant skills and techniques
+            needed to achieve that goal. By emphasizing these areas of development, the plan
+            provides a clear path towards success, while also incorporating progressive challenges
+            to enhance overall fitness and performance."
+                              role="tooltip"
+                              aria-describedby="tooltip-info"
                             >
-                              <IconButton className="info-icon">
+                              <IconButton
+                                className="info-icon"
+                                role="button"
+                                aria-label="Information"
+                                aria-describedby="tooltip-info"
+                              >
                                 <InfoIcon sx={{ color: "#ebe9e9" }} />
                               </IconButton>
                             </Tooltip>
                           </div>
                         }
                         className={"form-control"}
+                        role="presentation"
+                        aria-hidden={true}
                       />
                     </RadioGroup>
                   </FormControl>
@@ -354,6 +374,8 @@ function NewSchedule() {
               <div
                 className="number-container"
                 aria-label="Hours per week input field"
+                role="group"
+                aria-describedby="hours-error"
               >
                 <div className="number-field-container">
                   <TextField
@@ -368,12 +390,16 @@ function NewSchedule() {
                     error={Boolean(hoursPerWeekError) || hoursPerWeekEmpty}
                     helperText={hoursPerWeekError}
                     aria-label="Input field to set the number of hours per week"
+                    aria-invalid={Boolean(hoursPerWeekError)}
+                    aria-describedby="hours-error"
                   />
                 </div>
               </div>
               <div
                 className="select-container"
                 aria-label="Sport dropdown field"
+                role="group"
+                aria-describedby="sport-error"
               >
                 <div className="select-field">
                   <FormControl fullWidth>
@@ -387,6 +413,8 @@ function NewSchedule() {
                       onChange={handleSportChange}
                       error={ageEmpty}
                       aria-label="Select the sport for the workout plan"
+                      aria-invalid={ageEmpty}
+                      aria-describedby="sport-error"
                     >
                       <MenuItem value={"Rowing"}>Rowing</MenuItem>
                     </Select>
@@ -396,6 +424,8 @@ function NewSchedule() {
               <div
                 className={"select-container"}
                 aria-label="Goal dropdown field"
+                role="group"
+                aria-describedby="goal-error"
               >
                 <div className="select-field">
                   <FormControl fullWidth>
@@ -410,6 +440,8 @@ function NewSchedule() {
                       disabled={enableGoal}
                       error={goalEmpty}
                       aria-label="Select the goal for the workout plan"
+                      aria-invalid={goalEmpty}
+                      aria-describedby="goal-error"
                     >
                       <MenuItem value={"2000m"}>2000m Test</MenuItem>
                       <MenuItem value={"6000m"}>6000m Test</MenuItem>
@@ -419,10 +451,12 @@ function NewSchedule() {
                 </div>
               </div>
             </div>
-            <div className="form-row datepickers">
+            <div className="form-row datepickers" role="group">
               <div
                 className="date-container"
                 aria-label="Start date input field"
+                role="group"
+                aria-describedby="start-date-error"
               >
                 <label htmlFor="start-date">Start Date</label>
                 <div className="datepicker-container">
@@ -444,10 +478,21 @@ function NewSchedule() {
                     helperText={dateBeforeTodayError}
                     style={{ width: "100%" }}
                     aria-label="Input field to set the start date for the workout plan"
+                    aria-describedby="start-date-error"
+                    aria-invalid={
+                      Boolean(StartDateAfterEndError) ||
+                      Boolean(dateBeforeTodayError) ||
+                      startDateEmpty
+                    }
                   />
                 </div>
               </div>
-              <div className="date-container" aria-label="End date input field">
+              <div
+                className="date-container"
+                aria-label="End date input field"
+                role="group"
+                aria-describedby="end-date-error"
+              >
                 <label htmlFor="basic-date">End Date</label>
                 <div className="datepicker-container">
                   <TextField
@@ -463,7 +508,16 @@ function NewSchedule() {
                     helperText={StartDateAfterEndError}
                     style={{ width: "100%" }}
                     aria-label="Input field to set the end date for the workout plan"
+                    aria-invalid={
+                      Boolean(StartDateAfterEndError) || endDateEmpty
+                    }
+                    aria-describedby="end-date-error"
                   />
+                  {Boolean(StartDateAfterEndError) || endDateEmpty ? (
+                    <div id="end-date-error" className="error-message">
+                      {StartDateAfterEndError || "End date is required"}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
