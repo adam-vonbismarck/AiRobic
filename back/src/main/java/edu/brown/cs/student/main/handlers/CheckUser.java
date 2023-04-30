@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.database.NonSusDatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.util.HashMap;
 import java.util.Objects;
@@ -20,7 +21,7 @@ public class CheckUser implements Route {
     }
     else{
       String where = "users/" + username + "/valid";
-      String valid = new DatabaseCommands().get(where);
+      String valid = new NonSusDatabaseCommands().get(where);
       if (Objects.equals(valid, "\"true\"")) {
         output.put("result", "success");
         output.put("message", "True");

@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.database.NonSusDatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.util.HashMap;
 import java.util.Objects;
@@ -20,14 +21,14 @@ public class AddNewUser implements Route {
     }
     else{
       String where = "users/" + username + "/valid";
-      String valid = new DatabaseCommands().get(where);
+      String valid = new NonSusDatabaseCommands().get(where);
       if (Objects.equals(valid, "\"true\"")) {
         output.put("result", "error_bad_request");
         output.put("message", "ERROR: User already exists.");
       }
       else{
         String info = "{\"" + username + "\":{\"schedule\":\"\",\"valid\":\"true\"}}";
-        new DatabaseCommands().update(info, "users");
+        new NonSusDatabaseCommands().update(info, "users");
         output.put("result", "success");
         output.put("message", "Successfully added " + username);
       }

@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.database.NonSusDatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.util.HashMap;
 import spark.Request;
@@ -19,7 +20,7 @@ public class GetUserWorkouts implements Route {
     }
     else{
       String where = "users/" + username + "/schedule";
-      String workoutJSON = new DatabaseCommands().get(where);
+      String workoutJSON = new NonSusDatabaseCommands().get(where);
       System.out.println(workoutJSON);
       output.put("result", "success");
       output.put("message", workoutJSON.replace("\"", ""));
