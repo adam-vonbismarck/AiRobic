@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styling/Menu.css";
 
 interface MenuProps {
   description: string;
@@ -23,18 +24,16 @@ function LoggedInMenu({ description }: MenuProps) {
           <img src="/assets/icons/person.svg" alt="Person Icon" />
           <span>{localStorage.getItem("givenName")}</span>
         </div>
-
-        <Link to="/register" className={"menu-links"}>
+        <Link to="/plan" className={"menu-links"}>
           <button className="menu-button">WORKOUT PLAN</button>
         </Link>
-        <Link to="/" className={"menu-links"}>
+        <Link to="/create-plan" className={"menu-links"}>
           <button className="menu-button">CREATE NEW SCHEDULE</button>
         </Link>
         <Link to="/" className="menu-links">
-          <button className="menu-button"
-          onClick={logOut}
-          
-          >SIGN OUT</button>
+          <button className="menu-button" onClick={logOut}>
+            SIGN OUT
+          </button>
         </Link>
       </div>
       <h2 className="description">{description}</h2>

@@ -7,6 +7,7 @@ import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -41,10 +42,11 @@ public class MarkovModel {
   private void checkStateDistributions() throws InvalidDistributionException {
     for (HiddenState state : this.states) {
       if (!this.states.equals(state.potentialStates())) {
-        throw new InvalidDistributionException("Hidden state " + state + "had a state distribution that"
-            + "contained foreign states or did not contain all states of this instance of the model: " + this,
+        throw new InvalidDistributionException("Hidden state " + state + " had a state distribution that "
+            + "contained foreign states or did not contain all states relevant to the start distribution.",
             this.startDistribution);
       }
+      state.checkDistributions();
     }
   }
 
@@ -88,4 +90,29 @@ public class MarkovModel {
     return sequence;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+    MarkovModel that = (MarkovModel) o;
+    return Objects.equals(this.states, that.states) && Objects.equals(
+        this.startDistribution, that.startDistribution);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.states, this.startDistribution);
+  }
+
+  @Override
+  public String toString() {
+    return "MarkovModel{" +
+        "states=" + states +
+        ", startDistribution=" + startDistribution +
+        '}';
+  }
 }

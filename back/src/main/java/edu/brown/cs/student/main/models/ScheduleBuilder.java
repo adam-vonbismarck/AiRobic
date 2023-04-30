@@ -1,6 +1,9 @@
 package edu.brown.cs.student.main.models;
 
+import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.formattypes.Day;
+import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
 import java.util.ArrayList;
@@ -37,23 +40,29 @@ public class ScheduleBuilder {
   };
 
   public Schedule minutes(int minutes, int numWeeks, double highPercent, String startDay, String endDay,
-      String highIntensityLabel, String lowIntensityLabel) {
+      String highIntensityLabel, String lowIntensityLabel) throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(String.class, new HashMap<>() {{
+      this.put("High intensity", highPercent);
+      this.put("Low intensity", 1 - highPercent);
+    }});
     long highIntensity = Math.round(Math.max(highPercent*minutes, 60));
     long lowIntensity = minutes - highIntensity;
-    long numHighIntensity = Math.max(Math.floorDiv(highIntensity, 60), 4);
-    long lowIntensityWorkoutLength = Math.min(60, lowIntensity/(10 - numHighIntensity));
+    long numHighIntensity = Math.min(Math.floorDiv(highIntensity, 60), 4);
+    long lowIntensityWorkoutLength = Math.max(60, lowIntensity/(10 - numHighIntensity));
     long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
-    return this.workouts(numHighIntensity, numLowIntensity, numWeeks, startDay, endDay, highIntensityLabel, lowIntensityLabel);
+    return this.workouts(numHighIntensity, numLowIntensity, numWeeks, startDay, endDay,
+        highIntensityLabel, lowIntensityLabel, lowIntensityWorkoutLength);
   }
 
   public Schedule workouts(long highIntensity, long lowIntensity, int numWeeks, String startDay, String endDay,
-      String highIntensityLabel, String lowIntensityLabel) {
+      String highIntensityLabel, String lowIntensityLabel, long lowLength) {
     long workouts = highIntensity + lowIntensity;
     ArrayList<Week> weeks = new ArrayList<>();
     ArrayList<Day> exampleDays = new ArrayList<>();
 
     this.distributeWorkouts(exampleDays, workouts);
-    this.distributeIntensities(exampleDays, workouts, highIntensity, highIntensityLabel, lowIntensityLabel);
+    this.distributeIntensities(exampleDays, workouts, highIntensity, highIntensityLabel,
+        lowIntensityLabel, lowLength);
 
     Week exampleWeek = new Week("week", exampleDays);
 
@@ -72,7 +81,7 @@ public class ScheduleBuilder {
   private void distributeWorkouts(ArrayList<Day> days, long workouts) {
     for (int j = 0; j < NUM_DAYS; j++) {
       days.add(new Day("day", new ArrayList<>(), 0, intsToDays.get(j),
-          List.of(), List.of()));
+          new ArrayList<>(), new ArrayList<>()));
     }
 
     if (workouts <= 0) {
@@ -90,46 +99,59 @@ public class ScheduleBuilder {
       return;
     }
 
-    for (int w = 0; w < NUM_WORKOUT_DAYS; w += Math.floorDiv(NUM_WORKOUT_DAYS, workouts)) {
+    int w = 0;
+    long remainingWorkouts = workouts;
+    float cumulativeCounter = 0;
+    while (w < NUM_WORKOUT_DAYS) {
       days.get(w).incrementNumWorkouts();
       workouts--;
+      cumulativeCounter += ((float) NUM_WORKOUT_DAYS/remainingWorkouts);
+      w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
     assert(workouts == 0);
   }
 
   private void distributeIntensities(List<Day> days, long workouts, long highIntensity,
-      String highIntensityLabel, String lowIntensityLabel) {
+      String highIntensityLabel, String lowIntensityLabel, long lowLength) {
 
     if (highIntensity <= 0) {
-      this.fillInLow(days, lowIntensityLabel);
+      this.fillInLow(days, lowIntensityLabel, lowLength);
       return;
     }
 
     while (highIntensity > NUM_WORKOUT_DAYS - 1) {
       for (int k = 0; k < NUM_WORKOUT_DAYS; k++) {
-        days.get(k).addFirstIntensity(highIntensityLabel);
+        days.get(k).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
         highIntensity--;
       }
     }
 
     if (highIntensity <= 0) {
-      this.fillInLow(days, lowIntensityLabel);
+      this.fillInLow(days, lowIntensityLabel, lowLength);
       return;
     }
 
-    for (int w = 0; w < NUM_WORKOUT_DAYS; w += Math.floorDiv(NUM_WORKOUT_DAYS, highIntensity)) {
-      days.get(w).addFirstIntensity(highIntensityLabel);
+    int w = 0;
+    long remainingHighInt = highIntensity;
+    float cumulativeCounter = 0;
+    while (w < NUM_WORKOUT_DAYS) {
+      days.get(w).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
       highIntensity--;
+      cumulativeCounter += ((float) NUM_WORKOUT_DAYS/remainingHighInt);
+      w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
-    this.fillInLow(days, lowIntensityLabel);
+    this.fillInLow(days, lowIntensityLabel, lowLength);
   }
 
-  private void fillInLow(List<Day> days, String lowIntensityLabel) {
+  private void fillInLow(List<Day> days, String lowIntensityLabel, long lowLength) {
     for (Day day : days) {
-      for (int i = 0; i < day.getNumberOfWorkouts() - day.getIntensityLength(); i++) {
-        day.addFirstIntensity(lowIntensityLabel);
+      if (day.getNumberOfWorkouts() <= day.getIntensityLength()) {
+        continue;
+      }
+      for (int i = 0; i <= day.getNumberOfWorkouts() - day.getIntensityLength(); i++) {
+        day.addFirstIntensity(new WorkoutDescription(lowIntensityLabel, Math.toIntExact(lowLength)));
       }
     }
   }

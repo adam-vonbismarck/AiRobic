@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styling/notFound.css";
+import "../../styling/NotFound.css";
 import LoggedOutMenu from "../elements/loggedOutMenu";
 
 function ViewPage() {

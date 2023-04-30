@@ -65,7 +65,7 @@ public class RandomGenerator {
         return key;
       }
     }
-    throw new InvalidDistributionException("Start distribution probabilities summed to more than 1.",
+    throw new InvalidDistributionException("Distribution probabilities summed to more than 1.",
         distribution);
   }
 
@@ -81,16 +81,17 @@ public class RandomGenerator {
   public static <T> void validateDistribution(Class<T> type, HashMap<T, Double> distribution)
       throws InvalidDistributionException {
     double sum = 0;
+    System.out.println(distribution);
     for (T key : distribution.keySet()) {
       double currProb = distribution.get(key);
       if (currProb < 0) {
-        throw new InvalidDistributionException("The start probability associated "
-            + "with the hidden state " + key + " was negative.", distribution);
+        throw new InvalidDistributionException("The probability associated "
+            + "with the output " + key + " was negative.", distribution);
       }
       sum += currProb;
     }
     if (sum != 1) {
-      throw new InvalidDistributionException("Start distribution probabilities did not sum to 1.",
+      throw new InvalidDistributionException("Distribution probabilities did not sum to 1.",
           distribution);
     }
   }

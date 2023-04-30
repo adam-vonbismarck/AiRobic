@@ -1,0 +1,225 @@
+/* Styles for the form */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 32px;
+    /*align-items: center;*/
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+}
+
+.form-row {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+}
+
+.form-row.datepickers {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: auto;
+    height: 72px;
+    justify-content: center;
+    gap: 130px;
+    margin-bottom: 16px;
+}
+
+.form-row.radios {
+    align-items: center;
+    margin-top: 16px;
+}
+
+.form-row.dropdown {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: auto;
+    height: 72px;
+}
+
+.button-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styles for the radio buttons */
+.form-control {
+    margin-right: 16px;
+}
+
+/* Styles for the tooltip icon */
+.info-icon {
+    margin-left: 8px;
+    color: #f38418;
+}
+
+/* Styles for the select dropdown */
+.select-container {
+    min-width: 160px;
+}
+
+.number-container {
+    width: 160px;
+}
+
+.date-container {
+    min-width: 160px;
+}
+
+.datepicker-container {
+    width: 160px;
+}
+
+/*.custom-textfield{*/
+/*    width: 100%;*/
+/*}*/
+
+    /* Styles for the labels */
+/*label.MuiInputLabel-root {*/
+/*    color: #f38418;*/
+/*}*/
+
+/*.Mui-focused.MuiInputLabel-root {*/
+/*    color: #ebe9e9;*/
+/*}*/
+
+/*!* Styles for the select menu items *!*/
+/*.MuiMenuItem-root {*/
+/*    color: #000000;*/
+/*}*/
+
+/*.Mui-selected {*/
+/*    background-color: #e0e0e0;*/
+/*}*/
+
+.custom-textfield .MuiInputBase-input {
+    color: #ebe9e9 !important;
+    font-family: 'Muli', sans-serif;
+}
+
+.custom-textfield .MuiOutlinedInput-notchedOutline {
+    border-color: #ebe9e9;
+}
+
+.custom-textfield label.Mui-focused {
+    color: #ebe9e9;
+    font-family: 'Muli', sans-serif;
+}
+
+.custom-textfield label {
+    color: rgba(235, 233, 233, 0.8) !important;
+    font-family: 'Muli', sans-serif;
+}
+
+.custom-textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #f38418;
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #f38418;
+}
+
+.custom-textfield .MuiFormLabel-root.Mui-focused {
+    color: #ebe9e9;
+}
+
+/*Select Item*/
+.custom-select .MuiOutlinedInput-notchedOutline {
+    border-color: #ebe9e9;
+}
+
+.custom-select .MuiInputLabel-outlined.Mui-focused {
+    color: #ebe9e9;
+}
+
+.select-field label{
+    font-family: 'Muli', sans-serif;
+    color: rgba(235, 233, 233, 0.8) !important;
+}
+
+.select-field icon{
+    color: yellow;
+}
+
+.select-field .MuiSvgIcon-root{
+    color: #ebe9e9;
+}
+
+.custom-select:hover:not(.Mui-disabled) .MuiOutlinedInput-notchedOutline
+{
+    border-color: #f38418;
+}
+
+.custom-select.Mui-focused:not(.Mui-disabled) .MuiOutlinedInput-notchedOutline
+{
+    border-color: #f38418;
+}
+
+.custom-select .MuiInputBase-input {
+    font-family: 'Muli', sans-serif;
+    color: #ebe9e9;
+}
+
+.custom-select .MuiOutlinedInput-notchedOutline.Mui-focusVisible {
+    border-color: #cb18f3;
+}
+
+/*Radio*/
+/* For the radio button label */
+.MuiFormControlLabel-label {
+    font-family: 'Muli', sans-serif;
+    color: #ebe9e9;
+    font-size: 12pt;
+
+}
+
+.radio-label{
+    font-family: 'Muli', sans-serif;
+    color: #ebe9e9;
+    font-size: 12pt;
+}
+
+/* Style for radio button when not selected */
+.radio-group .Mui-selected {
+    color: white;
+}
+
+.MuiTooltip-tooltip {
+    font-size: 14px !important; /* change the font size to your desired size */
+    font-family: 'Muli', sans-serif !important;
+    color: #ebe9e9 !important;
+    -webkit-backdrop-filter: blur(7px) !important; /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px) !important; /* add a slight blur effect to the background */
+    background: rgba(79, 79, 79, 0.63) !important;
+}
+
+/* Add custom styles for the DatePicker component */
+.MuiDatePicker-root {
+    width: 100%;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+label {
+    font-family: 'Muli', sans-serif;
+    color: rgb(235, 233, 233) !important;
+    font-size: 12pt;
+}
+
+.loading-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

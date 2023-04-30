@@ -1,0 +1,85 @@
+.specific-workout{
+    width: 90%;
+}
+
+.custom-textfield .MuiInputBase-input {
+    color: #ebe9e9 !important;
+}
+
+.custom-textfield .MuiOutlinedInput-notchedOutline {
+    border-color: #ebe9e9;
+}
+
+.custom-textfield label.Mui-focused {
+    color: #ebe9e9;
+}
+
+.custom-textfield label {
+    color: rgba(235, 233, 233, 0.8) !important;
+    font-family: 'Muli', sans-serif;
+}
+
+.custom-textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #f38418;
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #f38418;
+}
+
+.custom-textfield .MuiFormLabel-root.Mui-focused {
+    color: #ebe9e9;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-bottom: 10px;*/
+    /*justify-content: space-around;*/
+    padding: 15px;
+    /*width: 75%*/
+}
+
+.workout-details {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+}
+
+.workout-details h2 {
+    font-family: 'Muli';
+    color: #f38418;
+    text-align: center;
+}
+
+.workout-details p {
+    font-family: 'Muli';
+    color: #ebe9e9;
+    padding-right: 16px;
+    /*white-space: nowrap;*/
+}
+
+.workout-details h5 {
+    font-family: 'Muli';
+    color: #ebe9e9;
+    padding-right: 16px;
+    white-space: nowrap;
+}
+
+.workout-details__split {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    /*margin-left: 35%;*/
+    /*z-index: 1000;*/
+}

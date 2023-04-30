@@ -20,12 +20,12 @@ public class DeleteUser implements Route {
     HashMap<String, Object> output = new HashMap<>();
     if (username == null) {
       output.put("result", "error_bad_request");
-      output.put("message", "ERROR: No filepath");
+      output.put("message", "ERROR: Invalid input.");
     }
     else{
-      new DatabaseCommands().delete(username + "/");
+      new DatabaseCommands().delete("users/" + username);
       output.put("result", "success");
-      output.put("message", "Successfully deleted" + username);
+      output.put("message", "Successfully deleted " + username);
     }
     return Serializer.serialize(output);
   }
