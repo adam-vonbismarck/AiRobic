@@ -24,14 +24,24 @@ function Register() {
           ...
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              var cred = getCredentialResponse(credentialResponse.credential)
-              if (checkUser(cred.sub)) {
-                addUser(cred.sub)
-                Login(cred)
-              }
-              else {
-                console.log("Registration failed")
-              }
+              getCredentialResponse(credentialResponse.credential).then((loginToken) => {
+
+                checkUser(loginToken.sub).then((isNewUser) => {
+                  if (isNewUser) {
+                    addUser(loginToken.sub).then((userAdded)=>{
+                      if (userAdded) {
+                        console.log("User added successfully")
+                        Login(loginToken)
+                      }
+                      else {
+                        console.log("Failed to add user")
+                      }
+                    })
+                  } else {
+                    console.log("User already exists")
+                  }
+                })
+              })
             }}
             onError={() => {
               console.log("Google authentication Failed");
@@ -49,56 +59,61 @@ function Register() {
   );
 }
 
-function getCredentialResponse(credential: string | undefined): LoginResponse {
-fetch(
-  "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + credential)
+function getCredentialResponse(credential: string | undefined): Promise<LoginResponse> {
+return new Promise((resolve, reject) => {
+fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + credential)
   .then((response: Response) => response.json())
   .then((loginToken) => {
     if (!isLoginResponse(loginToken)) {
       console.log("Login Failed");
+      reject(errLoginResponse)
     } else {
-      return loginToken
+      console.log(loginToken);
+      resolve(loginToken)
     }
   });
-  return errLoginResponse;
+})
+
+  
 }
 
-function addUser(userID: string): boolean {
-  fetch("localhost:3235/adduser?username="+userID).then((response: Response) => response.json()).then((addResponse) => {
-    if (!isAddUserResponse(addResponse)) {
-      console.log("Error adding user")   
-      return false;            
-    } else {
-      if (addResponse.result == "success") {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }             
-  });
-  return false;
-}
-
-function checkUser(userID: string): boolean {
-  fetch("localhost:3235/checkuser?username=" + userID)
-    .then((userResponse: Response) => userResponse.json())
-    .then((checkUser) => {
-      if (!isCheckUserResponse(checkUser)) {
-        console.log("Invalid check user response");
-      } else {
-        if (checkUser.message == "True") {
-          console.log("User checked successfully does not exist")
-          console.log("Proceed to register user")
-          return true;
+function addUser(userID: string): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    fetch("http://localhost:3235/adduser?username=" + userID)
+      .then((response: Response) => response.json())
+      .then((addResponse) => {
+        if (isAddUserResponse(addResponse) && addResponse.result == "success") {
+          resolve(true)
         }
         else {
-          console.log("User already exists or bad request")
-          return false;
+          reject(false)
         }
-      }
-    });
-  return false;
+      });
+  })
+}
+
+function checkUser(userID: string): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    fetch("http://localhost:3235/checkuser?username=" + userID)
+      .then((userResponse: Response) => userResponse.json())
+      .then((checkUser) => {
+        if (!isCheckUserResponse(checkUser)) {
+          console.log(checkUser)
+          console.log("Invalid check user response");
+          reject(false)
+        } else {
+          if (checkUser.message == "False") {
+            console.log("User checked successfully does not exist");
+            console.log("Proceed to register user");
+            resolve(true);
+          } else {
+            console.log(checkUser)
+            console.log("User already exists or bad request");
+            reject(false);
+          }
+        }
+      });
+  })
 }
 
 function Login(loginToken: LoginResponse) {
@@ -142,7 +157,13 @@ function isLoginResponse(rjson: any): rjson is LoginResponse {
 }
 
 function isCheckUserResponse(rjson: any): rjson is CheckUserResponse {
-  if (!("result" in rjson) ||("message" in rjson)) return false;
+  // if (!("result" in rjson)) {
+  //   console.log("no result")
+  // }
+  // if (!("message" in rjson)) {
+  //   console.log("no message")
+  // }
+  if (!("result" in rjson) || !("message" in rjson)) return false;
   return true;
 }
 
