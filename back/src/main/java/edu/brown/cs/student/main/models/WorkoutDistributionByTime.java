@@ -3,6 +3,10 @@ package edu.brown.cs.student.main.models;
 import edu.brown.cs.student.main.models.markov.Emission;
 import java.util.HashMap;
 
+/**
+ * Waiting to see if I will include this code in the WorkoutDistributionByName class, or if I
+ * will modify the distributions.
+ */
 public class WorkoutDistributionByTime {
 
   public static int MAX_INTERVALS = 5;

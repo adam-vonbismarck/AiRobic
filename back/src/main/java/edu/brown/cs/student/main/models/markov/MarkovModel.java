@@ -43,9 +43,6 @@ public class MarkovModel {
   private void checkStateDistributions() throws InvalidDistributionException {
     for (HiddenState state : this.states) {
       if (!this.states.equals(state.potentialStates())) {
-        System.out.println(state);
-        System.out.println(state.potentialStates());
-        System.out.println(this.states);
         throw new InvalidDistributionException("Hidden state " + state + " had a state distribution that "
             + "contained foreign states or did not contain all states relevant to the start distribution.",
             this.startDistribution);
@@ -94,6 +91,13 @@ public class MarkovModel {
     return sequence;
   }
 
+  /**
+   * This method overrides the normal equals method, ensuring that two MarkovModels are equal if
+   * their states and start distribution are the same.
+   *
+   * @param o - the object to check for equality.
+   * @return whether o was equal to this instance or not.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -107,11 +111,12 @@ public class MarkovModel {
         this.startDistribution, that.startDistribution);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.states, this.startDistribution);
-  }
-
+  /**
+   * Overrides the toString method for MarkovModels in order for its representation to be informative
+   * about its states and distributions.
+   *
+   * @return the MarkovModel as a string.
+   */
   @Override
   public String toString() {
     return "MarkovModel{" +
@@ -119,4 +124,5 @@ public class MarkovModel {
         ", startDistribution=" + startDistribution +
         '}';
   }
+
 }

@@ -49,11 +49,16 @@ import java.util.List;
  * model to build the schedule.
  *
  */
+
+/**
+ * Still deciding whether this class is worth keep around...will document better once I decide.
+ */
 public class ModelBuilder {
 
   private final List<HiddenState> states;
   private final HashMap<String, HiddenState> nameMap;
   private final HashMap<HiddenState, Double> startDist;
+
 
   public ModelBuilder() {
     this.states = new ArrayList<>();

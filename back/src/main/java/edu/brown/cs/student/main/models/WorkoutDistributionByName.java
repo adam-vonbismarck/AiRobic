@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Hoping to make this class more generic, and will document once that is complete.
+ */
 public class WorkoutDistributionByName {
 
   private final WorkoutDistMap map;

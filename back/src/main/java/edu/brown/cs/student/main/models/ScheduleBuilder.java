@@ -10,11 +10,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The ScheduleBuilder class builds schedules given a number of minutes and a percentage of high
+ * intensity work OR a number of low intensity/high intensity workouts per week. From here, the
+ * ScheduleBuilder class builds a reasonable schedule (with intensity labels provided) for use
+ * in generating a MarkovModel.
+ */
 public class ScheduleBuilder {
 
   public static int NUM_DAYS = 7;
   public static int NUM_WORKOUT_DAYS = 6;
 
+  /**
+   * These two HashMaps allow for easy conversion of day to integer – in fact, it might be worth
+   * using an enum...?
+   */
   public static HashMap<String, Integer> daysToInts = new HashMap<>() {
     {
       this.put("Monday", 0);
@@ -39,23 +49,71 @@ public class ScheduleBuilder {
     }
   };
 
+  /**
+   * The minutes call takes in a host of parameters, and builds a schedule (designed with rowing in
+   * mind) that will be reasonable given the time constraint. In particular, it calculates the number
+   * of low and high intensity workouts, and passes the problem off to the "workouts" method.
+   *
+   * @param minutes - approximate minutes per week the user has
+   * @param numWeeks - the number of weeks the schedule should be
+   * @param highPercent - the percentage of high intensity work to be done
+   * @param startDay - the day of the week the schedule should start
+   * @param endDay - the day of the week the schedule should end
+   * @param highIntensityLabel - the category of workout that should be high intensity
+   * @param lowIntensityLabel - the category of workout that should be low intensity
+   * @return a schedule that fits these constraints.
+   * @throws InvalidDistributionException if the percentage of high intensity work is not between
+   * 0 and 1.
+   */
   public Schedule minutes(int minutes, int numWeeks, double highPercent, String startDay, String endDay,
       String highIntensityLabel, String lowIntensityLabel) throws InvalidDistributionException {
     RandomGenerator.validateDistribution(String.class, new HashMap<>() {{
       this.put("High intensity", highPercent);
       this.put("Low intensity", 1 - highPercent);
     }});
+
+    // calculate high intensity minutes, with a minimum of 60
     long highIntensity = Math.round(Math.max(highPercent*minutes, 60));
+
+    // calculate low intensity minutes from high intensity minutes
     long lowIntensity = minutes - highIntensity;
+
+    // calculate the number of high intensity workouts, assuming each is 60 minutes, with a maximum of 4
     long numHighIntensity = Math.min(Math.floorDiv(highIntensity, 60), 4);
+
+    // find the length of low intensity workouts, with a minimum of 60 minute sessions, and a maximum
+    // of 10 sessions per week
     long lowIntensityWorkoutLength = Math.max(60, lowIntensity/(10 - numHighIntensity));
+
+    // use the low intensity workout length and the number of low intensity minutes to calculate the
+    // number of low intensity workouts
     long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
+
+    // call on the rest of the schedule building
     return this.workouts(numHighIntensity, numLowIntensity, numWeeks, startDay, endDay,
         highIntensityLabel, lowIntensityLabel, lowIntensityWorkoutLength);
   }
 
+  /**
+   * This method builds a schedule given a host of parameters, including the number of high and
+   * low intensity workouts per week. Using this information, the method distributes these workouts
+   * evenly over the course of an example week, and builds the schedule from there.
+   *
+   * @param highIntensity - the number of high intensity workouts in the schedule
+   * @param lowIntensity - the number of low intensity workouts in the schedule
+   * @param numWeeks - the number of weeks in the schedule
+   * @param startDay - the day of the week the schedule should start
+   * @param endDay - the day of the week the schedule should end
+   * @param highIntensityLabel - the category of workout that should be high intensity
+   * @param lowIntensityLabel - the category of workout that should be low intensity
+   * @param lowLength - the length of a given low intensity workout
+   * @return the built schedule, given these constraints.
+   */
   public Schedule workouts(long highIntensity, long lowIntensity, int numWeeks, String startDay, String endDay,
       String highIntensityLabel, String lowIntensityLabel, long lowLength) {
+
+    // will inline comment once the method is confirmed.
+
     long workouts = highIntensity + lowIntensity;
     ArrayList<Week> weeks = new ArrayList<>();
     ArrayList<Day> exampleDays = new ArrayList<>();
@@ -78,6 +136,14 @@ public class ScheduleBuilder {
     return new Schedule("schedule", weeks, exampleWeek);
   }
 
+  /**
+   * This method takes in a list of days and a number of workouts, and distributes these workouts
+   * evenly over the course of a week. While the arithmetic is a little messy, this distribution
+   * approximation produces consistent results for 7-day weeks.
+   *
+   * @param days - the list of days over which to distribute
+   * @param workouts - the number of workouts to distribute
+   */
   private void distributeWorkouts(ArrayList<Day> days, long workouts) {
     for (int j = 0; j < NUM_DAYS; j++) {
       days.add(new Day("day", new ArrayList<>(), 0, intsToDays.get(j),
@@ -112,6 +178,9 @@ public class ScheduleBuilder {
     assert(workouts == 0);
   }
 
+  /**
+   * Still ensuring that these next two methods are reasonable for schedule generation.
+   */
   private void distributeIntensities(List<Day> days, long workouts, long highIntensity,
       String highIntensityLabel, String lowIntensityLabel, long lowLength) {
 
