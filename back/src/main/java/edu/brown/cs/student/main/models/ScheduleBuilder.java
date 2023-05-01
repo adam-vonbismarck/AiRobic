@@ -73,7 +73,7 @@ public class ScheduleBuilder {
       weeks.add(newWeek);
     }
 
-    weeks.add(new Week("week", exampleWeek.getDaySubset(0, daysToInts.get(endDay))));
+    weeks.add(new Week("week", exampleWeek.getDaySubset(0, daysToInts.get(endDay) + 1)));
 
     return new Schedule("schedule", weeks, exampleWeek);
   }

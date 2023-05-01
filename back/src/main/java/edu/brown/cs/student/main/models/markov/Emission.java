@@ -27,7 +27,8 @@ public class Emission {
   }
 
   public Emission copy() {
-    return null;
+    return new Emission(this.workout, this.time, this.completed,
+        this.heartRate, this.rpe);
   }
 
   @Override

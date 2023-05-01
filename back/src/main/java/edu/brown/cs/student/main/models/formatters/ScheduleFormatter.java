@@ -38,6 +38,7 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
         this.workoutCount += day.getNumberOfWorkouts();
       }
     }
+    System.out.println(this.workoutCount);
   }
 
   /**
@@ -51,12 +52,16 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
   public Schedule formatEmissions(List<Emission> emissions) throws FormatterFailureException {
     if (emissions.size() != this.workoutCount) {
       throw new FormatterFailureException("Schedule and model emissions did not match in length, so the schedule"
-          + "could not be filled in appropriately.",
+          + " could not be filled in appropriately.",
           emissions);
     }
+
     for (Week week : this.schedule.weeks()) {
       for (Day day : week.days()) {
-        day.addWorkout(emissions.remove(0));
+        System.out.println(day);
+        for (int i = 0; i < day.getNumberOfWorkouts(); i++) {
+          day.addWorkout(emissions.remove(0));
+        }
       }
     }
     return this.schedule;

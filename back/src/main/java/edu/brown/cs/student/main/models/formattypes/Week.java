@@ -12,7 +12,7 @@ public record Week(@Json(name="type") String type, @Json(name="days") List<Day> 
   public List<Day> getDaySubset(int indexOne, int indexTwo) {
     ArrayList<Day> days = new ArrayList<>();
     for (Day day : this.days.subList(indexOne, indexTwo)) {
-      days.add(day); // .copy
+      days.add(day.copy()); // .copy
     }
     return days;
   }

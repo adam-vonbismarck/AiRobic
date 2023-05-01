@@ -81,7 +81,6 @@ public class RandomGenerator {
   public static <T> void validateDistribution(Class<T> type, HashMap<T, Double> distribution)
       throws InvalidDistributionException {
     double sum = 0;
-    System.out.println(distribution);
     for (T key : distribution.keySet()) {
       double currProb = distribution.get(key);
       if (currProb < 0) {
@@ -90,7 +89,7 @@ public class RandomGenerator {
       }
       sum += currProb;
     }
-    if (sum != 1) {
+    if (Math.round(sum*1000000)/1000000 != 1) {
       throw new InvalidDistributionException("Distribution probabilities did not sum to 1.",
           distribution);
     }

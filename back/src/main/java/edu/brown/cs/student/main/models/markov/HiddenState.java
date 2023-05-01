@@ -13,7 +13,7 @@ import java.util.Set;
 public class HiddenState {
 
   private final HashMap<HiddenState, Double> transitionDistribution;
-  private final HashMap<Emission, Double> emissionDistribution;
+  private HashMap<Emission, Double> emissionDistribution;
   private final String name;
 
   public HiddenState(@Json(name="category") String name,
@@ -40,6 +40,7 @@ public class HiddenState {
 
   public void addTransition(HiddenState state, Double prob) {
     this.transitionDistribution.put(state, prob);
+    System.out.println(this.transitionDistribution);
   }
 
   public void fillTransitions(HashMap<HiddenState, Double> transitions)
@@ -82,16 +83,10 @@ public class HiddenState {
         && Objects.equals(this.name, that.name);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.emissionDistribution, this.name);
-  }
-
+  // come back and add in emission dist
   @Override
   public String toString() {
-    return "HiddenState{" +
-        ", emissionDistribution=" + this.emissionDistribution.toString() +
-        ", name='" + this.name + '\'' +
+    return "HiddenState{" + "name='" + this.name + '\'' +
         '}';
   }
 }

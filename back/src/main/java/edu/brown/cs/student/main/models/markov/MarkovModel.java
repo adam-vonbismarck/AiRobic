@@ -5,6 +5,7 @@ import edu.brown.cs.student.main.RandomGenerator;
 import edu.brown.cs.student.main.models.formatters.EmissionFormatter;
 import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,9 @@ public class MarkovModel {
   private void checkStateDistributions() throws InvalidDistributionException {
     for (HiddenState state : this.states) {
       if (!this.states.equals(state.potentialStates())) {
+        System.out.println(state);
+        System.out.println(state.potentialStates());
+        System.out.println(this.states);
         throw new InvalidDistributionException("Hidden state " + state + " had a state distribution that "
             + "contained foreign states or did not contain all states relevant to the start distribution.",
             this.startDistribution);
@@ -82,7 +86,7 @@ public class MarkovModel {
   private List<Emission> generateRandomSequence(int len) throws InvalidDistributionException {
     HiddenState currState = RandomGenerator.generateRandomFromDistribution(HiddenState.class,
         this.startDistribution);
-    List<Emission> sequence = List.of();
+    ArrayList<Emission> sequence = new ArrayList<>();
     for (int i = 0; i < len; i++) {
       sequence.add(currState.emit());
       currState = currState.transition();

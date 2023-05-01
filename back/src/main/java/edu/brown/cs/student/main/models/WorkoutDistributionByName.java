@@ -7,6 +7,7 @@ import edu.brown.cs.student.main.server.Serializer;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WorkoutDistributionByName {
 
@@ -14,28 +15,24 @@ public class WorkoutDistributionByName {
 
   public WorkoutDistributionByName() throws IOException {
     this.map = Serializer.getDeserializedResponse(WorkoutDistMap.class,
-        "./main/workoutdata/data/WorkoutData.json");
+        "./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataGoal.json");
   }
 
   public HashMap<Emission, Double> generateEmissionDistribution(WorkoutDescription name) {
     if (this.map.allData().containsKey(name.intensity())) {
-      return this.map.allData().get(name.intensity()).getDist();
+      return this.map.getDist(name.intensity());
     }
-    if (name.equals("UT2")) {
+    if (name.intensity().equals("UT2")) {
       return WorkoutDistributionByTime.getLowIntensityDistributionByTime(name.minutes());
     }
     return null;
   }
 
-  public record WorkoutDistMap(@Json(name="categories") HashMap<String, WorkoutDistribution> allData) {
+  public record WorkoutDistMap(@Json(name="categories") Map<String, List<EmissionAndProb>> allData) {
+    public HashMap<Emission, Double> getDist(String key) {
 
-  }
-
-  public record WorkoutDistribution(@Json(name="distribution") List<EmissionAndProb> emissions) {
-
-    public HashMap<Emission, Double> getDist() {
       HashMap<Emission, Double> dist = new HashMap<>();
-      for (EmissionAndProb joined : this.emissions) {
+      for (EmissionAndProb joined : this.allData.get(key)) {
         dist.put(joined.emission(), joined.probability());
       }
       return dist;

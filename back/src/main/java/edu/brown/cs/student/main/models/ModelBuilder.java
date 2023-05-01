@@ -62,6 +62,11 @@ public class ModelBuilder {
   }
 
   public MarkovModel build() throws InvalidDistributionException {
+    for (HiddenState state : this.states) {
+      if (!this.startDist.containsKey(state)) {
+        this.startDist.put(state, 0.0);
+      }
+    }
     return new MarkovModel(this.startDist);
   }
 
@@ -134,13 +139,24 @@ public class ModelBuilder {
   }
 
   public void addLinearTransitions() throws InvalidDistributionException {
+    System.out.println(this.states.size());
     for (int i = 0; i < this.states.size() - 1; i++) {
       HashMap<HiddenState, Double> transitionMat = new HashMap<>();
       transitionMat.put(this.states.get(i + 1), 1.0);
+      for (HiddenState state : this.states) {
+        if (!transitionMat.containsKey(state)) {
+          transitionMat.put(state, 0.0);
+        }
+      }
       this.states.get(i).fillTransitions(transitionMat);
     }
     HashMap<HiddenState, Double> endTransitionMat = new HashMap<>();
     endTransitionMat.put(this.states.get(0), 1.0);
+    for (HiddenState state : this.states) {
+      if (!endTransitionMat.containsKey(state)) {
+        endTransitionMat.put(state, 0.0);
+      }
+    }
     this.states.get(this.states.size() - 1).fillTransitions(endTransitionMat);
   }
 

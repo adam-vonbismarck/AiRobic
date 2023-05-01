@@ -1,9 +1,17 @@
 package edu.brown.cs.student;
 
+import edu.brown.cs.student.main.models.LinearModelBuilder;
+import edu.brown.cs.student.main.models.ScheduleBuilder;
+import edu.brown.cs.student.main.models.WorkoutDistributionByName;
+import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
+import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
+import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
+import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.Emission;
 import edu.brown.cs.student.main.models.markov.HiddenState;
 import edu.brown.cs.student.main.models.markov.MarkovModel;
+import java.io.IOException;
 import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +21,7 @@ public class ModelTests {
 
   public HashMap<Emission, Double> validEmissionDist;
   public HashMap<Emission, Double> invalidEmissionDist;
+
 
   @BeforeEach
   public void setup() {
@@ -24,6 +33,22 @@ public class ModelTests {
       this.put(new Emission("workout", 60.0, true, 145.5, 1), 0.8);
       this.put(new Emission("workout2", 80.0, true, 147.5, 10), 0.3);
     }};
+  }
+
+  @Test
+  public void testLinear()
+      throws IOException, InvalidScheduleException, InvalidDistributionException, FormatterFailureException {
+    ScheduleBuilder builder = new ScheduleBuilder();
+    Schedule toBuild = null;
+    try {
+      toBuild = builder.minutes(420, 4, 0.2,
+          "Monday", "Friday", "2k", "UT2");
+    } catch (InvalidDistributionException e) {
+      throw new RuntimeException(e);
+    }
+    MarkovModel model = new LinearModelBuilder(new WorkoutDistributionByName()).build(toBuild, "Monday");
+    Schedule schedule = model.generateFormattedEmissions(23, new ScheduleFormatter(toBuild));
+    System.out.println(schedule);
   }
 
   @Test
@@ -167,8 +192,7 @@ public class ModelTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "Hidden state " + stateTwo + " had a state distribution that "
-            + "contained foreign states or did not contain all states relevant to the start distribution.");
+        "Distribution probabilities did not sum to 1.");
 
   }
 

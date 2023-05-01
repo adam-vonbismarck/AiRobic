@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.models.formattypes;
 
+import com.beust.ah.A;
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.markov.Emission;
 import java.util.ArrayList;
@@ -30,6 +31,14 @@ public class Day {
     this.name = name;
     this.intensity = intensity;
     this.subCategory = subCategory;
+  }
+
+  public Day copy() {
+    ArrayList<Emission> newWorkouts = new ArrayList<>();
+    for (Emission emission : this.workouts) {
+      newWorkouts.add(emission.copy());
+    }
+    return new Day(this.type, newWorkouts, this.numberOfWorkouts, this.name, this.intensity, this.subCategory);
   }
 
   public void incrementNumWorkouts() {
