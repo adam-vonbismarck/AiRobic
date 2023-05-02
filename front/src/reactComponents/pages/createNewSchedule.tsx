@@ -36,9 +36,9 @@ function NewSchedule() {
 
   /**
 
-   Handles changes to the selected option input.
-   @param {object} event - The event object for the change event.
-   */
+     Handles changes to the selected option input.
+     @param {object} event - The event object for the change event.
+     */
   const handleOptionChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -64,9 +64,9 @@ function NewSchedule() {
   };
 
   /**
-   Validates the hours per week input and sets the error state accordingly.
-   @param {string|number} value - The value of the hours per week input.
-   */
+     Validates the hours per week input and sets the error state accordingly.
+     @param {string|number} value - The value of the hours per week input.
+     */
   const validateHoursPerWeek = (value: string | number) => {
     if (value < 3.0) {
       setHoursPerWeekError("Minimum 3 hours per week");
@@ -84,10 +84,10 @@ function NewSchedule() {
 
   /**
 
-   Validates that the start date is before the end date.
-   @param {string} start - The value of the start date input.
-   @param {string} end - The value of the end date input.
-   */
+     Validates that the start date is before the end date.
+     @param {string} start - The value of the start date input.
+     @param {string} end - The value of the end date input.
+     */
   const validateDate = (start: string, end: string) => {
     if (start > end && start !== "" && end !== "") {
       setStartDateAfterEndError("Start date must be before end date");
@@ -97,9 +97,9 @@ function NewSchedule() {
   };
   /**
 
-   Validates that the date is not before today's date.
-   @param {string} dateToCheck - The value of the date input.
-   */
+     Validates that the date is not before today's date.
+     @param {string} dateToCheck - The value of the date input.
+     */
   const checkBeforeToday = (dateToCheck: string) => {
     if (now.isAfter(dateToCheck)) {
       setDateBeforeTodayError("Start cannot be before today");
@@ -120,9 +120,9 @@ function NewSchedule() {
 
   /**
 
-   Generates a workout plan based on the input values.
-   @param {object} event - The event object for the click event.
-   */
+     Generates a workout plan based on the input values.
+     @param {object} event - The event object for the click event.
+     */
   const generateWorkoutPlan = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -191,9 +191,9 @@ function NewSchedule() {
 
   /**
 
-   Renders the button for generating a workout plan.
-   @return {JSX.Element} The button JSX element.
-   */
+     Renders the button for generating a workout plan.
+     @return {JSX.Element} The button JSX element.
+     */
   const renderButton = () => {
     if (loading) {
       return (
@@ -515,7 +515,7 @@ function NewSchedule() {
                   />
                   {Boolean(StartDateAfterEndError) || endDateEmpty ? (
                     <div id="end-date-error" className="error-message">
-                      {StartDateAfterEndError || "End date is required"}
+                      {StartDateAfterEndError}
                     </div>
                   ) : null}
                 </div>

@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styling/index.css";
 import App from "./reactComponents/App";
+import { DevSupport } from "@react-buddy/ide-toolbox";
+import { ComponentPreviews, useInitial } from "./dev";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <App />
+  <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+    <App />
+  </DevSupport>
 );
-
-

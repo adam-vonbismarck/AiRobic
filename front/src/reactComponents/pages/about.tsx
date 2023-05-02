@@ -11,7 +11,7 @@ function About() {
     <LoggedOutMenu
       description={"About page"}
       aria-label="About page navigation menu"
-    />
+    ></LoggedOutMenu>
   );
 }
 
