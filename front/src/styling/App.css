@@ -165,6 +165,14 @@ button {
     backdrop-filter: blur(7px); /* add a slight blur effect to the background */
 }
 
+.register-window {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px);
+}
+
 .register-button {
     background-color: #f38418;
     border: none;
@@ -190,6 +198,11 @@ button {
     position: absolute;
     bottom: 50%;
     left: 50%;
+
+}
+.sign-in-button h2 {
+    color: #f38418;
+
 }
 
 .mdb-date-picker .md-form label.active {

@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import LoggedOutMenu from "../elements/loggedOutMenu";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
-import { Link } from "react-router-dom";
-import { useGoogleLogin } from "@react-oauth/google";
-import { login } from "../GoogleLogin";
 import { useNavigate } from "react-router-dom";
-import { aD } from "@fullcalendar/core/internal-common";
+import {Parallax} from "react-parallax";
+import {Alert} from "@mui/material";
 
 /**
  * https://www.youtube.com/watch?v=roxC8SMs7HU
@@ -16,35 +14,62 @@ import { aD } from "@fullcalendar/core/internal-common";
 
 
 function Register() {
-  
+  const [submitIssue, setSubmitIssue] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
   return (
+      <Parallax
+          bgImage={"/assets/images/GettyImages-1170269618-2.jpg"}
+          strength={100}
+          aria-label="Parallax image with register display page"
+      >
     <div className="register-window">
       <div className="sign-in-button">
         <GoogleOAuthProvider clientId="20770065062-amdbsjkao5gag2g7m0b7o4pn411akg80.apps.googleusercontent.com">
-          ...
+          <h2>Register Below</h2>
           <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              getCredentialResponse(credentialResponse.credential).then((loginToken) => {
+              shape={"rectangular"}
+              size={"large"}
+              theme={"filled_black"}
+              width={"500"}
+              text={"signup_with"}
 
+            onSuccess={(credentialResponse) => {
+
+              getCredentialResponse(credentialResponse.credential).then((loginToken) => {
                 checkUser(loginToken.sub).then((isNewUser) => {
+                  console.log("user checked")
                   if (isNewUser) {
                     addUser(loginToken.sub).then((userAdded)=>{
+                      console.log("user add")
                       if (userAdded) {
                         console.log("User added successfully")
                         Login(loginToken)
                       }
                       else {
                         console.log("Failed to add user")
+                        setSubmitIssue(true)
+                        setSubmitError("Error adding user to our server, Please try again")
                       }
                     })
                   } else {
                     console.log("User already exists")
+                    setSubmitIssue(true)
+                    setSubmitError("This email is already registered, please Sign in instead")
                   }
+                }).catch(err => {
+                  setSubmitError("Error checking user")
+                  setSubmitIssue(true)
+                  console.log("error checking user DISPLAY ERROR MESSAGE")
                 })
               })
-            }}
+            }
+
+          }
             onError={() => {
               console.log("Google authentication Failed");
+              setSubmitIssue(true)
+              setSubmitError("Google authentication failed, please try again")
             }}
           />
           {/* <button onClick={() => login()}       //TODO invalid hook ?????
@@ -54,13 +79,29 @@ function Register() {
         </button> */}
         </GoogleOAuthProvider>
       </div>
-      <LoggedOutMenu description={"register page"} />
+      <LoggedOutMenu description={"Register page"} />
     </div>
+        {submitIssue && (
+            <div className="error-row">
+              <div className="form-error-message" aria-label="Error message">
+                <Alert
+                    severity="error"
+                    variant="filled"
+                    sx={{ fontFamily: "Muli" }}
+                    aria-label="Error: Workout plan submission unsuccessful"
+                >
+                  {submitError}
+                </Alert>
+              </div>
+            </div>
+        )}
+      </Parallax>
   );
 }
 
 function getCredentialResponse(credential: string | undefined): Promise<LoginResponse> {
 return new Promise((resolve, reject) => {
+
 fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + credential)
   .then((response: Response) => response.json())
   .then((loginToken) => {
@@ -71,7 +112,7 @@ fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + credential)
       console.log(loginToken);
       resolve(loginToken)
     }
-  });
+  }).catch(err => reject(errLoginResponse));
 })
 
   
@@ -88,7 +129,7 @@ function addUser(userID: string): Promise<boolean> {
         else {
           reject(false)
         }
-      });
+      }).catch(err => reject(false));
   })
 }
 
@@ -112,7 +153,7 @@ function checkUser(userID: string): Promise<boolean> {
             reject(false);
           }
         }
-      });
+      }).catch(err => reject(false));
   })
 }
 
@@ -168,7 +209,7 @@ function isCheckUserResponse(rjson: any): rjson is CheckUserResponse {
 }
 
 function isAddUserResponse(rjson: any): rjson is AddUserResponse {
-  if (!("result" in rjson) || "message" in rjson) return false;
+  if (!("result" in rjson) || !("message" in rjson)) return false;
   return true;
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "../../styling/Menu.css";
 
 /**
@@ -12,9 +12,10 @@ interface MenuProps {
 /**
  * Logs the user out of the application
  */
+
 function logOut() {
   localStorage.clear();
-  window.location.reload();
+  window.location.href = "/"
 }
 
 /**
