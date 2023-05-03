@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "../../styling/App.css";
 import LoggedInMenu from "../elements/loggedInMenu";
 import { Parallax } from "react-parallax";
@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import {
   Alert,
   CircularProgress,
+  Fade,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -14,6 +15,7 @@ import {
   MenuItem,
   Radio,
   RadioGroup,
+  Slide,
   Tooltip,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -21,6 +23,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import "../../styling/GenerateWorkout.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { AnimatePresence, motion } from "framer-motion";
 
 /**
 
@@ -525,18 +528,28 @@ function NewSchedule() {
               {renderButton()}
             </div>
             {submitIssue && (
-              <div className="error-row">
-                <div className="form-error-message" aria-label="Error message">
-                  <Alert
-                    severity="error"
-                    variant="filled"
-                    sx={{ fontFamily: "Muli" }}
-                    aria-label="Error: Workout plan submission unsuccessful"
+              <AnimatePresence>
+                <motion.div
+                  className="error-row"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 50 }}
+                >
+                  <div
+                    className="form-error-message"
+                    aria-label="Error message"
                   >
-                    {submitError}
-                  </Alert>
-                </div>
-              </div>
+                    <Alert
+                      severity="error"
+                      variant="filled"
+                      sx={{ fontFamily: "Muli" }}
+                      aria-label="Error: Workout plan submission unsuccessful"
+                    >
+                      {submitError}
+                    </Alert>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             )}
           </form>
         </div>

@@ -42,14 +42,14 @@
 }
 
 .workout-details {
-    background: rgba(0, 0, 0, 0.5);
+    /*background: rgba(0, 0, 0, 0.5);*/
     border-radius: 10px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
-    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+    /*-webkit-backdrop-filter: blur(7px); !* add vendor prefix for Safari *!*/
+    /*backdrop-filter: blur(7px); !* add a slight blur effect to the background *!*/
 }
 
 .workout-details h2 {
