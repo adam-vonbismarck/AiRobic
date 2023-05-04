@@ -33,8 +33,6 @@ public class Server {
     //String dayOfWeek = DayOfTheWeek.getDayOfWeek(dateStr);
     //System.out.println(dayOfWeek);
 
-
-
     // Set the headers for cross-origin resource sharing (CORS) to allow any origin and any method.
     after(
         (request, response) -> {

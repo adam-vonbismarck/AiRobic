@@ -14,8 +14,16 @@ public class TerminalCommand {
     String[] command = {"/bin/bash", "-c", this.input};
     String os = System.getProperty("os.name").toLowerCase();
     if (os.contains("win")) {
-      command = new String[]{"cmd.exe", "/c", this.input};
+      //command = new String[]{"cmd.exe", "/c", this.input};
+      String input = "curl -X PATCH -d \"{\\\"alex\\\":{\\\"schedule\\\":\\\"\\\",\\\"valid\\\":\\\"true\\\"}}\" \"https://cs32airobic-default-rtdb.firebaseio.com/users.json\"";
+      String[] comman = {"cmd.exe", "/c", input};
+      ProcessBuilder builder = new ProcessBuilder(comman);
+      Process process = builder.start();
+      InputStream is = process.getInputStream();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+      return reader.readLine();
     }
+
     ProcessBuilder builder = new ProcessBuilder(command);
     Process process = builder.start();
     InputStream is = process.getInputStream();
