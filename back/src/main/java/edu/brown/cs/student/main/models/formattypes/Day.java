@@ -19,7 +19,6 @@ public class Day {
   private Integer numberOfWorkouts;
   private final DayOfWeek name;
   private final List<WorkoutDescription> intensity;
-  private final List<String> subCategory;
   private LocalDate date;
 
   public Day(@Json(name="type") String type,
@@ -27,14 +26,12 @@ public class Day {
       @Json(name="num") Integer numberOfWorkouts,
       @Json(name="name") DayOfWeek name,
       @Json(name="date") LocalDate date,
-      @Json(name="intensity") List<WorkoutDescription> intensity,
-      @Json(name="subcategory") List<String> subCategory) {
+      @Json(name="intensity") List<WorkoutDescription> intensity) {
     this.type = type;
     this.workouts = workouts;
     this.numberOfWorkouts = numberOfWorkouts;
     this.name = name;
     this.intensity = intensity;
-    this.subCategory = subCategory;
     this.date = date;
   }
 
@@ -45,7 +42,7 @@ public class Day {
     }
     return new Day(this.type, newWorkouts, this.numberOfWorkouts, this.name,
             (this.date != null) ? this.date.plusDays(0) : null,
-        new ArrayList<>(this.intensity), new ArrayList<>(this.subCategory));
+        new ArrayList<>(this.intensity));
   }
 
   public void incrementNumWorkouts() {
@@ -65,8 +62,7 @@ public class Day {
   }
 
   public boolean verifyDay() {
-    return (this.intensity.size() == 0 || this.intensity.size() == this.numberOfWorkouts) &&
-        (this.subCategory.size() == 0 || this.subCategory.size() == this.numberOfWorkouts);
+    return (this.intensity.size() == 0 || this.intensity.size() == this.numberOfWorkouts);
   }
 
   public void setDate(LocalDate date) {
@@ -99,13 +95,12 @@ public class Day {
   @Override
   public String toString() {
     return "Day{" +
-        "type='" + type + '\'' +
-        ", workouts=" + workouts +
-        ", numberOfWorkouts=" + numberOfWorkouts +
-        ", name=" + name +
-        ", intensity=" + intensity +
-        ", subCategory=" + subCategory +
-        ", date=" + date +
+        "type='" + this.type + '\'' +
+        ", workouts=" + this.workouts +
+        ", numberOfWorkouts=" + this.numberOfWorkouts +
+        ", name=" + this.name +
+        ", intensity=" + this.intensity +
+        ", date=" + this.date +
         '}';
   }
 
@@ -121,12 +116,12 @@ public class Day {
     return Objects.equals(this.type, day.type) && Objects.equals(this.workouts,
         day.workouts) && Objects.equals(this.numberOfWorkouts, day.numberOfWorkouts)
         && Objects.equals(this.name, day.name) && Objects.equals(this.intensity,
-        day.intensity) && Objects.equals(this.subCategory, day.subCategory);
+        day.intensity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.type, this.workouts, this.numberOfWorkouts, this.name, this.intensity, this.subCategory);
+    return Objects.hash(this.type, this.workouts, this.numberOfWorkouts, this.name, this.intensity);
   }
 
   public record WorkoutDescription(@Json(name="intensity") Workout intensity,

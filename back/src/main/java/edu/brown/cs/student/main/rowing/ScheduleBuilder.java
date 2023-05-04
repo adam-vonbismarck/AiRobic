@@ -151,7 +151,7 @@ public class ScheduleBuilder {
   private void distributeWorkouts(ArrayList<Day> days, long workouts) {
     for (int j = 0; j < NUM_DAYS; j++) {
       days.add(new Day("day", new ArrayList<>(), 0, DayOfWeek.of(j + 1),
-          null, new ArrayList<>(), new ArrayList<>()));
+          null, new ArrayList<>()));
     }
 
     if (workouts <= 0) {

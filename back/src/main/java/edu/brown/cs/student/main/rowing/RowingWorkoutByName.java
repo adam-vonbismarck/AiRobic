@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.rowing;
 
-import edu.brown.cs.student.main.models.UT2DistributionGenerator;
 import edu.brown.cs.student.main.models.WorkoutDistributionByName;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;

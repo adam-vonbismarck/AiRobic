@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.models;
+package edu.brown.cs.student.main.rowing;
 
 import edu.brown.cs.student.main.models.markov.Emission;
 import java.util.HashMap;

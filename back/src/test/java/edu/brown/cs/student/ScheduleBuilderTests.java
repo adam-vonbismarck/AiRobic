@@ -32,22 +32,22 @@ public class ScheduleBuilderTests {
     Assertions.assertEquals(schedule.example(), new Week("week", List.of(
         new Day("day", new ArrayList<>(), 2, DayOfWeek.MONDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.TUESDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.WEDNESDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.THURSDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.FRIDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.SATURDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.SUNDAY,
-            null, List.of(), new ArrayList<>())
+            null, List.of())
     )));
   }
 
@@ -68,22 +68,22 @@ public class ScheduleBuilderTests {
     Assertions.assertEquals(schedule.example(), new Week("week", List.of(
         new Day("day", new ArrayList<>(), 2, DayOfWeek.MONDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 160),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.TUESDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 160),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.WEDNESDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 160)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 160))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.THURSDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 160),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.FRIDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 160),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.SATURDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 160)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 160))),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.SUNDAY,
-            null, List.of(), new ArrayList<>())
+            null, List.of())
     )));
   }
 
@@ -103,19 +103,19 @@ public class ScheduleBuilderTests {
     Assertions.assertTrue(schedule.weeks().size() == 4);
     Assertions.assertEquals(schedule.example(), new Week("week", List.of(
         new Day("day", new ArrayList<>(), 1, DayOfWeek.MONDAY,
-            null, List.of(new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.TUESDAY,
-            null, List.of(), new ArrayList<>()),
+            null, List.of()),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.WEDNESDAY,
-            null, List.of(), new ArrayList<>()),
+            null, List.of()),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.THURSDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.FRIDAY,
-            null, List.of(), new ArrayList<>()),
+            null, List.of()),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.SATURDAY,
-            null, List.of(), new ArrayList<>()),
+            null, List.of()),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.SUNDAY,
-            null, List.of(), new ArrayList<>())
+            null, List.of())
     )));
   }
 
@@ -136,22 +136,22 @@ public class ScheduleBuilderTests {
     Assertions.assertEquals(schedule.example(), new Week("week", List.of(
         new Day("day", new ArrayList<>(), 2, DayOfWeek.MONDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.TUESDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.WEDNESDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.THURSDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.FRIDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.SATURDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.SUNDAY,
-            null, List.of(), new ArrayList<>())
+            null, List.of())
     )));
     Assertions.assertEquals(schedule.weeks().get(1), schedule.example());
 
@@ -165,22 +165,22 @@ public class ScheduleBuilderTests {
     Assertions.assertEquals(schedule.example(), new Week("week", List.of(
         new Day("day", new ArrayList<>(), 2, DayOfWeek.MONDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.TUESDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.WEDNESDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.THURSDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 2, DayOfWeek.FRIDAY,
             null, List.of(new WorkoutDescription(Workout.of("UT2"), 60),
-                new WorkoutDescription(Workout.of("2k"), 60)), new ArrayList<>()),
+                new WorkoutDescription(Workout.of("2k"), 60))),
         new Day("day", new ArrayList<>(), 1, DayOfWeek.SATURDAY,
-            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60)), new ArrayList<>()),
+            null, List.of(new WorkoutDescription(Workout.of("UT2"), 60))),
         new Day("day", new ArrayList<>(), 0, DayOfWeek.SUNDAY,
-            null, List.of(), new ArrayList<>())
+            null, List.of())
     )));
     Assertions.assertEquals(schedule.weeks().get(1), schedule.example());
   }

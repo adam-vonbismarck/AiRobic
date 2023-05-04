@@ -38,13 +38,13 @@ public class RandomGeneratorTests {
     }};
 
     this.negDay = new Day("day", new ArrayList<>(), 7, DayOfWeek.MONDAY,
-        null, new ArrayList<>(), new ArrayList<>());
+        null, new ArrayList<>());
 
     this.invalidDistNeg = new HashMap<>() {{
       this.put(new Day("day", new ArrayList<>(), 11, DayOfWeek.FRIDAY,
-          null, new ArrayList<>(), new ArrayList<>()), 0.5);
+          null, new ArrayList<>()), 0.5);
       this.put(new Day("day", new ArrayList<>(), 1, DayOfWeek.TUESDAY,
-          null, new ArrayList<>(), new ArrayList<>()), 0.7);
+          null, new ArrayList<>()), 0.7);
     }};
 
     this.invalidDistNeg.put(this.negDay, -0.2);
