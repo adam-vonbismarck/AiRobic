@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
+import edu.brown.cs.student.main.database.DatabaseCommandsSDK;
 import edu.brown.cs.student.main.database.NonSusDatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class AddNewUser implements Route {
       }
       else{
         String info = "{\"" + username + "\":{\"schedule\":\"\",\"valid\":\"true\"}}";
-        new NonSusDatabaseCommands().update(info, "users");
+        new DatabaseCommandsSDK().put(info, "users");
         output.put("result", "success");
         output.put("message", "Successfully added " + username);
       }

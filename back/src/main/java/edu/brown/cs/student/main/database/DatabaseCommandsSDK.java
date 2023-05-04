@@ -23,7 +23,7 @@ public class DatabaseCommandsSDK {
 
     public DatabaseCommandsSDK() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("path/to/your/serviceAccountKey.json");
+            FileInputStream serviceAccount = new FileInputStream("front/src/private/cs32airobic-firebase-adminsdk-7sap5-9a503e7dc1.json");
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl(DATABASE_URL)

@@ -25,13 +25,22 @@ public class Server {
     // Set the port number for the server to listen on.
     Spark.port(3235);
 
-    String startDateStr = "01-01-2023";
-    String endDateStr = "01-07-2023";
-    List<String> dates = DateListCreator.getDatesBetween(startDateStr, endDateStr);
-    System.out.println(dates);
-    String dateStr = "04-29-2023";
-    String dayOfWeek = DayOfTheWeek.getDayOfWeek(dateStr);
-    System.out.println(dayOfWeek);
+    //String startDateStr = "01-01-2023";
+    //String endDateStr = "01-07-2023";
+    //List<String> dates = DateListCreator.getDatesBetween(startDateStr, endDateStr);
+    //System.out.println(dates);
+    //String dateStr = "04-29-2023";
+    //String dayOfWeek = DayOfTheWeek.getDayOfWeek(dateStr);
+    //System.out.println(dayOfWeek);
+
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.contains("win")) {
+      System.out.println("You are using Windows.");
+    } else if (os.contains("mac")) {
+      System.out.println("You are using macOS.");
+    } else {
+      System.out.println("Your operating system could not be determined.");
+    }
 
     // Set the headers for cross-origin resource sharing (CORS) to allow any origin and any method.
     after(
