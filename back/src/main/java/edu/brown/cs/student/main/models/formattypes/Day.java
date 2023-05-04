@@ -3,11 +3,15 @@ package edu.brown.cs.student.main.models.formattypes;
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.markov.Emission;
 import edu.brown.cs.student.main.rowing.Workout;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Still ironing out format of these records.
@@ -19,13 +23,13 @@ public class Day {
   private Integer numberOfWorkouts;
   private final DayOfWeek name;
   private final List<WorkoutDescription> intensity;
-  private LocalDate date;
+  private Optional<LocalDate> date;
 
   public Day(@Json(name="type") String type,
       @Json(name="workouts") List<Emission> workouts,
       @Json(name="num") Integer numberOfWorkouts,
       @Json(name="name") DayOfWeek name,
-      @Json(name="date") LocalDate date,
+      @Json(name="date") @NotNull Optional<LocalDate> date,
       @Json(name="intensity") List<WorkoutDescription> intensity) {
     this.type = type;
     this.workouts = workouts;
@@ -41,8 +45,7 @@ public class Day {
       newWorkouts.add(emission.copy());
     }
     return new Day(this.type, newWorkouts, this.numberOfWorkouts, this.name,
-            (this.date != null) ? this.date.plusDays(0) : null,
-        new ArrayList<>(this.intensity));
+            this.date, new ArrayList<>(this.intensity));
   }
 
   public void incrementNumWorkouts() {
@@ -66,7 +69,7 @@ public class Day {
   }
 
   public void setDate(LocalDate date) {
-    this.date = date;
+    this.date = Optional.of(date);
   }
 
   /**
@@ -106,17 +109,10 @@ public class Day {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
+    if (this == o) return true;
+    if (o == null || this.getClass() != o.getClass()) return false;
     Day day = (Day) o;
-    return Objects.equals(this.type, day.type) && Objects.equals(this.workouts,
-        day.workouts) && Objects.equals(this.numberOfWorkouts, day.numberOfWorkouts)
-        && Objects.equals(this.name, day.name) && Objects.equals(this.intensity,
-        day.intensity);
+    return Objects.equals(this.type, day.type) && Objects.equals(this.workouts, day.workouts) && Objects.equals(this.numberOfWorkouts, day.numberOfWorkouts) && this.name == day.name && Objects.equals(this.intensity, day.intensity) && Objects.equals(this.date, day.date);
   }
 
   @Override

@@ -6,12 +6,14 @@ import com.squareup.moshi.JsonWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
 import org.jetbrains.annotations.Nullable;
 
 /**
  * A JsonAdapter for the LocalDate class, which we use to store dates in each Day object.
  */
-public class LocalDateJsonAdapter extends JsonAdapter<LocalDate> {
+public class LocalDateJsonAdapter extends JsonAdapter<Optional<LocalDate>> {
 
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
@@ -24,18 +26,18 @@ public class LocalDateJsonAdapter extends JsonAdapter<LocalDate> {
    */
   @Nullable
   @Override
-  public LocalDate fromJson(JsonReader jsonReader) throws IOException {
+  public Optional<LocalDate> fromJson(JsonReader jsonReader) throws IOException {
     if (!jsonReader.hasNext()) {
-      throw new IOException("No date to parse; cannot be empty.");
+      return Optional.empty();
     }
     String date = jsonReader.nextString();
 
     // expected behavior, given the field
-    if (date == "null") {
-      return null;
+    if (date.equals("null")) {
+      return Optional.empty();
     }
 
-    return LocalDate.parse(date, this.formatter);
+    return Optional.of(LocalDate.parse(date, this.formatter));
   }
 
   /**
@@ -46,11 +48,11 @@ public class LocalDateJsonAdapter extends JsonAdapter<LocalDate> {
    * @throws IOException if there is an issue with the JsonWriter.
    */
   @Override
-  public void toJson(JsonWriter jsonWriter, @Nullable LocalDate localDate) throws IOException {
-    if (localDate == null) {
+  public void toJson(JsonWriter jsonWriter, @Nullable Optional<LocalDate> localDate) throws IOException {
+    if (localDate == null || localDate.isEmpty()) {
       jsonWriter.value("null");
     } else {
-      jsonWriter.value(this.formatter.format(localDate));
+      jsonWriter.value(this.formatter.format(localDate.get()));
     }
   }
 }

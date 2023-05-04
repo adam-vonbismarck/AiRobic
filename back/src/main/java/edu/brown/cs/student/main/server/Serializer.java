@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+
 import okio.Buffer;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,7 +52,8 @@ public class Serializer {
    */
   public static <T> T getDeserializedResponse(Class<T> type, InputStream inputStream)
       throws IOException {
-    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
+    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class),
+            new LocalDateJsonAdapter()).build();
     JsonAdapter<T> adapter = moshi.adapter(type);
     return adapter.fromJson(new Buffer().readFrom(inputStream));
   }

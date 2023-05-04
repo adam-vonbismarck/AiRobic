@@ -66,7 +66,7 @@ public class CreatePlan implements Route {
       }
 
       Schedule built = new GenerateLinearPlan().generate(Integer.parseInt(hoursPerWeek), parsedStart, parsedEnd,
-              Workout.TWOKM, Workout.UTT, 0.2);
+              Workout._2K, Workout.UT_2, 0.2);
 
       // gagagagagag colins code
 
