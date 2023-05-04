@@ -1,8 +1,10 @@
 package edu.brown.cs.student.main.models.formattypes;
 
-import com.beust.ah.A;
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.markov.Emission;
+import edu.brown.cs.student.main.rowing.Workout;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,14 +17,16 @@ public class Day {
   private final String type;
   private final List<Emission> workouts;
   private Integer numberOfWorkouts;
-  private final String name;
+  private final DayOfWeek name;
   private final List<WorkoutDescription> intensity;
   private final List<String> subCategory;
+  private LocalDate date;
 
   public Day(@Json(name="type") String type,
       @Json(name="workouts") List<Emission> workouts,
       @Json(name="num") Integer numberOfWorkouts,
-      @Json(name="name") String name,
+      @Json(name="name") DayOfWeek name,
+      @Json(name="date") LocalDate date,
       @Json(name="intensity") List<WorkoutDescription> intensity,
       @Json(name="subcategory") List<String> subCategory) {
     this.type = type;
@@ -31,6 +35,7 @@ public class Day {
     this.name = name;
     this.intensity = intensity;
     this.subCategory = subCategory;
+    this.date = date;
   }
 
   public Day copy() {
@@ -38,7 +43,9 @@ public class Day {
     for (Emission emission : this.workouts) {
       newWorkouts.add(emission.copy());
     }
-    return new Day(this.type, newWorkouts, this.numberOfWorkouts, this.name, this.intensity, this.subCategory);
+    return new Day(this.type, newWorkouts, this.numberOfWorkouts, this.name,
+            (this.date != null) ? this.date.plusDays(0) : null,
+        new ArrayList<>(this.intensity), new ArrayList<>(this.subCategory));
   }
 
   public void incrementNumWorkouts() {
@@ -53,7 +60,7 @@ public class Day {
     return this.numberOfWorkouts;
   }
 
-  public String getName() {
+  public DayOfWeek getName() {
     return this.name;
   }
 
@@ -62,14 +69,16 @@ public class Day {
         (this.subCategory.size() == 0 || this.subCategory.size() == this.numberOfWorkouts);
   }
 
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+
   /**
    *
    * @return
    */
   public List<WorkoutDescription> getIntensityCopy() {
-    ArrayList<WorkoutDescription> copy = new ArrayList<>();
-    copy.addAll(this.intensity);
-    return copy;
+    return new ArrayList<>(this.intensity);
   }
 
   /**
@@ -90,12 +99,13 @@ public class Day {
   @Override
   public String toString() {
     return "Day{" +
-        "type='" + this.type + '\'' +
-        ", workouts=" + this.workouts +
-        ", numberOfWorkouts=" + this.numberOfWorkouts +
-        ", name='" + this.name + '\'' +
-        ", intensity=" + this.intensity +
-        ", subCategory=" + this.subCategory +
+        "type='" + type + '\'' +
+        ", workouts=" + workouts +
+        ", numberOfWorkouts=" + numberOfWorkouts +
+        ", name=" + name +
+        ", intensity=" + intensity +
+        ", subCategory=" + subCategory +
+        ", date=" + date +
         '}';
   }
 
@@ -119,7 +129,7 @@ public class Day {
     return Objects.hash(this.type, this.workouts, this.numberOfWorkouts, this.name, this.intensity, this.subCategory);
   }
 
-  public record WorkoutDescription(@Json(name="intensity") String intensity,
+  public record WorkoutDescription(@Json(name="intensity") Workout intensity,
                                    @Json(name="length") Integer minutes) {
 
   }

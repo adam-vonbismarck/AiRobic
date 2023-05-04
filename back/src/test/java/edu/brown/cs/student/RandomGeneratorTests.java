@@ -3,6 +3,7 @@ package edu.brown.cs.student;
 import edu.brown.cs.student.main.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.formattypes.Day;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
@@ -36,14 +37,14 @@ public class RandomGeneratorTests {
       this.put("those", 0.3);
     }};
 
-    this.negDay = new Day("day", new ArrayList<>(), 7, "Monday",
-        new ArrayList<>(), new ArrayList<>());
+    this.negDay = new Day("day", new ArrayList<>(), 7, DayOfWeek.MONDAY,
+        null, new ArrayList<>(), new ArrayList<>());
 
     this.invalidDistNeg = new HashMap<>() {{
-      this.put(new Day("day", new ArrayList<>(), 11, "Friday",
-          new ArrayList<>(), new ArrayList<>()), 0.5);
-      this.put(new Day("day", new ArrayList<>(), 1, "Tuesday",
-          new ArrayList<>(), new ArrayList<>()), 0.7);
+      this.put(new Day("day", new ArrayList<>(), 11, DayOfWeek.FRIDAY,
+          null, new ArrayList<>(), new ArrayList<>()), 0.5);
+      this.put(new Day("day", new ArrayList<>(), 1, DayOfWeek.TUESDAY,
+          null, new ArrayList<>(), new ArrayList<>()), 0.7);
     }};
 
     this.invalidDistNeg.put(this.negDay, -0.2);

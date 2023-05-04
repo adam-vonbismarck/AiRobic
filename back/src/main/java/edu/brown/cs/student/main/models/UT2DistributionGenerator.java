@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Waiting to see if I will include this code in the WorkoutDistributionByName class, or if I
  * will modify the distributions.
  */
-public class WorkoutDistributionByTime {
+public class UT2DistributionGenerator {
 
   public static int MAX_INTERVALS = 5;
   public static int MIN_INTERVALS = 2;
@@ -21,7 +21,7 @@ public class WorkoutDistributionByTime {
   public static HashMap<Emission, Double> getLowIntensityDistributionByTime(int minutes) {
     HashMap<Emission, Double> newDist = new HashMap<>();
     for (int i = MIN_INTERVALS; i < MAX_INTERVALS + 1; i++) {
-      newDist.put(WorkoutDistributionByTime.produceLowIntensityEmission(i, Math.floorDiv(minutes, i)),
+      newDist.put(UT2DistributionGenerator.produceLowIntensityEmission(i, Math.floorDiv(minutes, i)),
           intervalsProbability.get(i));
     }
     return newDist;

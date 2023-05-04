@@ -1,7 +1,9 @@
 package edu.brown.cs.student;
 
-import edu.brown.cs.student.main.models.LinearModelBuilder;
-import edu.brown.cs.student.main.models.ScheduleBuilder;
+import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
+import edu.brown.cs.student.main.rowing.LinearModelBuilder;
+import edu.brown.cs.student.main.rowing.Workout;
+import edu.brown.cs.student.main.rowing.ScheduleBuilder;
 import edu.brown.cs.student.main.models.WorkoutDistributionByName;
 import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
@@ -12,6 +14,8 @@ import edu.brown.cs.student.main.models.markov.Emission;
 import edu.brown.cs.student.main.models.markov.HiddenState;
 import edu.brown.cs.student.main.models.markov.MarkovModel;
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,17 +41,14 @@ public class ModelTests {
 
   @Test
   public void testLinear()
-      throws IOException, InvalidScheduleException, InvalidDistributionException, FormatterFailureException {
+          throws IOException, InvalidScheduleException, InvalidDistributionException, FormatterFailureException, NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
     Schedule toBuild = null;
-    try {
-      toBuild = builder.minutes(420, 4, 0.2,
-          "Monday", "Friday", "2k", "UT2");
-    } catch (InvalidDistributionException e) {
-      throw new RuntimeException(e);
-    }
-    MarkovModel model = new LinearModelBuilder(new WorkoutDistributionByName()).build(toBuild, "Monday");
-    Schedule schedule = model.generateFormattedEmissions(23, new ScheduleFormatter(toBuild));
+    toBuild = builder.minutesWithDates(300, LocalDate.now(), LocalDate.of(2023, 5, 25), 0.2,
+          Workout.of("2k"), Workout.of("UT2"));
+    MarkovModel model = null;
+    model = new LinearModelBuilder().build(toBuild, LocalDate.now().getDayOfWeek());
+    Schedule schedule = model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     System.out.println(schedule);
   }
 
