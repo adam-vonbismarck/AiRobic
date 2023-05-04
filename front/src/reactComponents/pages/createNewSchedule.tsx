@@ -24,6 +24,7 @@ import "../../styling/GenerateWorkout.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
+import duration from "dayjs/plugin/duration";
 
 /**
 
@@ -52,14 +53,14 @@ function NewSchedule() {
       setEnableGoaL(true);
     }
   };
-  // States for age, goal, and validation errors related to hours per week input.
-  const [age, setAge] = React.useState("");
+  // States for sport, goal, and validation errors related to hours per week input.
+  const [sport, setSport] = React.useState("");
   const [goal, setGoal] = React.useState("");
   const [hoursPerWeek, setHoursPerWeek] = useState("");
   const [hoursPerWeekError, setHoursPerWeekError] = useState("");
 
   const handleSportChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setSport(event.target.value as string);
   };
 
   const handleGoalChange = (event: SelectChangeEvent) => {
@@ -132,7 +133,7 @@ function NewSchedule() {
     event.preventDefault();
 
     setHoursPerWeekEmpty(hoursPerWeek === "");
-    setAgeEmpty(age === "");
+    setAgeEmpty(sport === "");
     setStartDateEmpty(startDate === "");
     setEndDateEmpty(endDate === "");
 
@@ -165,12 +166,18 @@ function NewSchedule() {
     setLoading(true);
 
     try {
+      let hours = Number(hoursPerWeek);
+
+      dayjs.extend(duration);
+
+      const durationObject = dayjs.duration(hours, "hours");
+      const minutes = Math.floor(durationObject.asMinutes());
+
       // Create API url based on input values.
-      let apiUrl = `http://localhost:3535/create-plan?model=${selectedOption}&hoursPerWeek=${hoursPerWeek}&sport=${age}&startDate=${startDate}&endDate=${endDate}`;
+      let apiUrl = `http://localhost:3535/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startDate}&endDate=${endDate}`;
 
       if (selectedOption === "model3") {
         apiUrl += `&goal=${goal}`;
-        console.log(goal);
       }
 
       // Call API to generate workout plan.
@@ -184,11 +191,14 @@ function NewSchedule() {
         }, 5000);
       } else {
         setLoading(false);
+        setSubmitIssue(true);
         setSubmitError("Error creating workout plan");
+        console.log(`${hours} hours = ${minutes} minutes`);
       }
     } catch (error) {
       setLoading(false);
-      setSubmitError("Error creating workout plan");
+      setSubmitIssue(true);
+      setSubmitError("Error creating workout plan.");
     }
   };
 
@@ -426,7 +436,7 @@ function NewSchedule() {
                         className="custom-select"
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={age}
+                        value={sport}
                         label="Sport"
                         onChange={handleSportChange}
                         error={ageEmpty}
