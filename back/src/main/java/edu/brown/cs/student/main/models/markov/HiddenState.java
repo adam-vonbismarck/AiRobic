@@ -79,14 +79,28 @@ public class HiddenState {
       return false;
     }
     HiddenState that = (HiddenState) o;
+
     return Objects.equals(this.emissionDistribution, that.emissionDistribution)
-        && Objects.equals(this.name, that.name);
+            && Objects.equals(this.name, that.name)
+            && Objects.equals(this.flattenTransitionDist(), that.flattenTransitionDist());
+  }
+
+  private HashMap<String, Double> flattenTransitionDist() {
+    HashMap<String, Double> flattenedDistThis = new HashMap<>();
+    for (HiddenState key : this.transitionDistribution.keySet()) {
+      flattenedDistThis.put(key.name, this.transitionDistribution.get(key));
+    }
+    return flattenedDistThis;
   }
 
   // come back and add in emission dist
+
   @Override
   public String toString() {
-    return "HiddenState{" + "name='" + this.name + '\'' +
-        '}';
+    return "HiddenState{" +
+            "transitionDistribution=" + this.flattenTransitionDist() +
+            ", emissionDistribution=" + this.emissionDistribution +
+            ", name='" + this.name + '\'' +
+            '}';
   }
 }

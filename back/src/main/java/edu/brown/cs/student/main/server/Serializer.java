@@ -1,6 +1,8 @@
 package edu.brown.cs.student.main.server;
 
 import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.JsonReader;
+import com.squareup.moshi.JsonWriter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import java.io.FileInputStream;
@@ -9,22 +11,27 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+
 import okio.Buffer;
+import org.jetbrains.annotations.Nullable;
 
 /** A static class containing utility methods for serializing and deserializing API responses. */
 public class Serializer {
 
   /**
-   * This method serializes the results HashMap for returning as the API response. Used the gear up
-   * to figure out how to use this parameterized type creator.
+   * This method serializes the results HashMap for returning as the API response. It also ensures
+   * that LocalDates can be serialized, as we use them in our Day objects.
    *
-   * @param map The map to be serialized
+   * @param map - The map to be serialized
    * @return The serialized version of the map
    */
   public static String serialize(HashMap<String, Object> map) {
-    Moshi moshi = new Moshi.Builder().build();
+    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
     Type genericMap = Types.newParameterizedType(Map.class, String.class, Object.class);
     JsonAdapter<Map<String, Object>> adapter = moshi.adapter(genericMap);
     return adapter.toJson(map);
@@ -34,17 +41,19 @@ public class Serializer {
    * Found this javadoc, which helped us make this method generic: <a
    * href="https://docs.oracle.com/javase/tutorial/extra/generics/literals.html">...</a>. This
    * method takes in a class type and an input stream, and returns the serialized version of the
-   * input stream as the class type.
+   * input stream as the class type. It also ensures that LocalDates can be deserialized, as we use
+   * them in our Day objects.
    *
-   * @param type Type of the deserialized response
-   * @param inputStream Input stream to be deserialized
-   * @param <T> The same type as the type parameter, which will be returned by the method
+   * @param type - Type of the deserialized response
+   * @param inputStream - Input stream to be deserialized
+   * @param <T> - The same type as the type parameter, which will be returned by the method
    * @return The deserialized response
    * @throws IOException If there is an error reading from the input stream.
    */
   public static <T> T getDeserializedResponse(Class<T> type, InputStream inputStream)
       throws IOException {
-    Moshi moshi = new Moshi.Builder().build();
+    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class),
+            new LocalDateJsonAdapter()).build();
     JsonAdapter<T> adapter = moshi.adapter(type);
     return adapter.fromJson(new Buffer().readFrom(inputStream));
   }
@@ -79,4 +88,5 @@ public class Serializer {
     clientConnection.connect();
     return Serializer.getDeserializedResponse(type, clientConnection.getInputStream());
   }
+
 }

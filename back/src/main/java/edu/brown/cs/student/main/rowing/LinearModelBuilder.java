@@ -1,11 +1,18 @@
-package edu.brown.cs.student.main.models;
+package edu.brown.cs.student.main.rowing;
 
+import edu.brown.cs.student.main.helpers.DayOfTheWeek;
+import edu.brown.cs.student.main.models.ModelBuilder;
+import edu.brown.cs.student.main.models.WorkoutDistributionByName;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
+import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.MarkovModel;
+
+import java.io.IOException;
+import java.time.DayOfWeek;
 
 /**
  * The LinearModelBuilder class contains a build method that takes in a schedule and a start day,
@@ -15,17 +22,16 @@ import edu.brown.cs.student.main.models.markov.MarkovModel;
  */
 public class LinearModelBuilder {
 
-  private WorkoutDistributionByName dists;
+  private RowingWorkoutByName dists;
 
   /**
-   * The constructor for the LinearModelBuilder class, which takes in a WorkoutDistributionByName
+   * The constructor for the LinearModelBuilder class, which loads a RowingWorkoutByName
    * instance that will get an emission distribution given a key name (that represents what category
    * of workout the hidden state should emit).
    *
-   * @param dists - the aforementioned WorkoutDistributionByName instance.
    */
-  public LinearModelBuilder(WorkoutDistributionByName dists) {
-    this.dists = dists;
+  public LinearModelBuilder() throws IOException {
+    this.dists = new RowingWorkoutByName();
   }
 
   /**
@@ -40,8 +46,8 @@ public class LinearModelBuilder {
    * @throws InvalidScheduleException if the schedule to be built does not have enough information
    * to build the model.
    */
-  public MarkovModel build(Schedule schedule, String startDay)
-      throws InvalidDistributionException, InvalidScheduleException {
+  public MarkovModel build(Schedule schedule, DayOfWeek startDay)
+          throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException {
     ModelBuilder builder = new ModelBuilder();
 
     // build up hidden states, with emission distributions based on provided key in the schedule
@@ -55,7 +61,7 @@ public class LinearModelBuilder {
       for (WorkoutDescription intensity : day.getIntensityCopy()) {
         builder.generateNewState(this.encodeDay(day.getName(), workoutCounter));
         builder.setEmissionDistribution(this.encodeDay(day.getName(), workoutCounter),
-            this.dists.generateEmissionDistribution(intensity));
+            this.dists.getEmissionDistGoal(intensity));
       }
     }
 
@@ -77,8 +83,8 @@ public class LinearModelBuilder {
    * @param counter - the workout number on that day to be encoded.
    * @return - the encoded HiddenState name.
    */
-  public String encodeDay(String day, int counter) {
-    return "Day: " + day + ", workout: " + counter;
+  public String encodeDay(DayOfWeek day, int counter) {
+    return "Day: " + day.toString() + ", workout: " + counter;
   }
 
 }
