@@ -22,7 +22,7 @@ public class CheckUser implements Route {
     }
     else{
       String where = "users/" + username + "/valid";
-      String valid = new DatabaseCommandsSDK().get(where);
+      String valid = new DatabaseCommands().get(where);
       if (Objects.equals(valid, "\"true\"")) {
         output.put("result", "success");
         output.put("message", "True");

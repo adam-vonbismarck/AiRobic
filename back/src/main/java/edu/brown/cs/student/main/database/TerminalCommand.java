@@ -12,6 +12,10 @@ public class TerminalCommand {
   // This method runs a terminal command and gets its output
   public String get() throws IOException, InterruptedException {
     String[] command = {"/bin/bash", "-c", this.input};
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.contains("win")) {
+      command = new String[]{"cmd.exe", "/c", this.input};
+    }
     ProcessBuilder builder = new ProcessBuilder(command);
     Process process = builder.start();
     InputStream is = process.getInputStream();
@@ -22,6 +26,10 @@ public class TerminalCommand {
   // This method runs a terminal command
   public void run() throws IOException, InterruptedException {
     String[] command = {"/bin/bash", "-c", this.input};
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.contains("win")) {
+      command = new String[]{"cmd.exe", "/c", this.input};
+    }
     ProcessBuilder builder = new ProcessBuilder(command);
     builder.start();
   }

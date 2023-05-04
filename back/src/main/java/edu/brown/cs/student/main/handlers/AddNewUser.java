@@ -22,14 +22,14 @@ public class AddNewUser implements Route {
     }
     else{
       String where = "users/" + username + "/valid";
-      String valid = new NonSusDatabaseCommands().get(where);
+      String valid = new DatabaseCommands().get(where);
       if (Objects.equals(valid, "\"true\"")) {
         output.put("result", "error_bad_request");
         output.put("message", "ERROR: User already exists.");
       }
       else{
         String info = "{\"" + username + "\":{\"schedule\":\"\",\"valid\":\"true\"}}";
-        new DatabaseCommandsSDK().put(info, "users");
+        new DatabaseCommands().update(info, "users");
         output.put("result", "success");
         output.put("message", "Successfully added " + username);
       }

@@ -33,14 +33,7 @@ public class Server {
     //String dayOfWeek = DayOfTheWeek.getDayOfWeek(dateStr);
     //System.out.println(dayOfWeek);
 
-    String os = System.getProperty("os.name").toLowerCase();
-    if (os.contains("win")) {
-      System.out.println("You are using Windows.");
-    } else if (os.contains("mac")) {
-      System.out.println("You are using macOS.");
-    } else {
-      System.out.println("Your operating system could not be determined.");
-    }
+
 
     // Set the headers for cross-origin resource sharing (CORS) to allow any origin and any method.
     after(

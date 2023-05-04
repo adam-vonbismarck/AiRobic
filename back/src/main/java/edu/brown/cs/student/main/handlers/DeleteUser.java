@@ -24,7 +24,7 @@ public class DeleteUser implements Route {
       output.put("message", "ERROR: Invalid input.");
     }
     else{
-      new NonSusDatabaseCommands().delete("users/" + username);
+      new DatabaseCommands().delete("users/" + username);
       output.put("result", "success");
       output.put("message", "Successfully deleted " + username);
     }

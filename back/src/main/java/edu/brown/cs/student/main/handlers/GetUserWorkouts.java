@@ -20,7 +20,7 @@ public class GetUserWorkouts implements Route {
     }
     else{
       String where = "users/" + username + "/schedule";
-      String workoutJSON = new NonSusDatabaseCommands().get(where);
+      String workoutJSON = new DatabaseCommands().get(where);
       System.out.println(workoutJSON);
       output.put("result", "success");
       output.put("message", workoutJSON.replace("\"", ""));
