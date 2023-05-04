@@ -57,5 +57,11 @@ public class Server {
 
     // Print a message to indicate that the server has started successfully.
     System.out.println("Server started.");
+
+    // Print a message to indicate that the server will not work for Windows.
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.contains("win")) {
+      System.out.println("This code will not work for Windows");
+    }
   }
 }
