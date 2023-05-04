@@ -58,7 +58,7 @@ function Register() {
                     setSubmitError("This email is already registered, please Sign in instead")
                   }
                 }).catch(err => {
-                  setSubmitError("Error checking user")
+                  setSubmitError("Error contacting our server, Please try again")
                   setSubmitIssue(true)
                   console.log("error checking user DISPLAY ERROR MESSAGE")
                 })
