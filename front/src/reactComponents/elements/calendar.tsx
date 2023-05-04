@@ -6,6 +6,7 @@ import { renderWorkoutDetails } from "./workoutDetails";
 import { Workout } from "./types";
 import { useState } from "react";
 import "../../styling/Calendar.css";
+import { AnimatePresence, motion } from "framer-motion";
 
 const WorkoutCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -83,48 +84,65 @@ const WorkoutCalendar: React.FC = () => {
     setSelectedDate(null);
   };
 
-  if (!selectedDate) {
-    return (
-      <div
-        className="workout-calendar"
-        role="application"
-        aria-label="Calendar of workout events"
-      >
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={{
-            left: "prev,next",
-            center: "title",
-            right: "today",
-          }}
-          initialView="dayGridMonth"
-          // editable={true}
-          selectable={true}
-          selectMirror={true}
-          dayMaxEvents={true}
-          firstDay={1}
-          events={workouts}
-          select={handleDateSelect}
-          aria-label="Interactive calendar of workout events"
-          aria-roledescription="Calendar"
-          aria-multiselectable={false}
-        />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        {renderWorkoutDetails({
-          selectedDate,
-          workoutDetails,
-          setWorkoutDetails,
-          workouts,
-          setWorkouts,
-          closeFullscreen,
-        })}
-      </div>
-    );
-  }
+  return (
+    <motion.div
+      className="workout-calendar"
+      role="application"
+      aria-label="Calendar of workout events"
+      initial={{ opacity: 0, x: 70 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.0, duration: 0.5 }}
+    >
+      <AnimatePresence mode={"wait"}>
+        {selectedDate ? (
+          <motion.div
+            key="popup"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {renderWorkoutDetails({
+              selectedDate,
+              workoutDetails,
+              setWorkoutDetails,
+              workouts,
+              setWorkouts,
+              closeFullscreen,
+            })}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="calendar"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              headerToolbar={{
+                left: "prev,next",
+                center: "title",
+                right: "today",
+              }}
+              initialView="dayGridMonth"
+              // editable={true}
+              selectable={true}
+              selectMirror={true}
+              dayMaxEvents={true}
+              firstDay={1}
+              events={workouts}
+              select={handleDateSelect}
+              aria-label="Interactive calendar of workout events"
+              aria-roledescription="Calendar"
+              aria-multiselectable={false}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
 };
 
 export default WorkoutCalendar;

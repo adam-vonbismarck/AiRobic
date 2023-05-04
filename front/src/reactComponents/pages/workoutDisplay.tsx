@@ -7,6 +7,7 @@ import "../../styling/App.css";
 import LoggedInMenu from "../elements/loggedInMenu";
 import WorkoutCalendar from "../elements/calendar";
 import { Parallax } from "react-parallax";
+import { motion } from "framer-motion";
 
 function WorkoutDisplay() {
   return (
@@ -24,7 +25,13 @@ function WorkoutDisplay() {
           <LoggedInMenu description="Click on a day for more details and to record your data." />
         </div>
         <div className="content-wrapper" role="article">
-          <h1>Your Workout Plan</h1>
+          <motion.h1
+            initial={{ opacity: 0, x: 70 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.0, duration: 0.5 }}
+          >
+            Your Workout Plan
+          </motion.h1>
           <WorkoutCalendar />
         </div>
       </div>

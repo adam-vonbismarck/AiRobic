@@ -45,6 +45,14 @@ public class DatabaseCommandsSDK {
         targetRef.updateChildrenAsync(data);
     }
 
+
+
+
+
+
+
+
+
     public void delete(String where) {
         DatabaseReference targetRef = ref.child(where);
         targetRef.removeValueAsync();
