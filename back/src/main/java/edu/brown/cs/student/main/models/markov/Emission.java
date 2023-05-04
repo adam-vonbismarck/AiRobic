@@ -31,6 +31,10 @@ public class Emission {
         this.heartRate, this.rpe);
   }
 
+  public double getTime() {
+    return this.time;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
