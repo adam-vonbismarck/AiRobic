@@ -473,8 +473,8 @@ function NewSchedule() {
                         aria-invalid={goalEmpty}
                         aria-describedby="goal-error"
                       >
-                        <MenuItem value={"2000m"}>2000m Test</MenuItem>
-                        <MenuItem value={"6000m"}>6000m Test</MenuItem>
+                        <MenuItem value={"2k"}>2000m Test</MenuItem>
+                        <MenuItem value={"6k"}>6000m Test</MenuItem>
                         <MenuItem value={"30r20"}>30 mins r20</MenuItem>
                       </Select>
                     </FormControl>
