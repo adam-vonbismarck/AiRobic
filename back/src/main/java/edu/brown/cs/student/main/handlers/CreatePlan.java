@@ -112,7 +112,8 @@ public class CreatePlan implements Route {
         try{
           Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
                   Workout._2K, Workout.UT_2, 0.2);
-          new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+          System.out.println(Serializer.serializeSchedule(built));
+          new DatabaseCommands().put(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
         }
         catch (Exception e){
           System.out.println(e.getMessage());

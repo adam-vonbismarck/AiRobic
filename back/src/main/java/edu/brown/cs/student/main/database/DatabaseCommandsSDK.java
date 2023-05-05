@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 
 /*
 Replace "path/to/your/serviceAccountKey.json" with the actual path to your Firebase service
-account key JSON file. This file can be obtained from the Firebase console.
+account key JSON file.json. This file.json can be obtained from the Firebase console.
  */
 public class DatabaseCommandsSDK {
   private static final String DATABASE_URL = "https://cs32airobic-default-rtdb.firebaseio.com/";

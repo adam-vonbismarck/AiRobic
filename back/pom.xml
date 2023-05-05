@@ -148,7 +148,7 @@
       </plugin>
 
       <!--
-            We use SortPom to apply ordering and formatting to this pom.xml file.
+            We use SortPom to apply ordering and formatting to this pom.xml file.json.
       -->
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
@@ -163,7 +163,7 @@
           <expandEmptyElements>false</expandEmptyElements>
         </configuration>
         <executions>
-          <!-- sorts the pom.xml file during the compile phase -->
+          <!-- sorts the pom.xml file.json during the compile phase -->
           <execution>
             <goals>
               <goal>sort</goal>

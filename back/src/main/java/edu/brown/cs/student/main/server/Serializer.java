@@ -28,7 +28,7 @@ public class Serializer {
    * @return The serialized version of the map
    */
   public static String serialize(HashMap<String, Object> map) {
-    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
+    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class), new LocalDateJsonAdapter()).build();
     Type genericMap = Types.newParameterizedType(Map.class, String.class, Object.class);
     JsonAdapter<Map<String, Object>> adapter = moshi.adapter(genericMap);
     return adapter.toJson(map);
@@ -41,7 +41,7 @@ public class Serializer {
    * @return The serialized version of the schedule
    */
   public static String serializeSchedule(Schedule schedule) {
-    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
+    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class), new LocalDateJsonAdapter()).build();
     JsonAdapter<Schedule> adapter = moshi.adapter(Schedule.class);
     return adapter.toJson(schedule);
   }
@@ -72,13 +72,13 @@ public class Serializer {
 
   /**
    * Similar to the method above, this method takes in a class type and a filename instead of an
-   * InputStream, and returns the serialized version of the file as the class type.
+   * InputStream, and returns the serialized version of the file.json as the class type.
    *
    * @param type Type of the deserialized response
-   * @param filename JSON file to be deserialized
+   * @param filename JSON file.json to be deserialized
    * @param <T> The same type as the type parameter, which will be returned by the method
    * @return The deserialized response
-   * @throws IOException If there is an error reading from the file
+   * @throws IOException If there is an error reading from the file.json
    */
   public static <T> T getDeserializedResponse(Class<T> type, String filename) throws IOException {
     return getDeserializedResponse(type, new FileInputStream(filename));

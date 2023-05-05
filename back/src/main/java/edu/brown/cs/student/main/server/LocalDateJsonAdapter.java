@@ -15,9 +15,9 @@ public class LocalDateJsonAdapter extends JsonAdapter<Optional<LocalDate>> {
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
   /**
-   * This method defines how to read a date from a Json file.
+   * This method defines how to read a date from a Json file.json.
    *
-   * @param jsonReader - the reader which reads said Json file.
+   * @param jsonReader - the reader which reads said Json file.json.
    * @return the deserialized LocalDate.
    * @throws IOException if the reader errors or if the field is empty.
    */
@@ -38,7 +38,7 @@ public class LocalDateJsonAdapter extends JsonAdapter<Optional<LocalDate>> {
   }
 
   /**
-   * The toJson method defines how a LocalDate should be written into a Json file.
+   * The toJson method defines how a LocalDate should be written into a Json file.json.
    *
    * @param jsonWriter - a reference to where this Json should be written.
    * @param localDate - the date to write to this reference.

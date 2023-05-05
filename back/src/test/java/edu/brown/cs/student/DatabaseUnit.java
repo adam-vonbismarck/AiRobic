@@ -17,7 +17,7 @@ public class DatabaseUnit {
     Thread.sleep(2000);
   }
 
-  // Empty file test
+  // Empty file.json test
   @Test
   public void testEmpty() throws IOException, InterruptedException {
     String actual = this.database.get("test");
