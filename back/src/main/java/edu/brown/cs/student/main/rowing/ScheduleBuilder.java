@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The ScheduleBuilder class builds schedules given a number of minutes and a percentage of high
@@ -151,7 +152,7 @@ public class ScheduleBuilder {
   private void distributeWorkouts(ArrayList<Day> days, long workouts) {
     for (int j = 0; j < NUM_DAYS; j++) {
       days.add(new Day("day", new ArrayList<>(), 0, DayOfWeek.of(j + 1),
-          null, new ArrayList<>(), new ArrayList<>()));
+          Optional.empty(), new ArrayList<>()));
     }
 
     if (workouts <= 0) {

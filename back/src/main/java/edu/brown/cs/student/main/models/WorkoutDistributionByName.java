@@ -21,6 +21,7 @@ public class WorkoutDistributionByName {
   public WorkoutDistributionByName(String filename) throws IOException {
     this.map = Serializer.getDeserializedResponse(WorkoutDistMap.class,
         filename);
+    System.out.println(this.map);
   }
 
   public HashMap<Emission, Double> generateEmissionDistribution(WorkoutDescription name) throws NoWorkoutTypeException {

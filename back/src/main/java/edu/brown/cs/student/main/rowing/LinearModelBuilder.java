@@ -61,7 +61,7 @@ public class LinearModelBuilder {
       for (WorkoutDescription intensity : day.getIntensityCopy()) {
         builder.generateNewState(this.encodeDay(day.getName(), workoutCounter));
         builder.setEmissionDistribution(this.encodeDay(day.getName(), workoutCounter),
-            this.dists.getEmissionDistGoal(intensity));
+            this.dists.getEmissionDistNoGoal(intensity));
       }
     }
 

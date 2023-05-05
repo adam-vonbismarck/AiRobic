@@ -89,7 +89,8 @@ public class RandomGenerator {
       }
       sum += currProb;
     }
-    if (Math.round(sum*1000000)/1000000 != 1) {
+
+    if (Math.round(sum*1000000.0)/1000000.0 != 1) {
       throw new InvalidDistributionException("Distribution probabilities did not sum to 1.",
           distribution);
     }

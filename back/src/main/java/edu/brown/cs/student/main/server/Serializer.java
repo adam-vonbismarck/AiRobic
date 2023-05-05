@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+
+import edu.brown.cs.student.main.models.formattypes.Schedule;
 import okio.Buffer;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,6 +39,18 @@ public class Serializer {
   }
 
   /**
+   * This method serializes the schedule that needs to be returned.
+   *
+   * @param schedule - The schedule to be serialized
+   * @return The serialized version of the schedule
+   */
+  public static String serializeSchedule(Schedule schedule) {
+    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
+    JsonAdapter<Schedule> adapter = moshi.adapter(Schedule.class);
+    return adapter.toJson(schedule);
+  }
+
+  /**
    * Found this javadoc, which helped us make this method generic: <a
    * href="https://docs.oracle.com/javase/tutorial/extra/generics/literals.html">...</a>. This
    * method takes in a class type and an input stream, and returns the serialized version of the
@@ -50,7 +65,8 @@ public class Serializer {
    */
   public static <T> T getDeserializedResponse(Class<T> type, InputStream inputStream)
       throws IOException {
-    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
+    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class),
+            new LocalDateJsonAdapter()).build();
     JsonAdapter<T> adapter = moshi.adapter(type);
     return adapter.fromJson(new Buffer().readFrom(inputStream));
   }

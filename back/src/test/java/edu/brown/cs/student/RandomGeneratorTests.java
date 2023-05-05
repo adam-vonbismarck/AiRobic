@@ -6,6 +6,8 @@ import edu.brown.cs.student.main.models.formattypes.Day;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,13 +40,13 @@ public class RandomGeneratorTests {
     }};
 
     this.negDay = new Day("day", new ArrayList<>(), 7, DayOfWeek.MONDAY,
-        null, new ArrayList<>(), new ArrayList<>());
+        Optional.empty(), new ArrayList<>());
 
     this.invalidDistNeg = new HashMap<>() {{
       this.put(new Day("day", new ArrayList<>(), 11, DayOfWeek.FRIDAY,
-          null, new ArrayList<>(), new ArrayList<>()), 0.5);
+          Optional.empty(), new ArrayList<>()), 0.5);
       this.put(new Day("day", new ArrayList<>(), 1, DayOfWeek.TUESDAY,
-          null, new ArrayList<>(), new ArrayList<>()), 0.7);
+          Optional.empty(), new ArrayList<>()), 0.7);
     }};
 
     this.invalidDistNeg.put(this.negDay, -0.2);
