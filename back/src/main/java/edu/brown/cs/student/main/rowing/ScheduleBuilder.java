@@ -16,16 +16,22 @@ import java.util.Optional;
 /**
  * The ScheduleBuilder class builds schedules given a number of minutes and a percentage of high
  * intensity work OR a number of low intensity/high intensity workouts per week. From here, the
- * ScheduleBuilder class builds a reasonable schedule (with intensity labels provided) for use
- * in generating a MarkovModel.
+ * ScheduleBuilder class builds a reasonable schedule (with intensity labels provided) for use in
+ * generating a MarkovModel.
  */
 public class ScheduleBuilder {
 
   public static int NUM_DAYS = 7;
   public static int NUM_WORKOUT_DAYS = 6;
 
-  public Schedule minutesWithDates(int minutes, LocalDate startDay, LocalDate endDay, double highPercent,
-      Workout highIntensityLabel, Workout lowIntensityLabel) throws InvalidDistributionException {
+  public Schedule minutesWithDates(
+      int minutes,
+      LocalDate startDay,
+      LocalDate endDay,
+      double highPercent,
+      Workout highIntensityLabel,
+      Workout lowIntensityLabel)
+      throws InvalidDistributionException {
     int weekCounter = 0;
     int numDays = startDay.datesUntil(endDay).toList().size();
 
@@ -39,8 +45,15 @@ public class ScheduleBuilder {
 
     weekCounter++;
 
-    Schedule schedule = this.minutes(minutes, weekCounter, highPercent, startDay.getDayOfWeek(),
-        endDay.getDayOfWeek(), highIntensityLabel, lowIntensityLabel);
+    Schedule schedule =
+        this.minutes(
+            minutes,
+            weekCounter,
+            highPercent,
+            startDay.getDayOfWeek(),
+            endDay.getDayOfWeek(),
+            highIntensityLabel,
+            lowIntensityLabel);
 
     LocalDate dummyDate = startDay.minusDays(1);
     for (Week week : schedule.weeks()) {
@@ -50,14 +63,14 @@ public class ScheduleBuilder {
       }
     }
 
-    assert(dummyDate.equals(endDay));
+    assert (dummyDate.equals(endDay));
     return schedule;
   }
 
   /**
    * The minutes call takes in a host of parameters, and builds a schedule (designed with rowing in
-   * mind) that will be reasonable given the time constraint. In particular, it calculates the number
-   * of low and high intensity workouts, and passes the problem off to the "workouts" method.
+   * mind) that will be reasonable given the time constraint. In particular, it calculates the
+   * number of low and high intensity workouts, and passes the problem off to the "workouts" method.
    *
    * @param minutes - approximate minutes per week the user has
    * @param numWeeks - the number of weeks the schedule should be
@@ -67,41 +80,61 @@ public class ScheduleBuilder {
    * @param highIntensityLabel - the category of workout that should be high intensity
    * @param lowIntensityLabel - the category of workout that should be low intensity
    * @return a schedule that fits these constraints.
-   * @throws InvalidDistributionException if the percentage of high intensity work is not between
-   * 0 and 1.
+   * @throws InvalidDistributionException if the percentage of high intensity work is not between 0
+   *     and 1.
    */
-  public Schedule minutes(int minutes, int numWeeks, double highPercent, DayOfWeek startDay, DayOfWeek endDay,
-      Workout highIntensityLabel, Workout lowIntensityLabel) throws InvalidDistributionException {
-    RandomGenerator.validateDistribution(String.class, new HashMap<>() {{
-      this.put("High intensity", highPercent);
-      this.put("Low intensity", 1 - highPercent);
-    }});
+  public Schedule minutes(
+      int minutes,
+      int numWeeks,
+      double highPercent,
+      DayOfWeek startDay,
+      DayOfWeek endDay,
+      Workout highIntensityLabel,
+      Workout lowIntensityLabel)
+      throws InvalidDistributionException {
+    RandomGenerator.validateDistribution(
+        String.class,
+        new HashMap<>() {
+          {
+            this.put("High intensity", highPercent);
+            this.put("Low intensity", 1 - highPercent);
+          }
+        });
 
     // calculate high intensity minutes, with a minimum of 60
-    long highIntensity = Math.round(Math.max(highPercent*minutes, 60));
+    long highIntensity = Math.round(Math.max(highPercent * minutes, 60));
 
     // calculate low intensity minutes from high intensity minutes
     long lowIntensity = minutes - highIntensity;
 
-    // calculate the number of high intensity workouts, assuming each is 60 minutes, with a maximum of 4
+    // calculate the number of high intensity workouts, assuming each is 60 minutes, with a maximum
+    // of 4
     long numHighIntensity = Math.min(Math.floorDiv(highIntensity, 60), 4);
 
-    // find the length of low intensity workouts, with a minimum of 60 minute sessions, and a maximum
+    // find the length of low intensity workouts, with a minimum of 60 minute sessions, and a
+    // maximum
     // of 10 sessions per week
-    long lowIntensityWorkoutLength = Math.max(60, lowIntensity/(10 - numHighIntensity));
+    long lowIntensityWorkoutLength = Math.max(60, lowIntensity / (10 - numHighIntensity));
 
     // use the low intensity workout length and the number of low intensity minutes to calculate the
     // number of low intensity workouts
     long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
 
     // call on the rest of the schedule building
-    return this.workouts(numHighIntensity, numLowIntensity, numWeeks, startDay, endDay,
-        highIntensityLabel, lowIntensityLabel, lowIntensityWorkoutLength);
+    return this.workouts(
+        numHighIntensity,
+        numLowIntensity,
+        numWeeks,
+        startDay,
+        endDay,
+        highIntensityLabel,
+        lowIntensityLabel,
+        lowIntensityWorkoutLength);
   }
 
   /**
-   * This method builds a schedule given a host of parameters, including the number of high and
-   * low intensity workouts per week. Using this information, the method distributes these workouts
+   * This method builds a schedule given a host of parameters, including the number of high and low
+   * intensity workouts per week. Using this information, the method distributes these workouts
    * evenly over the course of an example week, and builds the schedule from there.
    *
    * @param highIntensity - the number of high intensity workouts in the schedule
@@ -114,8 +147,15 @@ public class ScheduleBuilder {
    * @param lowLength - the length of a given low intensity workout
    * @return the built schedule, given these constraints.
    */
-  public Schedule workouts(long highIntensity, long lowIntensity, int numWeeks, DayOfWeek startDay, DayOfWeek endDay,
-      Workout highIntensityLabel, Workout lowIntensityLabel, long lowLength) {
+  public Schedule workouts(
+      long highIntensity,
+      long lowIntensity,
+      int numWeeks,
+      DayOfWeek startDay,
+      DayOfWeek endDay,
+      Workout highIntensityLabel,
+      Workout lowIntensityLabel,
+      long lowLength) {
 
     // will inline comment once the method is confirmed.
 
@@ -124,8 +164,8 @@ public class ScheduleBuilder {
     ArrayList<Day> exampleDays = new ArrayList<>();
 
     this.distributeWorkouts(exampleDays, workouts);
-    this.distributeIntensities(exampleDays, workouts, highIntensity, highIntensityLabel,
-        lowIntensityLabel, lowLength);
+    this.distributeIntensities(
+        exampleDays, workouts, highIntensity, highIntensityLabel, lowIntensityLabel, lowLength);
 
     Week exampleWeek = new Week("week", exampleDays);
 
@@ -151,8 +191,14 @@ public class ScheduleBuilder {
    */
   private void distributeWorkouts(ArrayList<Day> days, long workouts) {
     for (int j = 0; j < NUM_DAYS; j++) {
-      days.add(new Day("day", new ArrayList<>(), 0, DayOfWeek.of(j + 1),
-          Optional.empty(), new ArrayList<>()));
+      days.add(
+          new Day(
+              "day",
+              new ArrayList<>(),
+              0,
+              DayOfWeek.of(j + 1),
+              Optional.empty(),
+              new ArrayList<>()));
     }
 
     if (workouts <= 0) {
@@ -176,18 +222,21 @@ public class ScheduleBuilder {
     while (w < NUM_WORKOUT_DAYS) {
       days.get(w).incrementNumWorkouts();
       workouts--;
-      cumulativeCounter += ((float) NUM_WORKOUT_DAYS/remainingWorkouts);
+      cumulativeCounter += ((float) NUM_WORKOUT_DAYS / remainingWorkouts);
       w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
-    assert(workouts == 0);
+    assert (workouts == 0);
   }
 
-  /**
-   * Still ensuring that these next two methods are reasonable for schedule generation.
-   */
-  private void distributeIntensities(List<Day> days, long workouts, long highIntensity,
-      Workout highIntensityLabel, Workout lowIntensityLabel, long lowLength) {
+  /** Still ensuring that these next two methods are reasonable for schedule generation. */
+  private void distributeIntensities(
+      List<Day> days,
+      long workouts,
+      long highIntensity,
+      Workout highIntensityLabel,
+      Workout lowIntensityLabel,
+      long lowLength) {
 
     if (highIntensity <= 0) {
       this.fillInLow(days, lowIntensityLabel, lowLength);
@@ -212,7 +261,7 @@ public class ScheduleBuilder {
     while (w < NUM_WORKOUT_DAYS) {
       days.get(w).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
       highIntensity--;
-      cumulativeCounter += ((float) NUM_WORKOUT_DAYS/remainingHighInt);
+      cumulativeCounter += ((float) NUM_WORKOUT_DAYS / remainingHighInt);
       w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
@@ -225,7 +274,8 @@ public class ScheduleBuilder {
         continue;
       }
       for (int i = 0; i <= day.getNumberOfWorkouts() - day.getIntensityLength(); i++) {
-        day.addFirstIntensity(new WorkoutDescription(lowIntensityLabel, Math.toIntExact(lowLength)));
+        day.addFirstIntensity(
+            new WorkoutDescription(lowIntensityLabel, Math.toIntExact(lowLength)));
       }
     }
   }

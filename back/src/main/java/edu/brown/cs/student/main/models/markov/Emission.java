@@ -1,11 +1,10 @@
 package edu.brown.cs.student.main.models.markov;
 
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonClass;
 import java.util.Objects;
 
-/**
- * Still ironing out details of Emission class and HiddenState class.
- */
+/** Still ironing out details of Emission class and HiddenState class. */
 public class Emission {
 
   private final String workout;
@@ -14,11 +13,13 @@ public class Emission {
   private Double heartRate;
   private Integer rpe;
 
-  public Emission(@Json(name = "workout") String workout,
-      @Json(name="minutes") double time,
-      @Json(name="completion") boolean completed,
-      @Json(name="HR") Double heartRate,
-      @Json(name="RPE") Integer rpe) {
+  @JsonClass(generateAdapter = true)
+  public Emission(
+      @Json(name = "workout") String workout,
+      @Json(name = "minutes") double time,
+      @Json(name = "completion") boolean completed,
+      @Json(name = "HR") Double heartRate,
+      @Json(name = "RPE") Integer rpe) {
     this.workout = workout;
     this.time = time;
     this.completed = completed;
@@ -27,12 +28,15 @@ public class Emission {
   }
 
   public Emission copy() {
-    return new Emission(this.workout, this.time, this.completed,
-        this.heartRate, this.rpe);
+    return new Emission(this.workout, this.time, this.completed, this.heartRate, this.rpe);
   }
 
   public double getTime() {
     return this.time;
+  }
+
+  public Emission setTime(double time) {
+    return new Emission(this.workout, time, this.completed, this.heartRate, this.rpe);
   }
 
   @Override
@@ -44,9 +48,11 @@ public class Emission {
       return false;
     }
     Emission emission = (Emission) o;
-    return this.completed == emission.completed && Objects.equals(this.workout, emission.workout)
-        && Objects.equals(this.time, emission.time) && Objects.equals(this.heartRate,
-        emission.heartRate) && Objects.equals(this.rpe, emission.rpe);
+    return this.completed == emission.completed
+        && Objects.equals(this.workout, emission.workout)
+        && Objects.equals(this.time, emission.time)
+        && Objects.equals(this.heartRate, emission.heartRate)
+        && Objects.equals(this.rpe, emission.rpe);
   }
 
   @Override
@@ -56,16 +62,22 @@ public class Emission {
 
   @Override
   public String toString() {
-    return "Emission{" +
-        "workout='" + workout + '\'' +
-        ", time=" + time +
-        ", completed=" + completed +
-        ", heartRate=" + heartRate +
-        ", rpe=" + rpe +
-        '}';
+    return "Emission{"
+        + "workout='"
+        + workout
+        + '\''
+        + ", time="
+        + time
+        + ", completed="
+        + completed
+        + ", heartRate="
+        + heartRate
+        + ", rpe="
+        + rpe
+        + '}';
   }
 
-  //getWorkout
-  //getTotalTime
-  //etc.
+  // getWorkout
+  // getTotalTime
+  // etc.
 }

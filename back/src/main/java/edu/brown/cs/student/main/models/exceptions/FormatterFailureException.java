@@ -4,8 +4,8 @@ import edu.brown.cs.student.main.models.markov.Emission;
 import java.util.List;
 
 /**
- * The FormatterFailureException is thrown when a given list of Emissions cannot be converted according
- * to the rules of a Formatter provided.
+ * The FormatterFailureException is thrown when a given list of Emissions cannot be converted
+ * according to the rules of a Formatter provided.
  */
 public class FormatterFailureException extends Exception {
   final List<Emission> emissions;
@@ -22,4 +22,3 @@ public class FormatterFailureException extends Exception {
     this.emissions = emissions;
   }
 }
-

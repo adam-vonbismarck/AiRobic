@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class DefaultFormatter implements EmissionFormatter<List<Emission>> {
 
-
   /**
-   * The format method, which in this case just returns the copied raw results of the Markov sequence.
+   * The format method, which in this case just returns the copied raw results of the Markov
+   * sequence.
    *
    * @param emissions - the emissions to be formatted.
    * @return the copied results of formatting.
@@ -24,5 +24,4 @@ public class DefaultFormatter implements EmissionFormatter<List<Emission>> {
     }
     return newList;
   }
-
 }

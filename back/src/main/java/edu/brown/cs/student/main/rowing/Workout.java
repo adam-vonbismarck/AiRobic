@@ -1,8 +1,12 @@
 package edu.brown.cs.student.main.rowing;
 
 public enum Workout {
-
-  _2K, _30R_20, _6K, UT_2, NONE, OVERALL;
+  _2K,
+  _30R_20,
+  _6K,
+  UT_2,
+  NONE,
+  OVERALL;
 
   public static Workout of(String workout) {
     return switch (workout) {
@@ -25,5 +29,4 @@ public enum Workout {
       default -> "null";
     };
   }
-
 }

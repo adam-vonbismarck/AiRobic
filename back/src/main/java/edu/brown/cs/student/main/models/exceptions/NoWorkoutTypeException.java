@@ -1,8 +1,6 @@
 package edu.brown.cs.student.main.models.exceptions;
 
-/**
- * The NoWorkoutTypeException is thrown when the NONE type of RowingWorkout is ever used.
- */
+/** The NoWorkoutTypeException is thrown when the NONE type of RowingWorkout is ever used. */
 public class NoWorkoutTypeException extends Exception {
 
   /**
@@ -14,4 +12,3 @@ public class NoWorkoutTypeException extends Exception {
     super(message);
   }
 }
-

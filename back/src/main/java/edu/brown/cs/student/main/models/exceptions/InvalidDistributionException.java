@@ -10,8 +10,8 @@ public class InvalidDistributionException extends Exception {
   final Object distribution;
 
   /**
-   * The constructor for the InvalidDistributionException, which takes in a message and the distribution
-   * that was invalid.
+   * The constructor for the InvalidDistributionException, which takes in a message and the
+   * distribution that was invalid.
    *
    * @param message The message to be displayed upon error
    * @param dist The invalid distribution (leading to this error)
@@ -21,4 +21,3 @@ public class InvalidDistributionException extends Exception {
     this.distribution = dist.clone();
   }
 }
-
