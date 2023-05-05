@@ -24,10 +24,10 @@ public class Day {
   public Day(
       @Json(name = "type") String type,
       @Json(name = "workouts") List<Emission> workouts,
-      @Json(name = "num") Integer numberOfWorkouts,
+      Integer numberOfWorkouts,
       @Json(name = "name") DayOfWeek name,
       @Json(name = "date") @NotNull Optional<LocalDate> date,
-      @Json(name = "intensity") List<WorkoutDescription> intensity) {
+      List<WorkoutDescription> intensity) {
     this.type = type;
     this.workouts = workouts;
     this.numberOfWorkouts = numberOfWorkouts;

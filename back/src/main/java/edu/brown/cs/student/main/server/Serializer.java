@@ -65,7 +65,8 @@ public class Serializer {
         new Moshi.Builder()
             .add(
                 Types.newParameterizedType(Optional.class, LocalDate.class),
-                new LocalDateJsonAdapter()).build();
+                new LocalDateJsonAdapter())
+            .build();
     JsonAdapter<T> adapter = moshi.adapter(type);
     return adapter.fromJson(new Buffer().readFrom(inputStream));
   }

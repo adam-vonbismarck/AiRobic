@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Set;
+
+import edu.brown.cs.student.main.server.Serializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,7 +79,7 @@ public class ModelTests {
                 Set.of(Workout.UT_2),
                 0.2);
     System.out.println(schedule);
-    System.out.println(ConvertToJson.convert(schedule));
+    System.out.println(Serializer.serializeSchedule(schedule));
   }
 
   @Test
