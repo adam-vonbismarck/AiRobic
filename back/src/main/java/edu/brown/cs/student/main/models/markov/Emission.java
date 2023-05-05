@@ -9,13 +9,13 @@ import java.util.Objects;
 public class Emission {
 
   private final String workout;
-  private final Double time;
+  private final double time;
   private boolean completed;
   private Double heartRate;
   private Integer rpe;
 
   public Emission(@Json(name = "workout") String workout,
-      @Json(name="minutes") Double time,
+      @Json(name="minutes") double time,
       @Json(name="completion") boolean completed,
       @Json(name="HR") Double heartRate,
       @Json(name="RPE") Integer rpe) {

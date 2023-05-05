@@ -8,7 +8,7 @@ import java.util.List;
  * Still ironing out format of these records.
  */
 public record Schedule(@Json(name="type") String type, @Json(name="weeks") List<Week> weeks,
-                       @Json(name="exampleWeek") Week example) {
+                       Week example) {
 
   public int getLength() {
     int workoutCounter = 0;

@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.rowing;
 
 public enum Workout {
 
-  _2K, _30R_20, _6K, UT_2, NONE;
+  _2K, _30R_20, _6K, UT_2, NONE, OVERALL;
 
   public static Workout of(String workout) {
     return switch (workout) {
@@ -10,6 +10,7 @@ public enum Workout {
       case "30r20" -> _30R_20;
       case "6k" -> _6K;
       case "UT2" -> UT_2;
+      case "overall" -> OVERALL;
       default -> NONE;
     };
   }
@@ -20,6 +21,7 @@ public enum Workout {
       case _30R_20 -> "30r20";
       case _6K -> "6k";
       case UT_2 -> "UT2";
+      case OVERALL -> "overall";
       default -> "null";
     };
   }

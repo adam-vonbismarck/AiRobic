@@ -1,12 +1,11 @@
 package edu.brown.cs.student;
 
-import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
+import edu.brown.cs.student.main.handlers.GenerateGraphLikePlan;
+import edu.brown.cs.student.main.models.exceptions.*;
 import edu.brown.cs.student.main.rowing.LinearModelBuilder;
+import edu.brown.cs.student.main.rowing.VariableModelBuilder;
 import edu.brown.cs.student.main.rowing.Workout;
 import edu.brown.cs.student.main.rowing.ScheduleBuilder;
-import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
-import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
-import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.Emission;
@@ -15,6 +14,8 @@ import edu.brown.cs.student.main.models.markov.MarkovModel;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,15 @@ public class ModelTests {
     model = new LinearModelBuilder().build(toBuild, LocalDate.now().getDayOfWeek());
     Schedule schedule = model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     System.out.println(schedule);
-    System.out.println(Workout.UT_2.name());
+  }
+
+  @Test
+  public void testVariable()
+          throws IOException, InvalidScheduleException, InvalidDistributionException, FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
+    Schedule schedule = new GenerateGraphLikePlan().generate(
+            420, LocalDate.now(), LocalDate.of(2023, 5, 23),
+            Set.of(Workout._2K), Set.of(Workout.UT_2), 0.2);
+    System.out.println(schedule);
   }
 
   @Test
