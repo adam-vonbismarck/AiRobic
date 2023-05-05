@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import duration from "dayjs/plugin/duration";
+import moment from "moment";
 
 /**
 
@@ -172,6 +173,11 @@ function NewSchedule() {
 
       const durationObject = dayjs.duration(hours, "hours");
       const minutes = Math.floor(durationObject.asMinutes());
+
+      const startFormatted = moment(startDate).format("MM-DD-yyyy");
+      const endFormatted = moment(endDate).format("MM-DD-yyyy");
+
+      console.log("start date", startFormatted);
 
       // Create API url based on input values.
       let apiUrl = `http://localhost:3235/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startDate}&endDate=${endDate}&username=${localStorage.getItem}(
@@ -545,11 +551,6 @@ function NewSchedule() {
                       }
                       aria-describedby="end-date-error"
                     />
-                    {Boolean(StartDateAfterEndError) || endDateEmpty ? (
-                      <div id="end-date-error" className="error-message">
-                        {StartDateAfterEndError}
-                      </div>
-                    ) : null}
                   </div>
                 </div>
               </div>
