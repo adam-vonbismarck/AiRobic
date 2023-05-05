@@ -15,10 +15,10 @@ public class RowingWorkoutByName {
   public RowingWorkoutByName() throws IOException {
     this.goal =
         new WorkoutDistributionByName(
-            "./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataGoal.json");
+            "./data/WorkoutDataGoal.json");
     this.noGoal =
         new WorkoutDistributionByName(
-            "./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataNoGoal.json");
+            "./data/WorkoutDataNoGoal.json");
   }
 
   public HashMap<Emission, Double> getEmissionDistGoal(WorkoutDescription name)
