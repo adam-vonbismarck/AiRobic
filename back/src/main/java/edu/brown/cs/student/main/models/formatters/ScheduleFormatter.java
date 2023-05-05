@@ -21,18 +21,20 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
   /**
    * The constructor for the ScheduleFormatter class, which takes in a schedule to fill and verifies
    * that it has enough information to be filled appropriately.
+   *
    * @param toFill - the Schedule to fill.
-   * @throws InvalidScheduleException if the schedule does not have all relevant information for loading.
+   * @throws InvalidScheduleException if the schedule does not have all relevant information for
+   *     loading.
    */
-  public ScheduleFormatter (Schedule toFill) throws InvalidScheduleException {
+  public ScheduleFormatter(Schedule toFill) throws InvalidScheduleException {
     this.schedule = toFill;
     this.workoutCount = 0;
 
     for (Week week : this.schedule.weeks()) {
       for (Day day : week.days()) {
         if (day.getNumberOfWorkouts() == null) {
-          throw new InvalidScheduleException("All days must have a number of workouts pre-listed, "
-              + "but " + day + " does not.",
+          throw new InvalidScheduleException(
+              "All days must have a number of workouts pre-listed, " + "but " + day + " does not.",
               this.schedule);
         }
         this.workoutCount += day.getNumberOfWorkouts();
@@ -44,6 +46,7 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
   /**
    * The particular implementation of formatEmissions for this class. In particular, it sequentially
    * loads each Emission into the first available Schedule slot.
+   *
    * @param emissions - the results of the MarkovModel.
    * @return the filled in Schedule.
    * @throws FormatterFailureException if the Schedule and list of Emissions do not match in length.
@@ -51,8 +54,9 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
   @Override
   public Schedule formatEmissions(List<Emission> emissions) throws FormatterFailureException {
     if (emissions.size() != this.workoutCount) {
-      throw new FormatterFailureException("Schedule and model emissions did not match in length, so the schedule"
-          + " could not be filled in appropriately.",
+      throw new FormatterFailureException(
+          "Schedule and model emissions did not match in length, so the schedule"
+              + " could not be filled in appropriately.",
           emissions);
     }
 
@@ -66,5 +70,4 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
     }
     return this.schedule;
   }
-
 }

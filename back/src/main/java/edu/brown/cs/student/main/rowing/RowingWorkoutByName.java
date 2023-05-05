@@ -13,11 +13,16 @@ public class RowingWorkoutByName {
   WorkoutDistributionByName noGoal;
 
   public RowingWorkoutByName() throws IOException {
-    this.goal = new WorkoutDistributionByName("./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataGoal.json");
-    this.noGoal = new WorkoutDistributionByName("./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataNoGoal.json");
+    this.goal =
+        new WorkoutDistributionByName(
+            "./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataGoal.json");
+    this.noGoal =
+        new WorkoutDistributionByName(
+            "./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataNoGoal.json");
   }
 
-  public HashMap<Emission, Double> getEmissionDistGoal(WorkoutDescription name) throws NoWorkoutTypeException {
+  public HashMap<Emission, Double> getEmissionDistGoal(WorkoutDescription name)
+      throws NoWorkoutTypeException {
     try {
       return this.goal.generateEmissionDistribution(name);
     } catch (NoWorkoutTypeException e) {
@@ -28,7 +33,8 @@ public class RowingWorkoutByName {
     }
   }
 
-  public HashMap<Emission, Double> getEmissionDistNoGoal(WorkoutDescription name) throws NoWorkoutTypeException {
+  public HashMap<Emission, Double> getEmissionDistNoGoal(WorkoutDescription name)
+      throws NoWorkoutTypeException {
     try {
       return this.noGoal.generateEmissionDistribution(name);
     } catch (NoWorkoutTypeException e) {
@@ -38,5 +44,4 @@ public class RowingWorkoutByName {
       throw new NoWorkoutTypeException(e.getMessage());
     }
   }
-
 }

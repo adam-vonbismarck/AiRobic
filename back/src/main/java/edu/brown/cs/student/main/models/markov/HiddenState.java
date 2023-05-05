@@ -7,16 +7,15 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Still ironing out details of Emission class and HiddenState class.
- */
+/** Still ironing out details of Emission class and HiddenState class. */
 public class HiddenState {
 
   private final HashMap<HiddenState, Double> transitionDistribution;
   private HashMap<Emission, Double> emissionDistribution;
   private final String name;
 
-  public HiddenState(@Json(name="category") String name,
+  public HiddenState(
+      @Json(name = "category") String name,
       @Json(name = "transitions") HashMap<HiddenState, Double> transitionDistribution,
       @Json(name = "emissions") HashMap<Emission, Double> emissionDistribution) {
     this.transitionDistribution = transitionDistribution;
@@ -26,12 +25,14 @@ public class HiddenState {
 
   public Emission emit() throws InvalidDistributionException {
     RandomGenerator.validateDistribution(Emission.class, this.emissionDistribution);
-    return RandomGenerator.generateRandomFromDistribution(Emission.class, this.emissionDistribution);
+    return RandomGenerator.generateRandomFromDistribution(
+        Emission.class, this.emissionDistribution);
   }
 
   public HiddenState transition() throws InvalidDistributionException {
     RandomGenerator.validateDistribution(HiddenState.class, this.transitionDistribution);
-    return RandomGenerator.generateRandomFromDistribution(HiddenState.class, this.transitionDistribution);
+    return RandomGenerator.generateRandomFromDistribution(
+        HiddenState.class, this.transitionDistribution);
   }
 
   public Set<HiddenState> potentialStates() {
@@ -81,8 +82,8 @@ public class HiddenState {
     HiddenState that = (HiddenState) o;
 
     return Objects.equals(this.emissionDistribution, that.emissionDistribution)
-            && Objects.equals(this.name, that.name)
-            && Objects.equals(this.flattenTransitionDist(), that.flattenTransitionDist());
+        && Objects.equals(this.name, that.name)
+        && Objects.equals(this.flattenTransitionDist(), that.flattenTransitionDist());
   }
 
   private HashMap<String, Double> flattenTransitionDist() {
@@ -97,10 +98,14 @@ public class HiddenState {
 
   @Override
   public String toString() {
-    return "HiddenState{" +
-            "transitionDistribution=" + this.flattenTransitionDist() +
-            ", emissionDistribution=" + this.emissionDistribution +
-            ", name='" + this.name + '\'' +
-            '}';
+    return "HiddenState{"
+        + "transitionDistribution="
+        + this.flattenTransitionDist()
+        + ", emissionDistribution="
+        + this.emissionDistribution
+        + ", name='"
+        + this.name
+        + '\''
+        + '}';
   }
 }

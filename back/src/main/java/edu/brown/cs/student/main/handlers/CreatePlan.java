@@ -4,7 +4,6 @@ import edu.brown.cs.student.main.database.DatabaseCommands;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.rowing.Workout;
 import edu.brown.cs.student.main.server.Serializer;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,10 +14,7 @@ import spark.Route;
 
 public class CreatePlan implements Route {
 
-
-  /**
-   *
-   */
+  /** */
   @Override
   public Object handle(Request request, Response response) throws Exception {
     String username = request.queryParams("username");
@@ -29,8 +25,12 @@ public class CreatePlan implements Route {
     String model = request.queryParams("model");
     String goal = request.queryParams("goal");
     HashMap<String, Object> output = new HashMap<>();
-    if (username == null || sport == null || startDate == null ||
-        endDate == null || hoursPerWeek == null || model == null){
+    if (username == null
+        || sport == null
+        || startDate == null
+        || endDate == null
+        || hoursPerWeek == null
+        || model == null) {
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: Invalid input.");
       return Serializer.serialize(output);
@@ -74,34 +74,40 @@ public class CreatePlan implements Route {
             output.put("result", "error_bad_request");
             output.put("message", "ERROR: Invalid input (wrong goal).");
           } else {
-            Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
-                    Workout.of(goal), Workout.UT_2, 0.2);
-            new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+            Schedule built =
+                new GenerateLinearPlan()
+                    .generate(
+                        parsedHours, parsedStart, parsedEnd, Workout.of(goal), Workout.UT_2, 0.2);
+            new DatabaseCommands()
+                .update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
             output.put("result", "success");
             output.put("message", "Successfully updated " + username);
           }
         }
         return Serializer.serialize(output);
       }
-      // Handling the classic linear model
+        // Handling the classic linear model
       case "model1" -> {
         // change this to overall
-        Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
-                Workout._2K, Workout.UT_2, 0.2);
-        new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        Schedule built =
+            new GenerateLinearPlan()
+                .generate(parsedHours, parsedStart, parsedEnd, Workout._2K, Workout.UT_2, 0.2);
+        new DatabaseCommands()
+            .update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
         output.put("result", "success");
         output.put("message", "Successfully updated " + username);
         return Serializer.serialize(output);
       }
-      // Handling the variable model
+        // Handling the variable model
       case "model2" -> {
         Schedule built;
-        //new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        // new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username +
+        // "/schedule");
         output.put("result", "success");
         output.put("message", "Successfully updated " + username);
         return Serializer.serialize(output);
       }
-      // Handling invalid models
+        // Handling invalid models
       default -> {
         output.put("result", "error_bad_request");
         output.put("message", "ERROR: Invalid input (model).");

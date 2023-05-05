@@ -7,12 +7,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import org.jetbrains.annotations.Nullable;
 
-/**
- * A JsonAdapter for the LocalDate class, which we use to store dates in each Day object.
- */
+/** A JsonAdapter for the LocalDate class, which we use to store dates in each Day object. */
 public class LocalDateJsonAdapter extends JsonAdapter<Optional<LocalDate>> {
 
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
@@ -48,7 +45,8 @@ public class LocalDateJsonAdapter extends JsonAdapter<Optional<LocalDate>> {
    * @throws IOException if there is an issue with the JsonWriter.
    */
   @Override
-  public void toJson(JsonWriter jsonWriter, @Nullable Optional<LocalDate> localDate) throws IOException {
+  public void toJson(JsonWriter jsonWriter, @Nullable Optional<LocalDate> localDate)
+      throws IOException {
     if (localDate == null || localDate.isEmpty()) {
       jsonWriter.value("null");
     } else {

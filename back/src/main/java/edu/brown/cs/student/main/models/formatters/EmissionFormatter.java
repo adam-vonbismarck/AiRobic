@@ -20,5 +20,4 @@ public interface EmissionFormatter<T> {
    * @throws FormatterFailureException if the formatter is unable to format the emission list given.
    */
   T formatEmissions(List<Emission> emissions) throws FormatterFailureException;
-
 }

@@ -3,19 +3,15 @@ package edu.brown.cs.student.main.models.formattypes;
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.markov.Emission;
 import edu.brown.cs.student.main.rowing.Workout;
-import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nonnull;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-/**
- * Still ironing out format of these records.
- */
+/** Still ironing out format of these records. */
 public class Day {
 
   private final String type;
@@ -25,12 +21,13 @@ public class Day {
   private final List<WorkoutDescription> intensity;
   private Optional<LocalDate> date;
 
-  public Day(@Json(name="type") String type,
-      @Json(name="workouts") List<Emission> workouts,
-      @Json(name="num") Integer numberOfWorkouts,
-      @Json(name="name") DayOfWeek name,
-      @Json(name="date") @NotNull Optional<LocalDate> date,
-      @Json(name="intensity") List<WorkoutDescription> intensity) {
+  public Day(
+      @Json(name = "type") String type,
+      @Json(name = "workouts") List<Emission> workouts,
+      @Json(name = "num") Integer numberOfWorkouts,
+      @Json(name = "name") DayOfWeek name,
+      @Json(name = "date") @NotNull Optional<LocalDate> date,
+      @Json(name = "intensity") List<WorkoutDescription> intensity) {
     this.type = type;
     this.workouts = workouts;
     this.numberOfWorkouts = numberOfWorkouts;
@@ -44,8 +41,13 @@ public class Day {
     for (Emission emission : this.workouts) {
       newWorkouts.add(emission.copy());
     }
-    return new Day(this.type, newWorkouts, this.numberOfWorkouts, this.name,
-            this.date, new ArrayList<>(this.intensity));
+    return new Day(
+        this.type,
+        newWorkouts,
+        this.numberOfWorkouts,
+        this.name,
+        this.date,
+        new ArrayList<>(this.intensity));
   }
 
   public void incrementNumWorkouts() {
@@ -73,7 +75,6 @@ public class Day {
   }
 
   /**
-   *
    * @return
    */
   public List<WorkoutDescription> getIntensityCopy() {
@@ -86,25 +87,36 @@ public class Day {
    *
    * @param toAdd - workout to add (intensity label)
    */
-  public void addFirstIntensity(WorkoutDescription toAdd) { this.intensity.add(0, toAdd); }
+  public void addFirstIntensity(WorkoutDescription toAdd) {
+    this.intensity.add(0, toAdd);
+  }
 
   /**
    * This method returns the current number of workouts, according to the intensity list.
    *
    * @return - the size of the intensity list.
    */
-  public int getIntensityLength() { return this.intensity.size(); }
+  public int getIntensityLength() {
+    return this.intensity.size();
+  }
 
   @Override
   public String toString() {
-    return "Day{" +
-        "type='" + this.type + '\'' +
-        ", workouts=" + this.workouts +
-        ", numberOfWorkouts=" + this.numberOfWorkouts +
-        ", name=" + this.name +
-        ", intensity=" + this.intensity +
-        ", date=" + this.date +
-        '}';
+    return "Day{"
+        + "type='"
+        + this.type
+        + '\''
+        + ", workouts="
+        + this.workouts
+        + ", numberOfWorkouts="
+        + this.numberOfWorkouts
+        + ", name="
+        + this.name
+        + ", intensity="
+        + this.intensity
+        + ", date="
+        + this.date
+        + '}';
   }
 
   @Override
@@ -112,7 +124,12 @@ public class Day {
     if (this == o) return true;
     if (o == null || this.getClass() != o.getClass()) return false;
     Day day = (Day) o;
-    return Objects.equals(this.type, day.type) && Objects.equals(this.workouts, day.workouts) && Objects.equals(this.numberOfWorkouts, day.numberOfWorkouts) && this.name == day.name && Objects.equals(this.intensity, day.intensity) && Objects.equals(this.date, day.date);
+    return Objects.equals(this.type, day.type)
+        && Objects.equals(this.workouts, day.workouts)
+        && Objects.equals(this.numberOfWorkouts, day.numberOfWorkouts)
+        && this.name == day.name
+        && Objects.equals(this.intensity, day.intensity)
+        && Objects.equals(this.date, day.date);
   }
 
   @Override
@@ -120,8 +137,6 @@ public class Day {
     return Objects.hash(this.type, this.workouts, this.numberOfWorkouts, this.name, this.intensity);
   }
 
-  public record WorkoutDescription(@Json(name="intensity") Workout intensity,
-                                   @Json(name="length") Integer minutes) {
-
-  }
+  public record WorkoutDescription(
+      @Json(name = "intensity") Workout intensity, @Json(name = "length") Integer minutes) {}
 }

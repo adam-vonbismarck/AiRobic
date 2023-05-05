@@ -9,7 +9,6 @@ import edu.brown.cs.student.main.models.markov.Emission;
 import edu.brown.cs.student.main.models.markov.MarkovModel;
 import edu.brown.cs.student.main.rowing.VariableModelBuilder;
 import edu.brown.cs.student.main.rowing.Workout;
-
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -21,26 +20,42 @@ import java.util.Set;
 
 public class GenerateGraphLikePlan {
 
-  public Schedule generate(int minutes, LocalDate startDate, LocalDate endDate, Set<Workout> highIntensityLabels,
-                           Set<Workout> lowIntensityLabels, double highIntensityPercent) throws IOException, InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException, FormatterFailureException, InvalidDatesException {
+  public Schedule generate(
+      int minutes,
+      LocalDate startDate,
+      LocalDate endDate,
+      Set<Workout> highIntensityLabels,
+      Set<Workout> lowIntensityLabels,
+      double highIntensityPercent)
+      throws IOException, InvalidDistributionException, InvalidScheduleException,
+          NoWorkoutTypeException, FormatterFailureException, InvalidDatesException {
 
     if (!startDate.isBefore(endDate)) {
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-      throw new InvalidDatesException("Start date of plan: " + startDate.format(formatter) + " was not before" +
-              " end date of plan: " + endDate.format(formatter));
+      throw new InvalidDatesException(
+          "Start date of plan: "
+              + startDate.format(formatter)
+              + " was not before"
+              + " end date of plan: "
+              + endDate.format(formatter));
     }
 
     VariableModelBuilder builder = new VariableModelBuilder();
-    MarkovModel varModel = builder.build(lowIntensityLabels, highIntensityLabels, minutes, highIntensityPercent);
+    MarkovModel varModel =
+        builder.build(lowIntensityLabels, highIntensityLabels, minutes, highIntensityPercent);
 
     List<Week> weeks = new ArrayList<>();
 
-    LocalDate firstSunday = startDate.plusDays(
-            DayOfWeek.SUNDAY.getValue() - startDate.getDayOfWeek().getValue());
+    LocalDate firstSunday =
+        startDate.plusDays(DayOfWeek.SUNDAY.getValue() - startDate.getDayOfWeek().getValue());
 
-    weeks.add(this.generateWeek(Math.floorDiv(
-            minutes*(DayOfWeek.SUNDAY.getValue() - startDate.getDayOfWeek().getValue()), 6),
-            startDate, firstSunday, varModel));
+    weeks.add(
+        this.generateWeek(
+            Math.floorDiv(
+                minutes * (DayOfWeek.SUNDAY.getValue() - startDate.getDayOfWeek().getValue()), 6),
+            startDate,
+            firstSunday,
+            varModel));
 
     LocalDate currDate = firstSunday;
 
@@ -49,29 +64,38 @@ public class GenerateGraphLikePlan {
       currDate = currDate.plusDays(7);
     }
 
-    weeks.add(this.generateWeek(Math.floorDiv(
-            minutes*(endDate.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue() + 1), 6), currDate.plusDays(1),
-            endDate, varModel));
+    weeks.add(
+        this.generateWeek(
+            Math.floorDiv(
+                minutes * (endDate.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue() + 1), 6),
+            currDate.plusDays(1),
+            endDate,
+            varModel));
 
-    return new Schedule("schedule", weeks, (
-            (weeks.size() <= 1) ? weeks.get(0) : weeks.get(1)
-            ));
+    return new Schedule("schedule", weeks, ((weeks.size() <= 1) ? weeks.get(0) : weeks.get(1)));
   }
 
-  private Week generateWeek(int minutes, LocalDate startDay, LocalDate endDay,
-                           MarkovModel model) throws InvalidDistributionException, FormatterFailureException {
+  private Week generateWeek(int minutes, LocalDate startDay, LocalDate endDay, MarkovModel model)
+      throws InvalidDistributionException, FormatterFailureException {
 
     List<Emission> totalWeekEmissions = new ArrayList<>();
     List<Day> days = new ArrayList<>();
 
-    long numDays = startDay.datesUntil(endDay.plusDays(
-            (endDay.getDayOfWeek() == DayOfWeek.SUNDAY) ? 0 : 1
-    )).count();
+    long numDays =
+        startDay
+            .datesUntil(endDay.plusDays((endDay.getDayOfWeek() == DayOfWeek.SUNDAY) ? 0 : 1))
+            .count();
 
     LocalDate dummyDate = startDay.minusDays(1);
     for (int i = 0; i < numDays; i++) {
       dummyDate = dummyDate.plusDays(1);
-      days.add(new Day("day", new ArrayList<>(), 0, dummyDate.getDayOfWeek(), Optional.of(dummyDate),
+      days.add(
+          new Day(
+              "day",
+              new ArrayList<>(),
+              0,
+              dummyDate.getDayOfWeek(),
+              Optional.of(dummyDate),
               new ArrayList<>()));
     }
 
@@ -79,7 +103,7 @@ public class GenerateGraphLikePlan {
 
     while (minutes > 0) {
       List<Emission> singleton = model.generateFormattedEmissions(1, new DefaultFormatter());
-      assert(singleton.size() == 1);
+      assert (singleton.size() == 1);
       totalWeekEmissions.add(singleton.get(0));
       minutes -= singleton.get(0).getTime();
     }
@@ -105,12 +129,11 @@ public class GenerateGraphLikePlan {
     while (w < numDays) {
       days.get(w).incrementNumWorkouts();
       days.get(w).addWorkout(totalWeekEmissions.remove(0));
-      cumulativeCounter += ((float) numDays/remainingWorkouts);
+      cumulativeCounter += ((float) numDays / remainingWorkouts);
       w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 
-    assert(totalWeekEmissions.size() == 0);
+    assert (totalWeekEmissions.size() == 0);
     return new Week("week", days);
-
   }
 }

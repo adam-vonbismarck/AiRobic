@@ -63,6 +63,14 @@
       <scope>compile</scope>
     </dependency>
 
+    <!-- Google's Guava library contains many useful utilities, including
+      various cache classes. -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>31.1-jre</version>
+    </dependency>
+
     <!--
            JUnit is a unit testing library for Java.
     -->
@@ -73,16 +81,24 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Google's Guava library contains many useful utilities, including
-      various cache classes. -->
+    <!--
+           Firebase is a database used for the project.
+    -->
     <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>31.1-jre</version>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>9.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
   <build>
+
     <plugins>
       <!--
             The Compiler Plugin is used to compile the sources of your project.

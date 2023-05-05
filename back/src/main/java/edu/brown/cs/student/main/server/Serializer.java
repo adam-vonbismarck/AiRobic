@@ -1,10 +1,10 @@
 package edu.brown.cs.student.main.server;
 
 import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.JsonReader;
-import com.squareup.moshi.JsonWriter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
+import edu.brown.cs.student.main.models.WorkoutDistributionByName;
+import edu.brown.cs.student.main.models.formattypes.Schedule;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,13 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-
-import edu.brown.cs.student.main.models.formattypes.Schedule;
 import okio.Buffer;
-import org.jetbrains.annotations.Nullable;
 
 /** A static class containing utility methods for serializing and deserializing API responses. */
 public class Serializer {
@@ -65,8 +61,11 @@ public class Serializer {
    */
   public static <T> T getDeserializedResponse(Class<T> type, InputStream inputStream)
       throws IOException {
-    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class),
-            new LocalDateJsonAdapter()).build();
+    Moshi moshi =
+        new Moshi.Builder()
+            .add(
+                Types.newParameterizedType(Optional.class, LocalDate.class),
+                new LocalDateJsonAdapter()).build();
     JsonAdapter<T> adapter = moshi.adapter(type);
     return adapter.fromJson(new Buffer().readFrom(inputStream));
   }
@@ -101,5 +100,4 @@ public class Serializer {
     clientConnection.connect();
     return Serializer.getDeserializedResponse(type, clientConnection.getInputStream());
   }
-
 }

@@ -11,28 +11,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Hoping to make this class more generic, and will document once that is complete.
- */
+/** Hoping to make this class more generic, and will document once that is complete. */
 public class WorkoutDistributionByName {
 
   private final WorkoutDistMap map;
 
   public WorkoutDistributionByName(String filename) throws IOException {
-    this.map = Serializer.getDeserializedResponse(WorkoutDistMap.class,
-        filename);
+    this.map = Serializer.getDeserializedResponse(WorkoutDistMap.class, filename);
     System.out.println(this.map);
   }
 
-  public HashMap<Emission, Double> generateEmissionDistribution(WorkoutDescription name) throws NoWorkoutTypeException {
+  public HashMap<Emission, Double> generateEmissionDistribution(WorkoutDescription name)
+      throws NoWorkoutTypeException {
     if (this.map.allData().containsKey(Workout.value(name.intensity()))) {
       return this.map.getDist(Workout.value(name.intensity()));
     }
-    throw new NoWorkoutTypeException("Type: " + Workout.value(name.intensity()) + "was not found in the loaded set of workout" +
-            "distributions.");
+    throw new NoWorkoutTypeException(
+        "Type: "
+            + Workout.value(name.intensity())
+            + "was not found in the loaded set of workout"
+            + "distributions.");
   }
 
-  public record WorkoutDistMap(@Json(name="categories") Map<String, List<EmissionAndProb>> allData) {
+  public record WorkoutDistMap(
+      @Json(name = "categories") Map<String, List<EmissionAndProb>> allData) {
     public HashMap<Emission, Double> getDist(String key) {
 
       HashMap<Emission, Double> dist = new HashMap<>();
@@ -41,12 +43,9 @@ public class WorkoutDistributionByName {
       }
       return dist;
     }
-
   }
 
-  public record EmissionAndProb(@Json(name="emission") Emission emission,
-                                @Json(name="probability") Double probability) {
-
-  }
-
+  public record EmissionAndProb(
+      @Json(name = "emission") Emission emission, @Json(name = "probability") Double probability,
+      @Json(name="minutes") double minutes) {}
 }
