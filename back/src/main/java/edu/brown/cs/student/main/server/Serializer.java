@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import edu.brown.cs.student.main.models.formattypes.Schedule;
 import okio.Buffer;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,6 +36,18 @@ public class Serializer {
     Type genericMap = Types.newParameterizedType(Map.class, String.class, Object.class);
     JsonAdapter<Map<String, Object>> adapter = moshi.adapter(genericMap);
     return adapter.toJson(map);
+  }
+
+  /**
+   * This method serializes the schedule that needs to be returned.
+   *
+   * @param schedule - The schedule to be serialized
+   * @return The serialized version of the schedule
+   */
+  public static String serializeSchedule(Schedule schedule) {
+    Moshi moshi = new Moshi.Builder().add(LocalDate.class, new LocalDateJsonAdapter()).build();
+    JsonAdapter<Schedule> adapter = moshi.adapter(Schedule.class);
+    return adapter.toJson(schedule);
   }
 
   /**

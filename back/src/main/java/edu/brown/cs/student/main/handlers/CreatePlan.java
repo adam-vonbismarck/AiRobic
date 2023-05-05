@@ -17,9 +17,7 @@ public class CreatePlan implements Route {
 
 
   /**
-   * NOTE: we need to really error check this code. i.e., before we pass things on, we need to check that they
-   * are integers, of the proper format for dates, etc. Also maybe store model types in an enum? just ideas as I'm
-   * modifying this
+   *
    */
   @Override
   public Object handle(Request request, Response response) throws Exception {
@@ -35,45 +33,80 @@ public class CreatePlan implements Route {
         endDate == null || hoursPerWeek == null || model == null){
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: Invalid input.");
+      return Serializer.serialize(output);
     }
-    else{
-      if (model.equals("goaloriented") & goal!=null){
-
-        // gagagagagag colins code
-
+    // Error checking
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    LocalDate parsedStart;
+    LocalDate parsedEnd;
+    int parsedHours;
+    try {
+      parsedStart = LocalDate.parse(startDate, formatter);
+    } catch (DateTimeParseException e) {
+      output.put("result", "error_bad_request");
+      output.put("message", "ERROR: Invalid input (start date).");
+      return Serializer.serialize(output);
+    }
+    try {
+      parsedEnd = LocalDate.parse(endDate, formatter);
+    } catch (DateTimeParseException e) {
+      output.put("result", "error_bad_request");
+      output.put("message", "ERROR: Invalid input (end date).");
+      return Serializer.serialize(output);
+    }
+    try {
+      parsedHours = Integer.parseInt(hoursPerWeek);
+    } catch (NumberFormatException e) {
+      output.put("result", "error_bad_request");
+      output.put("message", "ERROR: Invalid input (hours per week).");
+      return Serializer.serialize(output);
+    }
+    // Adding the sport to the database
+    new DatabaseCommands().update("{\"sport\":\"" + sport + "\"}", "users/" + username);
+    // Handling the goal oriented model
+    switch (model) {
+      case "model3" -> {
+        if (goal == null) {
+          output.put("result", "error_bad_request");
+          output.put("message", "ERROR: Invalid input (no goal).");
+        } else {
+          if (Workout.of(goal) == Workout.NONE || Workout.of(goal) == Workout.UT_2) {
+            output.put("result", "error_bad_request");
+            output.put("message", "ERROR: Invalid input (wrong goal).");
+          } else {
+            Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
+                    Workout.of(goal), Workout.UT_2, 0.2);
+            new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+            output.put("result", "success");
+            output.put("message", "Successfully updated " + username);
+          }
+        }
+        return Serializer.serialize(output);
       }
-      else{ // this branch is gonna make the next part unreachable...but I've added a class for linear model below.
+      // Handling the classic linear model
+      case "model1" -> {
+        // change this to overall
+        Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
+                Workout._2K, Workout.UT_2, 0.2);
+        new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        output.put("result", "success");
+        output.put("message", "Successfully updated " + username);
+        return Serializer.serialize(output);
+      }
+      // Handling the variable model
+      case "model2" -> {
+        Schedule built;
+        //new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        output.put("result", "success");
+        output.put("message", "Successfully updated " + username);
+        return Serializer.serialize(output);
+      }
+      // Handling invalid models
+      default -> {
         output.put("result", "error_bad_request");
-        output.put("message", "ERROR: Invalid input (no goal).");
+        output.put("message", "ERROR: Invalid input (model).");
         return Serializer.serialize(output);
       }
-
-      // an example of the type of error checking that we need
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-      LocalDate parsedStart;
-      LocalDate parsedEnd;
-      try {
-        parsedStart = LocalDate.parse(startDate, formatter);
-      } catch (DateTimeParseException e) {
-        // put err to results
-        return Serializer.serialize(output);
-      }
-      try {
-        parsedEnd = LocalDate.parse(endDate, formatter);
-      } catch (DateTimeParseException e) {
-        // put err to results
-        return Serializer.serialize(output);
-      }
-
-      Schedule built = new GenerateLinearPlan().generate(Integer.parseInt(hoursPerWeek), parsedStart, parsedEnd,
-              Workout._2K, Workout.UT_2, 0.2);
-
-      // gagagagagag colins code
-
-      new DatabaseCommands().update("{\"sport\":\"" + sport + "\"}", "users/" + username);
-      output.put("result", "success");
-      output.put("message", "Successfully updated " + username);
     }
-    return Serializer.serialize(output);
   }
 }
