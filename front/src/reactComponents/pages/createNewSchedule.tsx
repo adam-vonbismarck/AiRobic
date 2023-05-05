@@ -177,10 +177,8 @@ function NewSchedule() {
       const startFormatted = moment(startDate).format("MM-DD-yyyy");
       const endFormatted = moment(endDate).format("MM-DD-yyyy");
 
-      console.log("start date", startFormatted);
-
       // Create API url based on input values.
-      let apiUrl = `http://localhost:3235/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startDate}&endDate=${endDate}&username=${localStorage.getItem}(
+      let apiUrl = `http://localhost:3235/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startFormatted}&endDate=${endFormatted}&username=${localStorage.getItem(
         "userID"
       )}`;
 
