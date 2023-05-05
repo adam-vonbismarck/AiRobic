@@ -50,7 +50,7 @@ public class WorkoutDistributionByName {
       @Json(name="minutes") double minutes) {
 
     public Emission getTimedEmission() {
-      return this.emission.setTime(minutes);
+      return this.emission.setTime(this.minutes);
     }
   }
 }

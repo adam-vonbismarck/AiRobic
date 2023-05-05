@@ -49,6 +49,19 @@ public class GenerateGraphLikePlan {
     LocalDate firstSunday =
         startDate.plusDays(DayOfWeek.SUNDAY.getValue() - startDate.getDayOfWeek().getValue());
 
+    if (endDate.isBefore(firstSunday.plusDays(1))) {
+      weeks.add(
+              this.generateWeek(
+                      Math.floorDiv(
+                              minutes * (endDate.getDayOfWeek().getValue() - startDate.getDayOfWeek().getValue() + (
+                                      endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1
+                              )), 6),
+                      startDate,
+                      endDate,
+                      varModel));
+      return new Schedule("schedule", weeks, weeks.get(0));
+    }
+
     weeks.add(
         this.generateWeek(
             Math.floorDiv(
@@ -67,12 +80,12 @@ public class GenerateGraphLikePlan {
     weeks.add(
         this.generateWeek(
             Math.floorDiv(
-                minutes * (endDate.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue() + 1), 6),
+                minutes * (endDate.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue() + (
+                        endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1
+                        )), 6),
             currDate.plusDays(1),
             endDate,
             varModel));
-
-    System.out.println(varModel.toString());
 
     return new Schedule("schedule", weeks, ((weeks.size() <= 1) ? weeks.get(0) : weeks.get(1)));
   }
@@ -103,12 +116,14 @@ public class GenerateGraphLikePlan {
               new ArrayList<>()));
     }
 
+    List<Emission> potentialWorkouts = model.generateFormattedEmissions(18, new DefaultFormatter());
+
     // change: generate long seq and work back
     while (minutes > 0) {
-      List<Emission> singleton = model.generateFormattedEmissions(1, new DefaultFormatter());
-      assert (singleton.size() == 1);
-      totalWeekEmissions.add(singleton.get(0));
-      minutes -= singleton.get(0).getTime();
+      assert (potentialWorkouts.size() > 0);
+      Emission nextWorkout = potentialWorkouts.remove(0);
+      totalWeekEmissions.add(nextWorkout);
+      minutes -= nextWorkout.getTime();
     }
 
     System.out.println(totalWeekEmissions);

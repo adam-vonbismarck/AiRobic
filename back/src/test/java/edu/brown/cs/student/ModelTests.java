@@ -70,8 +70,8 @@ public class ModelTests {
         new GenerateGraphLikePlan()
             .generate(
                 420,
-                LocalDate.now(),
-                LocalDate.of(2023, 5, 23),
+                LocalDate.now().plusDays(2),
+                LocalDate.of(2023, 5, 8),
                 Set.of(Workout._2K, Workout._6K),
                 Set.of(Workout.UT_2),
                 0.2);

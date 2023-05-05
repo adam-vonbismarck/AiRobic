@@ -57,25 +57,16 @@ public class VariableModelBuilder {
       builder.generateNewState(Workout.value(wo));
       builder.setEmissionDistribution(
           Workout.value(wo),
-          this.dists.getEmissionDistGoal(new Day.WorkoutDescription(wo, lowLength)));
+          this.dists.getEmissionDistNoGoal(new Day.WorkoutDescription(wo, lowLength)));
     }
 
     for (Workout wo : highWorkouts) {
       builder.generateNewState(Workout.value(wo));
       builder.setEmissionDistribution(
-          Workout.value(wo), this.dists.getEmissionDistGoal(new Day.WorkoutDescription(wo, 60)));
+          Workout.value(wo), this.dists.getEmissionDistNoGoal(new Day.WorkoutDescription(wo, 60)));
     }
 
-    for (Workout wo : highWorkouts) {
-      for (Workout lowWo : lowWorkouts) {
-        builder.addTransition(Workout.value(wo), Workout.value(lowWo), (1.0) / (numLow));
-      }
-      for (Workout highWo : highWorkouts) {
-        builder.addTransition(Workout.value(wo), Workout.value(highWo), 0.0);
-      }
-    }
-
-    for (Workout wo : lowWorkouts) {
+    for (Workout wo : allWorkouts) {
       for (Workout lowWo : lowWorkouts) {
         builder.addTransition(
             Workout.value(wo), Workout.value(lowWo), (1.0 - highPercent) / numLow);
@@ -85,8 +76,11 @@ public class VariableModelBuilder {
       }
     }
 
-    for (Workout wo : allWorkouts) {
-      builder.addStartProbability(Workout.value(wo), (1.0) / (numLow + numHigh));
+    for (Workout lowWo : lowWorkouts) {
+      builder.addStartProbability(Workout.value(lowWo), (1.0 - highPercent) / (numLow));
+    }
+    for (Workout highWo : highWorkouts) {
+      builder.addStartProbability(Workout.value(highWo), (highPercent) / (numHigh));
     }
 
     return builder.build();
