@@ -13,8 +13,8 @@ public class RowingWorkoutByName {
   WorkoutDistributionByName noGoal;
 
   public RowingWorkoutByName() throws IOException {
-    this.goal = new WorkoutDistributionByName("./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataGoal.json");
-    this.noGoal = new WorkoutDistributionByName("./src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataNoGoal.json");
+    this.goal = new WorkoutDistributionByName("./back/src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataGoal.json");
+    this.noGoal = new WorkoutDistributionByName("./back/src/main/java/edu/brown/cs/student/main/workoutdata/data/WorkoutDataNoGoal.json");
   }
 
   public HashMap<Emission, Double> getEmissionDistGoal(WorkoutDescription name) throws NoWorkoutTypeException {

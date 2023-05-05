@@ -36,7 +36,14 @@ public class CreatePlan implements Route {
       return Serializer.serialize(output);
     }
     // Error checking
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    System.out.println(username);
+    System.out.println(startDate);
+    System.out.println(endDate);
+    System.out.println(model);
+    System.out.println(hoursPerWeek);
+    System.out.println(goal);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate parsedStart;
     LocalDate parsedEnd;
     int parsedHours;
@@ -62,6 +69,14 @@ public class CreatePlan implements Route {
       return Serializer.serialize(output);
     }
     // Adding the sport to the database
+
+    System.out.println(username);
+    System.out.println(parsedStart);
+    System.out.println(parsedEnd);
+    System.out.println(model);
+    System.out.println(parsedHours);
+    System.out.println(goal);
+
     new DatabaseCommands().update("{\"sport\":\"" + sport + "\"}", "users/" + username);
     // Handling the goal oriented model
     switch (model) {
@@ -74,9 +89,17 @@ public class CreatePlan implements Route {
             output.put("result", "error_bad_request");
             output.put("message", "ERROR: Invalid input (wrong goal).");
           } else {
-            Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
-                    Workout.of(goal), Workout.UT_2, 0.2);
-            new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+            System.out.println("Reached this line!");
+            try {
+              Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
+                      Workout.of(goal), Workout.UT_2, 0.2);
+              new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+            } catch (Exception e){
+              System.out.println(e.getMessage());
+              output.put("result", "error_bad_request");
+              output.put("message", "ERROR: Server output: " + e.getMessage());
+            }
+            System.out.println("Reached this giga line!");
             output.put("result", "success");
             output.put("message", "Successfully updated " + username);
           }
@@ -86,9 +109,16 @@ public class CreatePlan implements Route {
       // Handling the classic linear model
       case "model1" -> {
         // change this to overall
-        Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
-                Workout._2K, Workout.UT_2, 0.2);
-        new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        try{
+          Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
+                  Workout._2K, Workout.UT_2, 0.2);
+          new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        }
+        catch (Exception e){
+          System.out.println(e.getMessage());
+          output.put("result", "error_bad_request");
+          output.put("message", "ERROR: Server output: " + e.getMessage());
+        }
         output.put("result", "success");
         output.put("message", "Successfully updated " + username);
         return Serializer.serialize(output);
