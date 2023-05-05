@@ -1,9 +1,8 @@
 import React from "react";
-import {ComponentPreview, Previews} from "@react-buddy/ide-toolbox";
+import { ComponentPreview, Previews } from "@react-buddy/ide-toolbox";
 import { PaletteTree } from "./palette";
 import About from "../reactComponents/pages/about";
 import NewSchedule from "../reactComponents/pages/createNewSchedule";
-import ComponentPreviews from "./previews 2";
 
 const ComponentPreviews = () => {
   return (
