@@ -174,7 +174,7 @@ function NewSchedule() {
       const minutes = Math.floor(durationObject.asMinutes());
 
       // Create API url based on input values.
-      let apiUrl = `http://localhost:3235/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startDate}&endDate=${endDate}&username=${localStorage.getItem(
+      let apiUrl = `http://localhost:3235/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startDate}&endDate=${endDate}&username=${localStorage.getItem}(
         "userID"
       )}`;
 
