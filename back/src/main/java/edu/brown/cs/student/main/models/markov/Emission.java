@@ -35,6 +35,10 @@ public class Emission {
     return this.time;
   }
 
+  public Emission setTime(double time) {
+    return new Emission(this.workout, time, this.completed, this.heartRate, this.rpe);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

@@ -72,6 +72,8 @@ public class GenerateGraphLikePlan {
             endDate,
             varModel));
 
+    System.out.println(varModel.toString());
+
     return new Schedule("schedule", weeks, ((weeks.size() <= 1) ? weeks.get(0) : weeks.get(1)));
   }
 
@@ -87,7 +89,9 @@ public class GenerateGraphLikePlan {
             .count();
 
     LocalDate dummyDate = startDay.minusDays(1);
-    for (int i = 0; i < numDays; i++) {
+    for (int i = 0; i < startDay
+            .datesUntil(endDay.plusDays(1))
+            .count(); i++) {
       dummyDate = dummyDate.plusDays(1);
       days.add(
           new Day(
@@ -99,8 +103,7 @@ public class GenerateGraphLikePlan {
               new ArrayList<>()));
     }
 
-    System.out.println(minutes);
-
+    // change: generate long seq and work back
     while (minutes > 0) {
       List<Emission> singleton = model.generateFormattedEmissions(1, new DefaultFormatter());
       assert (singleton.size() == 1);
@@ -109,12 +112,6 @@ public class GenerateGraphLikePlan {
     }
 
     System.out.println(totalWeekEmissions);
-    double sum = 0;
-    for (Emission emission : totalWeekEmissions) {
-      sum += emission.getTime();
-    }
-    System.out.println(sum);
-    System.out.println(minutes);
 
     while (totalWeekEmissions.size() > numDays) {
       for (int i = 0; i < numDays; i++) {
