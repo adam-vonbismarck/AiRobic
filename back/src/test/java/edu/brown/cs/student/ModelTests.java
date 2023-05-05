@@ -1,5 +1,6 @@
 package edu.brown.cs.student;
 
+import edu.brown.cs.student.main.handlers.ConvertToJson;
 import edu.brown.cs.student.main.handlers.GenerateGraphLikePlan;
 import edu.brown.cs.student.main.models.exceptions.*;
 import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
@@ -76,6 +77,7 @@ public class ModelTests {
                 Set.of(Workout.UT_2),
                 0.2);
     System.out.println(schedule);
+    System.out.println(ConvertToJson.convert(schedule));
   }
 
   @Test

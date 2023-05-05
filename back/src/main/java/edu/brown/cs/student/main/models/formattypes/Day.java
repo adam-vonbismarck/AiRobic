@@ -50,6 +50,18 @@ public class Day {
         new ArrayList<>(this.intensity));
   }
 
+  public List<Emission> getEmissions() {
+    List<Emission> copied = new ArrayList<>();
+    for (Emission emission : this.workouts) {
+      copied.add(emission.copy());
+    }
+    return copied;
+  }
+
+  public Optional<LocalDate> getDate() {
+    return this.date;
+  }
+
   public void incrementNumWorkouts() {
     this.numberOfWorkouts++;
   }

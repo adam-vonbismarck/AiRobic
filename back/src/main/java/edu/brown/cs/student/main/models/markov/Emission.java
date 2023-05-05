@@ -39,6 +39,10 @@ public class Emission {
     return new Emission(this.workout, time, this.completed, this.heartRate, this.rpe);
   }
 
+  public String getWorkout() {
+    return this.workout;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
