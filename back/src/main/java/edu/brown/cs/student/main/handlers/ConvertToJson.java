@@ -3,7 +3,7 @@ package edu.brown.cs.student.main.handlers;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
-import edu.brown.cs.student.main.models.markov.Emission;
+import edu.brown.cs.student.main.models.markov.model.Emission;
 import java.time.format.DateTimeFormatter;
 
 public class ConvertToJson {

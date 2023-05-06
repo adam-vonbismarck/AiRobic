@@ -2,7 +2,6 @@ export interface Workout {
   workoutsNumber: number;
   dayNumber: number;
   date: string;
-  completed: boolean;
   RPE?: number;
   distance?: number;
   split?: string;
@@ -12,14 +11,16 @@ export interface Workout {
 
 export interface Day {
   date: string;
-  intensity?: { intensity: string; length: number }[];
-  name: string;
+  day: string;
   numberOfWorkouts: number;
   type: string;
   workouts?: {
-    completed: boolean;
-    rpe?: number;
     time: number;
     workout: string;
+    data?: {
+      distance?: number;
+      split?: string;
+      rpe?: number;
+    };
   }[];
 }

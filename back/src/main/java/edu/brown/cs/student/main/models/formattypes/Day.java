@@ -1,8 +1,8 @@
 package edu.brown.cs.student.main.models.formattypes;
 
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
-import edu.brown.cs.student.main.models.markov.Emission;
-import edu.brown.cs.student.main.rowing.Workout;
+import edu.brown.cs.student.main.models.markov.model.Emission;
+import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;

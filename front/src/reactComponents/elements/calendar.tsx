@@ -32,8 +32,9 @@ const WorkoutCalendar: React.FC = () => {
             workoutsNumber: workoutsNumber++,
             dayNumber: dayIndex + 1,
             date: day.date,
-            completed: workout.completed,
-            RPE: workout.rpe,
+            RPE: workout.data?.rpe,
+            distance: workout.data?.distance,
+            split: workout.data?.split,
             time: workout.time,
             workout: workout.workout,
           });
@@ -59,8 +60,9 @@ const WorkoutCalendar: React.FC = () => {
         title: `Workout ${item.workoutsNumber} for day ${item.dayNumber}`,
         date: moment(item.date, "MM-DD-YYYY").format("yyyy-MM-DD"),
         time: item.time,
-        completed: item.completed,
         RPE: item.RPE,
+        distance: item.distance,
+        split: item.split,
         workout: item.workout,
         dayNumber: item.dayNumber,
         workoutsNumber: item.workoutsNumber,
@@ -69,7 +71,6 @@ const WorkoutCalendar: React.FC = () => {
       return event;
     });
 
-    console.log(eventsArray);
     return eventsArray;
   }
 

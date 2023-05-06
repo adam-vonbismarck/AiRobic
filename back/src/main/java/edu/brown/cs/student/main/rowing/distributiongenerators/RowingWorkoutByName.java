@@ -1,9 +1,10 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.rowing.distributiongenerators;
 
-import edu.brown.cs.student.main.models.WorkoutDistributionByName;
+import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
+import edu.brown.cs.student.main.models.markov.modelbuilding.WorkoutDistributionByName;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
-import edu.brown.cs.student.main.models.markov.Emission;
+import edu.brown.cs.student.main.models.markov.model.Emission;
 import java.io.IOException;
 import java.util.HashMap;
 

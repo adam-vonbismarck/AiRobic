@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.server;
 
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;

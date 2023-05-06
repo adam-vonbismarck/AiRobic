@@ -1,10 +1,9 @@
-package edu.brown.cs.student.main.models;
+package edu.brown.cs.student.main.models.markov.modelbuilding;
 
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
-import edu.brown.cs.student.main.models.markov.Emission;
-import edu.brown.cs.student.main.rowing.Workout;
-import edu.brown.cs.student.main.server.Serializer;
+import edu.brown.cs.student.main.models.markov.model.Emission;
+import edu.brown.cs.student.main.server.serializing.Serializer;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

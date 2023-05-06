@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
-import edu.brown.cs.student.main.server.Serializer;
+import edu.brown.cs.student.main.server.serializing.Serializer;
 import java.io.IOException;
 import java.util.HashMap;
 import spark.Request;

@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.models.markov.modelbuilding;
 
 /**
  * The Workout enum associates an integer (from the enum) with a string key in our workout files. Useful for

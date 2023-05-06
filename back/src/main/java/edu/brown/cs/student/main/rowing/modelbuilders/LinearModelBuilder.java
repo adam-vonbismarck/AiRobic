@@ -1,13 +1,15 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.models.ModelBuilder;
+import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
-import edu.brown.cs.student.main.models.markov.MarkovModel;
+import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
+
 import java.io.IOException;
 import java.time.DayOfWeek;
 
@@ -93,10 +95,18 @@ public class LinearModelBuilder {
    * @throws InvalidScheduleException if the schedule has no workouts.
    */
   private DayOfWeek findFirstWorkout(DayOfWeek startDay, Schedule schedule) throws InvalidScheduleException {
+
+    // runs through days in two passes, following the calendar from the startDay until a workout is found.
     for (Day day : schedule.example().days()) {
       if (day.getDay().getValue() < startDay.getValue()) {
         continue;
       }
+      if (day.getNumberOfWorkouts() > 0) {
+        return day.getDay();
+      }
+    }
+
+    for (Day day : schedule.example().days()) {
       if (day.getNumberOfWorkouts() > 0) {
         return day.getDay();
       }
