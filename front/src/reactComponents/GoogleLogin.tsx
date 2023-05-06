@@ -35,34 +35,39 @@ function addUser(userID: string): Promise<boolean> {
   })
 }
 
+function deleteUser(userID: string): Promise<DeleteUserResponse> {
+    return new Promise((resolve, reject) => {
+        fetch("http://localhost:3235/deleteuser?username=" + userID)
+            .then((response: Response) => response.json())
+            .then((deleteResponse) => {
+                resolve(deleteResponse)
+            }).catch(err => reject(false));
+    })
+}
+
 function isNewUser(userID: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     fetch("http://localhost:3235/checkuser?username=" + userID)
         .then((userResponse: Response) => userResponse.json())
         .then((checkUser) => {
           if (!isCheckUserResponse(checkUser)) {
-            console.log(checkUser)
-            console.log("Invalid check user response");
             reject(false)
           } else {
             if (checkUser.message == "False") {
-              console.log("User checked successfully does not exist");
-              console.log("Proceed to register user");
               resolve(true);
             } else {
-              console.log(checkUser)
-              console.log("User exists");
               resolve(false);
             }
           }
         }).catch(err => reject(false));
   })
 }
-function Login(loginToken: LoginResponse) {
+function Login(loginToken: LoginResponse): boolean {
     localStorage.setItem("userID", loginToken.sub);
     localStorage.setItem("givenName", loginToken.given_name);
     localStorage.setItem("loggedIn", "true");
     window.location.href = "/";
+    return true
 }
 
 
@@ -73,6 +78,11 @@ export interface LoginResponse {
   given_name: string;
 }
 
+export interface DeleteUserResponse {
+    result: string;
+    message: string;
+}
+
 const errLoginResponse = {
   sub: "ERROR",
   email: "ERROR",
@@ -80,12 +90,12 @@ const errLoginResponse = {
   given_name: "ERROR"
 }
 
-interface CheckUserResponse {
+export interface CheckUserResponse {
   result: string;
   message: string;
 }
 
-interface AddUserResponse{
+export interface AddUserResponse{
   result: string;
   message: string;
 }
@@ -113,6 +123,6 @@ function isAddUserResponse(rjson: any): rjson is AddUserResponse {
 
 
 
-export { getCredentialResponse, isNewUser, isAddUserResponse, addUser, errLoginResponse, isCheckUserResponse, isLoginResponse, Login }
+export { getCredentialResponse, isNewUser, isAddUserResponse, addUser, errLoginResponse, isCheckUserResponse, isLoginResponse, Login, deleteUser }
 
 
