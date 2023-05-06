@@ -15,10 +15,6 @@ import spark.Route;
 
 public class CreatePlan implements Route {
 
-
-  /**
-   *
-   */
   @Override
   public Object handle(Request request, Response response) throws Exception {
     String username = request.queryParams("username");
@@ -98,6 +94,7 @@ public class CreatePlan implements Route {
               System.out.println(e.getMessage());
               output.put("result", "error_bad_request");
               output.put("message", "ERROR: Server output: " + e.getMessage());
+              return Serializer.serialize(output);
             }
             System.out.println("Reached this giga line!");
             output.put("result", "success");
@@ -119,6 +116,7 @@ public class CreatePlan implements Route {
           System.out.println(e.getMessage());
           output.put("result", "error_bad_request");
           output.put("message", "ERROR: Server output: " + e.getMessage());
+          return Serializer.serialize(output);
         }
         output.put("result", "success");
         output.put("message", "Successfully updated " + username);
@@ -126,8 +124,18 @@ public class CreatePlan implements Route {
       }
       // Handling the variable model
       case "model2" -> {
-        Schedule built;
-        //new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+        try{
+          //Schedule built = new GenerateGraphLikePlan().generate(parsedHours, parsedStart, parsedEnd,
+                  //, , 0.2);
+          //System.out.println(Serializer.serializeSchedule(built.flatten()));
+          //new DatabaseCommands().put(Serializer.serializeSchedule(built.flatten()), "users/" + username + "/schedule");
+        }
+        catch (Exception e){
+          System.out.println(e.getMessage());
+          output.put("result", "error_bad_request");
+          output.put("message", "ERROR: Server output: " + e.getMessage());
+          return Serializer.serialize(output);
+        }
         output.put("result", "success");
         output.put("message", "Successfully updated " + username);
         return Serializer.serialize(output);
