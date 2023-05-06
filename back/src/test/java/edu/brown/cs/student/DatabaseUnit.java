@@ -17,7 +17,7 @@ public class DatabaseUnit {
     Thread.sleep(2000);
   }
 
-  // Empty file test
+  // Empty file.json test
   @Test
   public void testEmpty() throws IOException, InterruptedException {
     String actual = this.database.get("test");
@@ -27,10 +27,12 @@ public class DatabaseUnit {
   // Test for adding new users and their information
   @Test
   public void testUpdate() throws IOException, InterruptedException {
-    String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
+    String s =
+        "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
     this.database.update(s, "");
     Thread.sleep(2000);
-    String expected = "{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}";
+    String expected =
+        "{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}";
     String actual = this.database.get("test");
     Assertions.assertEquals(expected, actual);
   }
@@ -38,7 +40,8 @@ public class DatabaseUnit {
   // Getter testing for specific user information
   @Test
   public void testGet() throws IOException, InterruptedException {
-    String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
+    String s =
+        "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
     this.database.update(s, "");
     Thread.sleep(2000);
     String expected1 = "\"June 23, 1912\"";
@@ -52,7 +55,8 @@ public class DatabaseUnit {
   // User deletion testing
   @Test
   public void testDelete() throws IOException, InterruptedException {
-    String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
+    String s =
+        "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
     this.database.update(s, "");
     Thread.sleep(2000);
     this.database.delete("test");
@@ -64,7 +68,8 @@ public class DatabaseUnit {
   // Specific user information deletion testing
   @Test
   public void testDeleteSpecific() throws IOException, InterruptedException {
-    String s = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
+    String s =
+        "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
     this.database.update(s, "");
     Thread.sleep(2000);
     this.database.delete("test/alanisawesome/name");
@@ -77,7 +82,8 @@ public class DatabaseUnit {
   // Correct input testing, for more users
   @Test
   public void testUpdateMultiple() throws IOException, InterruptedException {
-    String s1 = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
+    String s1 =
+        "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
     this.database.update(s1, "");
     Thread.sleep(2000);
     String s2 = "{\"alexiscool\":{\"birthday\":\"May 24, 2003\",\"name\":\"Alex Fake\"}}";
@@ -94,10 +100,12 @@ public class DatabaseUnit {
   // Incorrect input testing, correct way is above
   @Test
   public void testOverwriting() throws IOException, InterruptedException {
-    String s1 = "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
+    String s1 =
+        "{\"test\":{\"alanisawesome\":{\"birthday\":\"June 23, 1912\",\"name\":\"Alan Turing\"}}}";
     this.database.update(s1, "");
     Thread.sleep(2000);
-    String s2 = "{\"test\":{\"alexiscool\":{\"birthday\":\"May 24, 2003\",\"name\":\"Alex Fake\"}}}";
+    String s2 =
+        "{\"test\":{\"alexiscool\":{\"birthday\":\"May 24, 2003\",\"name\":\"Alex Fake\"}}}";
     this.database.update(s2, "");
     Thread.sleep(2000);
     // even though the information is different, "update" will overwrite the

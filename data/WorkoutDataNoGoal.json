@@ -1,0 +1,320 @@
+{
+  "categories": {
+    "overall": [
+      {
+        "emission": {
+          "workout": "Erg 2000m test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.02
+      },
+      {
+        "emission": {
+          "workout": "Erg 6x500m @2k pace with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x1250m @2k pace with 8min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.07
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(8x45s ON, 15s OFF) @2k pace with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 10x60s @2k pace with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.03
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x5min AT with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 1000m r24 test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.03
+      },
+      {
+        "emission": {
+          "workout": "Erg 3x2000m AT with 8min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.03
+      },
+      {
+        "emission": {
+          "workout": "Erg 30min r20 test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(6x3min r20 ON, 60s OFF) with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.07
+      },
+      {
+        "emission": {
+          "workout": "Erg 10x3min r20 with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.065
+      },
+      {
+        "emission": {
+          "workout": "Erg 3x12min r20 with 5min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 12x60s r20 pace with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 60min r20 test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.02
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x8min r20 with 4min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.03
+      },
+      {
+        "emission": {
+          "workout": "Erg 6000m test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.02
+      },
+      {
+        "emission": {
+          "workout": "Erg 3x4000m with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.065
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(8x100s ON, 20s OFF) @6k pace with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x8min @6k pace with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(6x3min r24 ON, 90s OFF) with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 10x3min r24 with 90s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x10min(4min r24/3min r26/2min r28/1min r30) with 5min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      }
+    ],
+    "2k": [
+      {
+        "emission": {
+          "workout": "Erg 2000m test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 6x500m @2k pace with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x1250m @2k pace with 8min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.20
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(8x45s ON, 15s OFF) @2k pace with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 10x60s @2k pace with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.10
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x5min AT with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 1000m r24 test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.10
+      },
+      {
+        "emission": {
+          "workout": "Erg 3x2000m AT with 8min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.10
+      }
+    ],
+    "30r20": [
+      {
+        "emission": {
+          "workout": "Erg 30min r20 test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(6x3min r20 ON, 60s OFF) with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.20
+      },
+      {
+        "emission": {
+          "workout": "Erg 10x3min r20 with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.20
+      },
+      {
+        "emission": {
+          "workout": "Erg 3x12min r20 with 5min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 12x60s r20 pace with 60s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 60min r20 test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x8min r20 with 4min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.10
+      }
+    ],
+    "6k": [
+      {
+        "emission": {
+          "workout": "Erg 6000m test (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.05
+      },
+      {
+        "emission": {
+          "workout": "Erg 3x4000m with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.20
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(8x100s ON, 20s OFF) @6k pace with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x8min @6k pace with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 2x(6x3min r24 ON, 90s OFF) with 6min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 10x3min r24 with 90s rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      },
+      {
+        "emission": {
+          "workout": "Erg 4x10min(4min r24/3min r26/2min r28/1min r30) with 5min rest (suggested: warmup and cooldown)"
+        },
+        "minutes": 60.0,
+        "probability": 0.15
+      }
+    ]
+  }
+}

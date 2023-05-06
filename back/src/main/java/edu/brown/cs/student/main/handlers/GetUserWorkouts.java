@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
-import edu.brown.cs.student.main.database.NonSusDatabaseCommands;
 import edu.brown.cs.student.main.server.Serializer;
 import java.util.HashMap;
 import spark.Request;
@@ -17,8 +16,7 @@ public class GetUserWorkouts implements Route {
     if (username == null) {
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: Invalid input.");
-    }
-    else{
+    } else {
       String where = "users/" + username + "/schedule";
       String workoutJSON = new DatabaseCommands().get(where);
       System.out.println(workoutJSON);

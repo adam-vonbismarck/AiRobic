@@ -72,6 +72,15 @@
     </dependency>
 
     <!--
+           Firebase is a database used for the project.
+    -->
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>9.1.1</version>
+    </dependency>
+
+    <!--
            JUnit is a unit testing library for Java.
     -->
     <dependency>
@@ -79,15 +88,6 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>5.4.0</version>
       <scope>test</scope>
-    </dependency>
-
-    <!--
-           Firebase is a database used for the project.
-    -->
-    <dependency>
-      <groupId>com.google.firebase</groupId>
-      <artifactId>firebase-admin</artifactId>
-      <version>9.1.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -148,7 +148,7 @@
       </plugin>
 
       <!--
-            We use SortPom to apply ordering and formatting to this pom.xml file.
+            We use SortPom to apply ordering and formatting to this pom.xml file.json.
       -->
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
@@ -163,7 +163,7 @@
           <expandEmptyElements>false</expandEmptyElements>
         </configuration>
         <executions>
-          <!-- sorts the pom.xml file during the compile phase -->
+          <!-- sorts the pom.xml file.json during the compile phase -->
           <execution>
             <goals>
               <goal>sort</goal>
