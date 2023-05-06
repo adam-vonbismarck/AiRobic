@@ -21,7 +21,7 @@ public class GetUserWorkouts implements Route {
       String workoutJSON = new DatabaseCommands().get(where);
       System.out.println(workoutJSON);
       output.put("result", "success");
-      output.put("message", workoutJSON.replace("\"", ""));
+      output.put("message", workoutJSON);
     }
     return Serializer.serialize(output);
   }
