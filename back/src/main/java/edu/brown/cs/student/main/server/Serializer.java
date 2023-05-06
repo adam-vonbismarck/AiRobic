@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.main.models.WorkoutDistributionByName;
+import edu.brown.cs.student.main.models.formattypes.FlatSchedule;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,9 +41,9 @@ public class Serializer {
    * @param schedule - The schedule to be serialized
    * @return The serialized version of the schedule
    */
-  public static String serializeSchedule(Schedule schedule) {
+  public static String serializeSchedule(FlatSchedule schedule) {
     Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class), new LocalDateJsonAdapter()).build();
-    JsonAdapter<Schedule> adapter = moshi.adapter(Schedule.class);
+    JsonAdapter<FlatSchedule> adapter = moshi.adapter(FlatSchedule.class);
     return adapter.toJson(schedule);
   }
 

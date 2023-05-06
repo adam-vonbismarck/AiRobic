@@ -1,6 +1,8 @@
 package edu.brown.cs.student.main.models.formattypes;
 
 import com.squareup.moshi.Json;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /** Still ironing out format of these records. */
@@ -16,4 +18,15 @@ public record Schedule(
     }
     return workoutCounter;
   }
+
+  public FlatSchedule flatten() {
+    List<Day> days = new ArrayList<>();
+    for (Week week : this.weeks()) {
+      for (Day day : week.days()) {
+        days.add(day.copy());
+      }
+    }
+    return new FlatSchedule(days);
+  }
+
 }

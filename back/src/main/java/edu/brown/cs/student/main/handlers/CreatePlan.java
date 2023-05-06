@@ -93,7 +93,7 @@ public class CreatePlan implements Route {
             try {
               Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
                       Workout.of(goal), Workout.UT_2, 0.2);
-              new DatabaseCommands().update(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+              new DatabaseCommands().update(Serializer.serializeSchedule(built.flatten()), "users/" + username + "/schedule");
             } catch (Exception e){
               System.out.println(e.getMessage());
               output.put("result", "error_bad_request");
@@ -112,8 +112,8 @@ public class CreatePlan implements Route {
         try{
           Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
                   Workout._2K, Workout.UT_2, 0.2);
-          System.out.println(Serializer.serializeSchedule(built));
-          new DatabaseCommands().put(Serializer.serializeSchedule(built), "users/" + username + "/schedule");
+          System.out.println(Serializer.serializeSchedule(built.flatten()));
+          new DatabaseCommands().put(Serializer.serializeSchedule(built.flatten()), "users/" + username + "/schedule");
         }
         catch (Exception e){
           System.out.println(e.getMessage());
