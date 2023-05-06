@@ -113,11 +113,10 @@ public class CreatePlan implements Route {
       }
         // Handling the classic linear model
       case "model1" -> {
-        // change this to overall
         try {
           Schedule built =
               new GenerateLinearPlan()
-                  .generate(parsedHours, parsedStart, parsedEnd, Workout._2K, Workout.UT_2, 0.2);
+                  .generate(parsedHours, parsedStart, parsedEnd, Workout.OVERALL, Workout.UT_2, 0.2);
           System.out.println(Serializer.serializeSchedule(built.flatten()));
           new DatabaseCommands()
               .put(
@@ -135,9 +134,9 @@ public class CreatePlan implements Route {
         // Handling the variable model
       case "model2" -> {
         try {
-          // Schedule built = new GenerateGraphLikePlan().generate(parsedHours, parsedStart,
-          // parsedEnd,
-          // , , 0.2);
+//           Schedule built = new GenerateGraphLikePlan().generate(parsedHours, parsedStart,
+//           parsedEnd,
+//           , , 0.2);
           // System.out.println(Serializer.serializeSchedule(built.flatten()));
           // new DatabaseCommands().put(Serializer.serializeSchedule(built.flatten()), "users/" +
           // username + "/schedule");
