@@ -93,10 +93,18 @@ public class LinearModelBuilder {
    * @throws InvalidScheduleException if the schedule has no workouts.
    */
   private DayOfWeek findFirstWorkout(DayOfWeek startDay, Schedule schedule) throws InvalidScheduleException {
+
+    // runs through days in two passes, following the calendar from the startDay until a workout is found.
     for (Day day : schedule.example().days()) {
       if (day.getDay().getValue() < startDay.getValue()) {
         continue;
       }
+      if (day.getNumberOfWorkouts() > 0) {
+        return day.getDay();
+      }
+    }
+
+    for (Day day : schedule.example().days()) {
       if (day.getNumberOfWorkouts() > 0) {
         return day.getDay();
       }
