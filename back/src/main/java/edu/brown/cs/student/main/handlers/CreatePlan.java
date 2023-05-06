@@ -111,7 +111,7 @@ public class CreatePlan implements Route {
         // change this to overall
         try{
           Schedule built = new GenerateLinearPlan().generate(parsedHours, parsedStart, parsedEnd,
-                  Workout._2K, Workout.UT_2, 0.2);
+                  Workout.OVERALL, Workout.UT_2, 0.2);
           System.out.println(Serializer.serializeSchedule(built.flatten()));
           new DatabaseCommands().put(Serializer.serializeSchedule(built.flatten()), "users/" + username + "/schedule");
         }
