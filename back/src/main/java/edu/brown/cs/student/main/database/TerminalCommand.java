@@ -14,21 +14,18 @@ public class TerminalCommand {
     String[] command = {"/bin/bash", "-c", this.input};
     String os = System.getProperty("os.name").toLowerCase();
     if (os.contains("win")) {
-      //command = new String[]{"cmd.exe", "/c", this.input};
-      String input = "curl -X PATCH -d \"{\\\"alex\\\":{\\\"schedule\\\":\\\"\\\",\\\"valid\\\":\\\"true\\\"}}\" \"https://cs32airobic-default-rtdb.firebaseio.com/users.json\"";
-      String[] comman = {"cmd.exe", "/c", input};
-      ProcessBuilder builder = new ProcessBuilder(comman);
+      System.out.println("Windows get");
+      command = new String[]{"cmd.exe", "/c", this.input};
+    }
+    System.out.println(this.input);
+    ProcessBuilder builder = new ProcessBuilder(command);
       Process process = builder.start();
       InputStream is = process.getInputStream();
       BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-      return reader.readLine();
-    }
+      String r = reader.readLine();
+      System.out.println(r);
+      return r;
 
-    ProcessBuilder builder = new ProcessBuilder(command);
-    Process process = builder.start();
-    InputStream is = process.getInputStream();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    return reader.readLine();
   }
 
   // This method runs a terminal command
@@ -36,6 +33,7 @@ public class TerminalCommand {
     String[] command = {"/bin/bash", "-c", this.input};
     String os = System.getProperty("os.name").toLowerCase();
     if (os.contains("win")) {
+      System.out.println("Windows run");
       command = new String[]{"cmd.exe", "/c", this.input};
     }
     ProcessBuilder builder = new ProcessBuilder(command);
