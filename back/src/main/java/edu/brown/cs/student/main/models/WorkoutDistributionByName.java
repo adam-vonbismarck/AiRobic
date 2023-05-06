@@ -2,7 +2,6 @@ package edu.brown.cs.student.main.models;
 
 import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
-import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.markov.Emission;
 import edu.brown.cs.student.main.rowing.Workout;
 import edu.brown.cs.student.main.server.Serializer;
@@ -11,31 +10,67 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Hoping to make this class more generic, and will document once that is complete. */
+/**
+ * The WorkoutDistributionByName class uses our preconceived workout data from the data folders in order to allow us
+ * to query it for emission distributions. Contains code to deserialize these files and use Workout types to query
+ * for emission distributions.
+ */
 public class WorkoutDistributionByName {
 
   private final WorkoutDistMap map;
 
+  /**
+   * The constructor for the WorkoutDistributionByName class, which takes in a file to deserialize.
+   *
+   * @param filename - the file to deserialize.
+   * @throws IOException if deserializing fails.
+   */
   public WorkoutDistributionByName(String filename) throws IOException {
     this.map = Serializer.getDeserializedResponse(WorkoutDistMap.class, filename);
-    System.out.println(this.map);
   }
 
-  public HashMap<Emission, Double> generateEmissionDistribution(WorkoutDescription name)
+  /**
+   * This method gets the emission distribution associated with a given Workout type.
+   *
+   * @param name - the Workout type to key on.
+   * @return the found emission distribution.
+   * @throws NoWorkoutTypeException if the workout type does not have an associated distribution in the read file.
+   */
+  public HashMap<Emission, Double> generateEmissionDistribution(Workout name)
       throws NoWorkoutTypeException {
-    if (this.map.allData().containsKey(Workout.value(name.workoutType()))) {
-      return this.map.getDist(Workout.value(name.workoutType()));
+    if (this.map.allData().containsKey(Workout.value(name))) {
+      return this.map.getDist(Workout.value(name));
     }
     throw new NoWorkoutTypeException(
         "Type: "
-            + Workout.value(name.workoutType())
+            + Workout.value(name)
             + "was not found in the loaded set of workout"
             + "distributions.");
   }
 
+  /**
+   * A record for storing data read in from one of our workout files.
+   *
+   * @param allData - the map of all workout data in the file.
+   */
   public record WorkoutDistMap(
       @Json(name = "categories") Map<String, List<EmissionAndProb>> allData) {
-    public HashMap<Emission, Double> getDist(String key) {
+
+    /**
+     * This method gets an emission distribution given a string key, if that key exists in the read file.
+     *
+     * @param key - the string key.
+     * @return the emission distribution
+     * @throws NoWorkoutTypeException if the key is not found in the stored file.
+     */
+    public HashMap<Emission, Double> getDist(String key) throws NoWorkoutTypeException {
+      if (!this.allData.containsKey(key)) {
+        throw new NoWorkoutTypeException(
+                "Type: "
+                        + key
+                        + "was not found in the loaded set of workout"
+                        + "distributions.");
+      }
 
       HashMap<Emission, Double> dist = new HashMap<>();
       for (EmissionAndProb joined : this.allData.get(key)) {
@@ -45,11 +80,25 @@ public class WorkoutDistributionByName {
     }
   }
 
+  /**
+   * A record for storing an emission and its associated probability. We had trouble getting moshi
+   * to deserialize the individual fields in the emission class, so we included the duration of the given
+   * emission in this class as well.
+   *
+   * @param emission - an emission.
+   * @param probability - the emission's associated probability in its distribution.
+   * @param minutes - the length of the workout associated with the emission.
+   */
   public record EmissionAndProb(
       @Json(name = "emission") Emission emission,
       @Json(name = "probability") Double probability,
       @Json(name = "minutes") double minutes) {
 
+    /**
+     * Returns an emission linked to its duration (minutes).
+     *
+     * @return the new emission.
+     */
     public Emission getTimedEmission() {
       return this.emission.setTime(this.minutes);
     }

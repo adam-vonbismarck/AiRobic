@@ -39,6 +39,7 @@ public class MarkovModel {
     this.states = startDistribution.keySet();
     this.startDistribution = startDistribution;
     RandomGenerator.validateDistribution(HiddenState.class, startDistribution);
+    System.out.println(startDistribution);
     this.checkStateDistributions();
   }
 

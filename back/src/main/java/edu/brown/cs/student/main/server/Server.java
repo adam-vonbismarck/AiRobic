@@ -2,11 +2,8 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.handlers.AddNewUser;
-import edu.brown.cs.student.main.handlers.CheckUser;
-import edu.brown.cs.student.main.handlers.CreatePlan;
-import edu.brown.cs.student.main.handlers.DeleteUser;
-import edu.brown.cs.student.main.handlers.GetUserWorkouts;
+import edu.brown.cs.student.main.handlers.*;
+
 import java.io.IOException;
 import spark.Spark;
 
@@ -22,14 +19,6 @@ public class Server {
 
     // Set the port number for the server to listen on.
     Spark.port(3235);
-
-    // String startDateStr = "01-01-2023";
-    // String endDateStr = "01-07-2023";
-    // List<String> dates = DateListCreator.getDatesBetween(startDateStr, endDateStr);
-    // System.out.println(dates);
-    // String dateStr = "04-29-2023";
-    // String dayOfWeek = DayOfTheWeek.getDayOfWeek(dateStr);
-    // System.out.println(dayOfWeek);
 
     // Set the headers for cross-origin resource sharing (CORS) to allow any origin and any method.
     after(
@@ -48,6 +37,8 @@ public class Server {
     // localhost:3235/getuserworkouts?username=alexfake
     Spark.get("checkuser", new CheckUser());
     // localhost:3235/checkuser?username=alexfake
+    Spark.get("updateworkout", new UpdateWorkout());
+    // localhost:3235/updateworkout?username=alexfake&day=0&workout=0&rpe=10&split=2:20.0&distance=6000
 
     // Initialize and start the Spark server.
     Spark.init();

@@ -19,7 +19,7 @@ import java.time.DayOfWeek;
  */
 public class LinearModelBuilder {
 
-  private RowingWorkoutByName dists;
+  private final RowingWorkoutByName dists;
 
   /**
    * The constructor for the LinearModelBuilder class, which loads a RowingWorkoutByName instance
@@ -58,7 +58,7 @@ public class LinearModelBuilder {
         builder.generateNewState(this.encodeDay(day.getDay(), workoutCounter));
         builder.setEmissionDistribution(
             this.encodeDay(day.getDay(), workoutCounter),
-            this.dists.getEmissionDistNoGoal(intensity));
+            this.dists.getEmissionDist(intensity));
       }
     }
 
@@ -67,9 +67,7 @@ public class LinearModelBuilder {
 
     // make sure start day is in keyset of days to ints?
 
-    // use the information provided by startDay to generate a start distribution - make sure to
-    // error check
-    builder.addStartProbability(this.encodeDay(startDay, 0), 1.0);
+    builder.addStartProbability(this.encodeDay(this.findFirstWorkout(startDay, schedule), 0), 1.0);
 
     return builder.build();
   }
@@ -81,7 +79,30 @@ public class LinearModelBuilder {
    * @param counter - the workout number on that day to be encoded.
    * @return - the encoded HiddenState name.
    */
-  public String encodeDay(DayOfWeek day, int counter) {
+  private String encodeDay(DayOfWeek day, int counter) {
     return "Day: " + day.toString() + ", workout: " + counter;
   }
+
+  /**
+   * This helper method finds the first day of the week with a workout, for the purposes of finding the first
+   * potential state in a linear model.
+   *
+   * @param startDay - the start day of the week of the potential schedule.
+   * @param schedule - the schedule to check.
+   * @return the DayOfWeek of the first workout of the schedule.
+   * @throws InvalidScheduleException if the schedule has no workouts.
+   */
+  private DayOfWeek findFirstWorkout(DayOfWeek startDay, Schedule schedule) throws InvalidScheduleException {
+    for (Day day : schedule.example().days()) {
+      if (day.getDay().getValue() < startDay.getValue()) {
+        continue;
+      }
+      if (day.getNumberOfWorkouts() > 0) {
+        return day.getDay();
+      }
+    }
+    throw new InvalidScheduleException("Schedule had no workouts, so no model could be built.", schedule);
+  }
+
+
 }

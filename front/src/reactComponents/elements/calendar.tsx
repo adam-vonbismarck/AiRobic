@@ -13,16 +13,7 @@ const WorkoutCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [workoutDetails, setWorkoutDetails] = useState<Workout[]>([]);
 
-  const [events, setEvents] = useState<any[]>([
-    {
-      title: "Endurance Row",
-      date: "2023-05-21",
-    },
-    {
-      title: "Interval Row",
-      date: "2023-04-21",
-    },
-  ]);
+  const [events, setEvents] = useState<Workout[]>([]);
 
   const fetchWorkouts = async (): Promise<Workout[]> => {
     const response = await fetch(
@@ -63,17 +54,22 @@ const WorkoutCalendar: React.FC = () => {
   }, []);
 
   function createEventsArray(data: Workout[]) {
-    const eventsArray = data.map((item) => {
+    const eventsArray: Workout[] = data.map((item) => {
       const event = {
-        title: `Workout ${item.workoutsNumber}`,
+        title: `Workout ${item.workoutsNumber} for day ${item.dayNumber}`,
         date: moment(item.date, "MM-DD-YYYY").format("yyyy-MM-DD"),
-        // completed: item.completed,
-        // RPE: item.RPE,
+        time: item.time,
+        completed: item.completed,
+        RPE: item.RPE,
+        workout: item.workout,
+        dayNumber: item.dayNumber,
+        workoutsNumber: item.workoutsNumber,
       };
 
       return event;
     });
 
+    console.log(eventsArray);
     return eventsArray;
   }
 
@@ -88,7 +84,7 @@ const WorkoutCalendar: React.FC = () => {
     let calendarApi = selectInfo.view.calendar;
     setSelectedDate(selectInfo.startStr);
     setWorkoutDetails(
-      workouts.filter((workout) => workout.date === selectInfo.startStr)
+      events.filter((workout) => workout.date === selectInfo.startStr)
     );
     calendarApi.unselect();
   };
@@ -102,7 +98,7 @@ const WorkoutCalendar: React.FC = () => {
 
   return (
     <motion.div
-      className="workout-calendar"
+      className="workout-calendar-container-animated"
       role="application"
       aria-label="Calendar of workout events"
       initial={{ opacity: 0, x: 70 }}
@@ -111,24 +107,27 @@ const WorkoutCalendar: React.FC = () => {
     >
       <AnimatePresence mode={"wait"}>
         {selectedDate ? (
-          <motion.div
-            key="popup"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {renderWorkoutDetails({
-              selectedDate,
-              workoutDetails,
-              setWorkoutDetails,
-              workouts,
-              setWorkouts,
-              closeFullscreen,
-            })}
-          </motion.div>
+          <div style={{ width: "50%" }}>
+            <motion.div
+              key="popup"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {renderWorkoutDetails({
+                selectedDate,
+                workoutDetails,
+                setWorkoutDetails,
+                events,
+                setWorkouts,
+                closeFullscreen,
+              })}
+            </motion.div>
+          </div>
         ) : (
           <motion.div
+            className="workout-calendar"
             key="calendar"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
