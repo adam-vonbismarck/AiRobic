@@ -182,18 +182,14 @@ export const renderWorkoutDetails = ({
             key={index}
             aria-label={`Workout ${index + 1}`}
           >
-            {/*<h3>{workout.title}</h3>*/}
+            <h3>{`Workout ${workout.workoutsNumber} for day ${workout.dayNumber}`}</h3>
             <p>
-              <strong aria-label="Duration">Duration:</strong>{" "}
-              {/*{workout.duration} minutes*/}
+              <strong aria-label="Duration">Duration:</strong> {workout.time}{" "}
+              minutes
             </p>
             <p>
               <strong aria-label="Description">Description:</strong>{" "}
-              {/*{workout.description}*/}
-            </p>
-            <p>
-              <strong aria-label="Calories Burned">Calories Burned:</strong>{" "}
-              {/*{workout.caloriesBurned}*/}
+              {workout.workout}
             </p>
             <div
               className="workout-details__split"
@@ -204,7 +200,7 @@ export const renderWorkoutDetails = ({
                 label="Distance (meters)"
                 type="text"
                 placeholder={"2000"}
-                // value={workout.distance || ""}
+                value={workout.distance || ""}
                 InputProps={{
                   inputComponent: NumericFormatCustom as any,
                   inputProps: {
@@ -221,9 +217,9 @@ export const renderWorkoutDetails = ({
               <TextField
                 className="custom-textfield"
                 label="Avg /500m"
-                // value={workout.avgSplit}
+                value={workout.split}
                 placeholder={"1:30.0"}
-                // defaultValue={workout.avgSplit}
+                defaultValue={workout.split}
                 onChange={(event) => {
                   const avgSplit = event.target.value;
                   const updatedWorkout = { ...workout, avgSplit };
@@ -248,8 +244,8 @@ export const renderWorkoutDetails = ({
                 min={0}
                 max={10}
                 track={false}
-                // value={workout.perceivedEffort}
-                // defaultValue={workout.perceivedEffort}
+                value={workout.RPE}
+                defaultValue={workout.RPE}
                 onChange={(event) => {
                   // @ts-ignore
                   const perceivedEffort = parseInt(event.target.value);

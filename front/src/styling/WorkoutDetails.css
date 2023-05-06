@@ -53,20 +53,20 @@
 }
 
 .workout-details h2 {
-    font-family: 'Muli';
+    font-family: 'Muli', serif;
     color: #f38418;
     text-align: center;
 }
 
 .workout-details p {
-    font-family: 'Muli';
+    font-family: 'Muli', serif;
     color: #ebe9e9;
     padding-right: 16px;
     /*white-space: nowrap;*/
 }
 
 .workout-details h5 {
-    font-family: 'Muli';
+    font-family: 'Muli', serif;
     color: #ebe9e9;
     padding-right: 16px;
     white-space: nowrap;
