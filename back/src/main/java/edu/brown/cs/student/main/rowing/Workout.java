@@ -1,5 +1,9 @@
 package edu.brown.cs.student.main.rowing;
 
+/**
+ * The Workout enum associates an integer (from the enum) with a string key in our workout files. Useful for
+ * searching classes like RowingWorkoutByName for a specific workout type.
+ */
 public enum Workout {
   _2K,
   _30R_20,
@@ -8,6 +12,12 @@ public enum Workout {
   NONE,
   OVERALL;
 
+  /**
+   * This method returns a Workout given its associated string.
+   *
+   * @param workout - the string associated with a given Workout.
+   * @return the Workout instance.
+   */
   public static Workout of(String workout) {
     return switch (workout) {
       case "2k" -> _2K;
@@ -19,6 +29,12 @@ public enum Workout {
     };
   }
 
+  /**
+   * This method returns a string given its associated Workout.
+   *
+   * @param workout - the Workout associated with a given string.
+   * @return the string of the Workout.
+   */
   public static String value(Workout workout) {
     return switch (workout) {
       case _2K -> "2k";

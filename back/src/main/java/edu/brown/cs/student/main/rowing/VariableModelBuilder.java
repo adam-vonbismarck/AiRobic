@@ -57,13 +57,13 @@ public class VariableModelBuilder {
       builder.generateNewState(Workout.value(wo));
       builder.setEmissionDistribution(
           Workout.value(wo),
-          this.dists.getEmissionDistNoGoal(new Day.WorkoutDescription(wo, lowLength)));
+          this.dists.getEmissionDist(new Day.WorkoutDescription(wo, lowLength)));
     }
 
     for (Workout wo : highWorkouts) {
       builder.generateNewState(Workout.value(wo));
       builder.setEmissionDistribution(
-          Workout.value(wo), this.dists.getEmissionDistNoGoal(new Day.WorkoutDescription(wo, 60)));
+          Workout.value(wo), this.dists.getEmissionDist(new Day.WorkoutDescription(wo, 60)));
     }
 
     for (Workout wo : allWorkouts) {

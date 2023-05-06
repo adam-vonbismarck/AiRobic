@@ -50,7 +50,7 @@ public class ModelTests {
     Schedule toBuild = null;
     toBuild =
         builder.minutesWithDates(
-            300,
+            600,
             LocalDate.now(),
             LocalDate.of(2023, 5, 25),
             0.2,
