@@ -23,12 +23,12 @@ public class WorkoutDistributionByName {
 
   public HashMap<Emission, Double> generateEmissionDistribution(WorkoutDescription name)
       throws NoWorkoutTypeException {
-    if (this.map.allData().containsKey(Workout.value(name.intensity()))) {
-      return this.map.getDist(Workout.value(name.intensity()));
+    if (this.map.allData().containsKey(Workout.value(name.workoutType()))) {
+      return this.map.getDist(Workout.value(name.workoutType()));
     }
     throw new NoWorkoutTypeException(
         "Type: "
-            + Workout.value(name.intensity())
+            + Workout.value(name.workoutType())
             + "was not found in the loaded set of workout"
             + "distributions.");
   }

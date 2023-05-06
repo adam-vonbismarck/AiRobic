@@ -10,73 +10,58 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Planning to rewrite the way this logic works. Going to rebuild day, schedule, and week so that
- * each schedule has an example week, and the model is built off of this week. So, in addition to
- * ScheduleBuilder, there will be a WeekBuilder that creates an example week for a given schedule
- * (used within ScheduleBuilder, so some code from ScheduleBuilder will be delegated to
- * WeekBuilder).
- *
- * <p>From here, the ModelBuilder will build hidden states with a transition matrix that transitions
- * (and loops according to) the example week. I will likely make this version of ModelBuilder
- * another class up the hierarchy, so something like LinearModelBuilder.
- *
- * <p>Both Week and ScheduleBuilder will have a generic option to build, as well as one that plugs
- * in the intensity of each workout into each Day (in a new field) for use in building the emissions
- * of the Model in the LinearModelBuilder.
- *
- * <p>I will use the Week and ScheduleBuilder non-generic options to build a Schedule for the
- * LinearModelBuilder, and then loop through the built Week to generate the hidden states and
- * emissions. Then, I will run the built model, using the built Schedule and ScheduleFormatter to
- * capture the results. This means the ScheduleBuild will need to be separate from the model build.
- *
- * <p>For the equivalent of the graph, I will build a generic Schedule given the time/workouts
- * inputted by the user and generate hidden states and transition matrices directly from workout
- * types, rather than with a schedule framework.
- *
- * <p>In a separate use of the LinearModelBuilder, I will build a linear model, but only run the
- * model with the length of a single week. Then, I will use the result of this linear model build
- * and use a simple process for increasing the intensity of each progressive week to build the full
- * schedule (applied the number of times equal to the number of weeks remaining).
- *
- * <p>This will all require the creation of different workout classes, and many instances of these
- * workout classes. Gordan will help me with these, and integrating them into the models above.
- *
- * <p>For the LinearModelBuilder, we will allow a random choice from all potential hard workouts for
- * each hard workout, unless otherwise specified. The steady workout will be grouped by time, and
- * their distribution will be placed in each respective day accordingly.
- *
- * <p>The goal parameter will narrow down which workout type LinearModelBuilder uses, and use the
- * progressive increase model to build the schedule.
+ * The ModelBuilder class contains code for building a MarkovModel, with helpful storage of HiddenStates by a
+ * string name for easy generation.
  */
-
-/** Still deciding whether this class is worth keep around...will document better once I decide. */
 public class ModelBuilder {
 
   private final List<HiddenState> states;
   private final HashMap<String, HiddenState> nameMap;
   private final HashMap<HiddenState, Double> startDist;
 
+  /**
+   * The constructor for the ModelBuilder class, which initializes all of its storage fields.
+   */
   public ModelBuilder() {
     this.states = new ArrayList<>();
     this.nameMap = new HashMap<>();
     this.startDist = new HashMap<>();
   }
 
+  /**
+   * Given the current data in states, nameMap, and startDist, attempts to build a MarkovModel.
+   *
+   * @return the MarkovModel, if successful.
+   * @throws InvalidDistributionException if there are any problems with any of the distributions associated
+   * with the new MarkovModel (including state distributions).
+   */
   public MarkovModel build() throws InvalidDistributionException {
+
+    // ensures start distribution, at least, contains all relevant states
     for (HiddenState state : this.states) {
       if (!this.startDist.containsKey(state)) {
         this.startDist.put(state, 0.0);
       }
     }
+
     return new MarkovModel(this.startDist);
   }
 
-  public HiddenState generateNewState(String name) {
+  /**
+   * Generates a new HiddenState, and puts it into the nameMap.
+   *
+   * @param name
+   * @return
+   * @throws InvalidDistributionException
+   */
+  public HiddenState generateNewState(String name) throws InvalidDistributionException {
     HiddenState state = new HiddenState(name, new HashMap<>(), new HashMap<>());
     this.states.add(state);
     this.nameMap.put(name, state);
     return state;
   }
+
+  // will continue commenting.
 
   public void setStateDistribution(String originName, HashMap<HiddenState, Double> potentialStates)
       throws InvalidDistributionException {
@@ -138,7 +123,6 @@ public class ModelBuilder {
   }
 
   public void addLinearTransitions() throws InvalidDistributionException {
-    System.out.println(this.states.size());
     for (int i = 0; i < this.states.size() - 1; i++) {
       HashMap<HiddenState, Double> transitionMat = new HashMap<>();
       transitionMat.put(this.states.get(i + 1), 1.0);
