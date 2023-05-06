@@ -258,7 +258,7 @@ export const renderWorkoutDetails = ({
                   },
                   "& .MuiSlider-rail": {
                     backgroundImage:
-                      "linear-gradient(90deg, rgba(0,204,13,1) 0%, rgba(209,221,221,1) 50%, rgba(255,0,0,1) 100%)",
+                      "linear-gradient(90deg, rgba(0,204,13,1) 0%, rgba(209,221,22,1) 50%, rgba(255,0,0,1) 100%)",
                   },
                   "& .MuiSlider-valueLabel": {
                     color: "#ebe9e9",

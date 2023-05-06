@@ -178,9 +178,10 @@ button {
 .register-window {
     display: flex;
     min-height: 100vh;
+    /*align-items: center;*/
     flex-direction: row;
-    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
-    backdrop-filter: blur(7px);
+    justify-content: center;
+    padding-left: 25%;
 }
 
 .register-button {
@@ -200,15 +201,21 @@ button {
 }
 
 .sign-in-button {
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    text-transform: uppercase;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /*text-align: center;*/
+    /*text-transform: uppercase;*/
     transition: background-color 0.3s ease, color 0.3s ease;
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-
+    /*position: absolute;*/
+    /*padding-left: 25%;*/
+    /*bottom: 50%;*/
+    /*left: 50%;*/
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
+    backdrop-filter: blur(7px); /* add a slight blur effect to the background */
 }
 .sign-in-button h2 {
     color: #f38418;

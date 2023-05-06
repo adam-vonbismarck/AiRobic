@@ -69,6 +69,7 @@ const WorkoutCalendar: React.FC = () => {
       return event;
     });
 
+    console.log(eventsArray);
     return eventsArray;
   }
 
