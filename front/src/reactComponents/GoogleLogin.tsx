@@ -60,10 +60,8 @@ function isNewUser(userID: string): Promise<boolean> {
 }
 function Login(loginToken: LoginResponse) {
     localStorage.setItem("userID", loginToken.sub);
-    console.log(loginToken);
     localStorage.setItem("givenName", loginToken.given_name);
     localStorage.setItem("loggedIn", "true");
-    console.log(localStorage);
     window.location.href = "/";
 }
 
