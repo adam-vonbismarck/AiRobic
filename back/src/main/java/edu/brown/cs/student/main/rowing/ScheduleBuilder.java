@@ -16,9 +16,9 @@ import java.util.Optional;
 
 /**
  * The ScheduleBuilder class builds schedules given a number of minutes and a percentage of high
- * workoutType work OR a number of low workoutType/high workoutType workouts per week. From here, the
- * ScheduleBuilder class builds a reasonable schedule (with workoutType labels provided) for use in
- * generating a MarkovModel.
+ * workoutType work OR a number of low workoutType/high workoutType workouts per week. From here,
+ * the ScheduleBuilder class builds a reasonable schedule (with workoutType labels provided) for use
+ * in generating a MarkovModel.
  */
 public class ScheduleBuilder {
 
@@ -32,7 +32,7 @@ public class ScheduleBuilder {
       double highPercent,
       Workout highIntensityLabel,
       Workout lowIntensityLabel)
-          throws InvalidDistributionException, InvalidScheduleException {
+      throws InvalidDistributionException, InvalidScheduleException {
     int weekCounter = 0;
     int numDays = startDay.datesUntil(endDay).toList().size();
 
@@ -71,7 +71,8 @@ public class ScheduleBuilder {
   /**
    * The minutes call takes in a host of parameters, and builds a schedule (designed with rowing in
    * mind) that will be reasonable given the time constraint. In particular, it calculates the
-   * number of low and high workoutType workouts, and passes the problem off to the "workouts" method.
+   * number of low and high workoutType workouts, and passes the problem off to the "workouts"
+   * method.
    *
    * @param minutes - approximate minutes per week the user has
    * @param numWeeks - the number of weeks the schedule should be
@@ -81,8 +82,8 @@ public class ScheduleBuilder {
    * @param highIntensityLabel - the category of workout that should be high workoutType
    * @param lowIntensityLabel - the category of workout that should be low workoutType
    * @return a schedule that fits these constraints.
-   * @throws InvalidDistributionException if the percentage of high workoutType work is not between 0
-   *     and 1.
+   * @throws InvalidDistributionException if the percentage of high workoutType work is not between
+   *     0 and 1.
    */
   public Schedule minutes(
       int minutes,
@@ -92,7 +93,7 @@ public class ScheduleBuilder {
       DayOfWeek endDay,
       Workout highIntensityLabel,
       Workout lowIntensityLabel)
-          throws InvalidDistributionException, InvalidScheduleException {
+      throws InvalidDistributionException, InvalidScheduleException {
     RandomGenerator.validateDistribution(
         String.class,
         new HashMap<>() {
@@ -108,7 +109,8 @@ public class ScheduleBuilder {
     // calculate low workoutType minutes from high workoutType minutes
     long lowIntensity = minutes - highIntensity;
 
-    // calculate the number of high workoutType workouts, assuming each is 60 minutes, with a maximum
+    // calculate the number of high workoutType workouts, assuming each is 60 minutes, with a
+    // maximum
     // of 4
     long numHighIntensity = Math.min(Math.floorDiv(highIntensity, 60), 4);
 
@@ -117,7 +119,8 @@ public class ScheduleBuilder {
     // of 10 sessions per week
     long lowIntensityWorkoutLength = Math.max(60, lowIntensity / (10 - numHighIntensity));
 
-    // use the low workoutType workout length and the number of low workoutType minutes to calculate the
+    // use the low workoutType workout length and the number of low workoutType minutes to calculate
+    // the
     // number of low workoutType workouts
     long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
 
@@ -156,7 +159,8 @@ public class ScheduleBuilder {
       DayOfWeek endDay,
       Workout highIntensityLabel,
       Workout lowIntensityLabel,
-      long lowLength) throws InvalidScheduleException {
+      long lowLength)
+      throws InvalidScheduleException {
 
     // will inline comment once the method is confirmed.
 
@@ -190,7 +194,8 @@ public class ScheduleBuilder {
    * @param days - the list of days over which to distribute
    * @param workouts - the number of workouts to distribute
    */
-  private void distributeWorkouts(ArrayList<Day> days, long workouts) throws InvalidScheduleException {
+  private void distributeWorkouts(ArrayList<Day> days, long workouts)
+      throws InvalidScheduleException {
     for (int j = 0; j < NUM_DAYS; j++) {
       days.add(
           new Day(

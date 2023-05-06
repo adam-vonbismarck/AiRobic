@@ -1,7 +1,5 @@
 package edu.brown.cs.student.main.models.formattypes;
 
-import com.squareup.moshi.Json;
-
 import java.util.List;
 
 /**
@@ -9,6 +7,4 @@ import java.util.List;
  *
  * @param days - the list of all Days in a given Schedule, when generated using the flatten method.
  */
-public record FlatSchedule(List<Day> days) {
-
-}
+public record FlatSchedule(List<Day> days) {}

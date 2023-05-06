@@ -1,6 +1,5 @@
 package edu.brown.cs.student;
 
-import edu.brown.cs.student.main.handlers.ConvertToJson;
 import edu.brown.cs.student.main.handlers.GenerateGraphLikePlan;
 import edu.brown.cs.student.main.models.exceptions.*;
 import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
@@ -11,12 +10,11 @@ import edu.brown.cs.student.main.models.markov.MarkovModel;
 import edu.brown.cs.student.main.rowing.LinearModelBuilder;
 import edu.brown.cs.student.main.rowing.ScheduleBuilder;
 import edu.brown.cs.student.main.rowing.Workout;
+import edu.brown.cs.student.main.server.Serializer;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Set;
-
-import edu.brown.cs.student.main.server.Serializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

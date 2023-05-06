@@ -3,9 +3,7 @@ package edu.brown.cs.student.main.server;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-import edu.brown.cs.student.main.models.WorkoutDistributionByName;
 import edu.brown.cs.student.main.models.formattypes.FlatSchedule;
-import edu.brown.cs.student.main.models.formattypes.Schedule;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +27,12 @@ public class Serializer {
    * @return The serialized version of the map
    */
   public static String serialize(HashMap<String, Object> map) {
-    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class), new LocalDateJsonAdapter()).build();
+    Moshi moshi =
+        new Moshi.Builder()
+            .add(
+                Types.newParameterizedType(Optional.class, LocalDate.class),
+                new LocalDateJsonAdapter())
+            .build();
     Type genericMap = Types.newParameterizedType(Map.class, String.class, Object.class);
     JsonAdapter<Map<String, Object>> adapter = moshi.adapter(genericMap);
     return adapter.toJson(map);
@@ -42,7 +45,12 @@ public class Serializer {
    * @return The serialized version of the schedule
    */
   public static String serializeSchedule(FlatSchedule schedule) {
-    Moshi moshi = new Moshi.Builder().add(Types.newParameterizedType(Optional.class, LocalDate.class), new LocalDateJsonAdapter()).build();
+    Moshi moshi =
+        new Moshi.Builder()
+            .add(
+                Types.newParameterizedType(Optional.class, LocalDate.class),
+                new LocalDateJsonAdapter())
+            .build();
     JsonAdapter<FlatSchedule> adapter = moshi.adapter(FlatSchedule.class);
     return adapter.toJson(schedule);
   }
