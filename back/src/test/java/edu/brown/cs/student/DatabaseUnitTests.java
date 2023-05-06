@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DatabaseUnit {
+/** This class tests the Database */
+public class DatabaseUnitTests {
   private DatabaseCommands database;
 
-  // Function to reset and set up the database before each test
+  /** Function to reset and set up the database before each test */
   @BeforeEach
   public void setUp() throws IOException, InterruptedException {
     this.database = new DatabaseCommands();
@@ -17,14 +18,14 @@ public class DatabaseUnit {
     Thread.sleep(2000);
   }
 
-  // Empty file.json test
+  /** Empty file.json test */
   @Test
   public void testEmpty() throws IOException, InterruptedException {
     String actual = this.database.get("test");
     Assertions.assertEquals("null", actual);
   }
 
-  // Test for adding new users and their information
+  /** Test for adding new users and their information */
   @Test
   public void testUpdate() throws IOException, InterruptedException {
     String s =
@@ -37,7 +38,7 @@ public class DatabaseUnit {
     Assertions.assertEquals(expected, actual);
   }
 
-  // Getter testing for specific user information
+  /** Getter testing for specific user information */
   @Test
   public void testGet() throws IOException, InterruptedException {
     String s =
@@ -52,7 +53,7 @@ public class DatabaseUnit {
     Assertions.assertEquals(expected2, actual2);
   }
 
-  // User deletion testing
+  /** User deletion testing */
   @Test
   public void testDelete() throws IOException, InterruptedException {
     String s =
@@ -65,7 +66,7 @@ public class DatabaseUnit {
     Assertions.assertEquals("null", actual);
   }
 
-  // Specific user information deletion testing
+  /** Specific user information deletion testing */
   @Test
   public void testDeleteSpecific() throws IOException, InterruptedException {
     String s =
@@ -79,7 +80,7 @@ public class DatabaseUnit {
     Assertions.assertEquals(expected, actual);
   }
 
-  // Correct input testing, for more users
+  /** Correct input testing, for more users */
   @Test
   public void testUpdateMultiple() throws IOException, InterruptedException {
     String s1 =
@@ -97,7 +98,7 @@ public class DatabaseUnit {
     Assertions.assertEquals(expected2, actual2);
   }
 
-  // Incorrect input testing, correct way is above
+  /** Incorrect input testing, correct way is above */
   @Test
   public void testOverwriting() throws IOException, InterruptedException {
     String s1 =

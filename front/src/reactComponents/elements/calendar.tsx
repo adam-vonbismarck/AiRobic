@@ -3,63 +3,79 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { renderWorkoutDetails } from "./workoutDetails";
-import { Workout } from "./types";
-import { useState } from "react";
+import { Day, Workout } from "./types";
+import { useEffect, useState } from "react";
 import "../../styling/Calendar.css";
 import { AnimatePresence, motion } from "framer-motion";
+import moment from "moment";
 
 const WorkoutCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [workoutDetails, setWorkoutDetails] = useState<Workout[]>([]);
 
-  const [workouts, setWorkouts] = useState<Workout[]>([
+  const [events, setEvents] = useState<any[]>([
     {
       title: "Endurance Row",
-      date: "2023-04-21",
-      duration: 30,
-      description:
-        "30-minute row at a steady pace to build endurance at a low HR sdfgsdfgds",
-      caloriesBurned: 300,
+      date: "2023-05-21",
     },
     {
       title: "Interval Row",
       date: "2023-04-21",
-      duration: 45,
-      description:
-        "45-minute row with alternating high-intensity and recovery intervals",
-      caloriesBurned: 450,
-    },
-    {
-      title: "Technique Row",
-      date: "2023-04-22",
-      duration: 60,
-      description:
-        "60-minute row with emphasis on proper rowing technique and form",
-      caloriesBurned: 200,
-    },
-    {
-      title: "Technique Row",
-      date: "2023-04-22",
-      duration: 60,
-      description:
-        "60-minute row with emphasis on proper rowing technique and form",
-      caloriesBurned: 200,
-    },
-    {
-      title: "Power Row",
-      date: "2023-04-23",
-      duration: 90,
-      description: "90-minute row with emphasis on building power and strength",
-      caloriesBurned: 500,
-    },
-    {
-      title: "Endurance Row",
-      date: "2023-04-23",
-      duration: 90,
-      description: "30-minute row with emphasis on building power and strength",
-      caloriesBurned: 500,
     },
   ]);
+
+  const fetchWorkouts = async (): Promise<Workout[]> => {
+    const response = await fetch(
+      `https://cs32airobic-default-rtdb.firebaseio.com/users/${localStorage.getItem(
+        "userID"
+      )}/schedule.json`
+    );
+    const data: { days: Day[] } = await response.json();
+    const workouts: Workout[] = [];
+
+    data.days.forEach((day: Day, dayIndex: number) => {
+      let workoutsNumber = 1;
+      if (day.workouts) {
+        day.workouts.forEach((workout, workoutIndex: number) => {
+          workouts.push({
+            workoutsNumber: workoutsNumber++,
+            dayNumber: dayIndex + 1,
+            date: day.date,
+            completed: workout.completed,
+            RPE: workout.rpe,
+            time: workout.time,
+            workout: workout.workout,
+          });
+        });
+      }
+    });
+
+    return workouts;
+  };
+
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+
+  useEffect(() => {
+    fetchWorkouts().then((workouts) => {
+      setWorkouts(workouts);
+      setEvents(createEventsArray(workouts));
+    });
+  }, []);
+
+  function createEventsArray(data: Workout[]) {
+    const eventsArray = data.map((item) => {
+      const event = {
+        title: `Workout ${item.workoutsNumber}`,
+        date: moment(item.date, "MM-DD-YYYY").format("yyyy-MM-DD"),
+        // completed: item.completed,
+        // RPE: item.RPE,
+      };
+
+      return event;
+    });
+
+    return eventsArray;
+  }
 
   /**
    * Handles the selection of a date on the calendar.
@@ -132,7 +148,7 @@ const WorkoutCalendar: React.FC = () => {
               selectMirror={true}
               dayMaxEvents={true}
               firstDay={1}
-              events={workouts}
+              events={events}
               select={handleDateSelect}
               aria-label="Interactive calendar of workout events"
               aria-roledescription="Calendar"

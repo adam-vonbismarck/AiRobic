@@ -23,6 +23,14 @@ public class Server {
     // Set the port number for the server to listen on.
     Spark.port(3235);
 
+    // String startDateStr = "01-01-2023";
+    // String endDateStr = "01-07-2023";
+    // List<String> dates = DateListCreator.getDatesBetween(startDateStr, endDateStr);
+    // System.out.println(dates);
+    // String dateStr = "04-29-2023";
+    // String dayOfWeek = DayOfTheWeek.getDayOfWeek(dateStr);
+    // System.out.println(dayOfWeek);
+
     // Set the headers for cross-origin resource sharing (CORS) to allow any origin and any method.
     after(
         (request, response) -> {
@@ -47,5 +55,11 @@ public class Server {
 
     // Print a message to indicate that the server has started successfully.
     System.out.println("Server started.");
+
+    // Print a message to indicate that the server will not work for Windows.
+    String os = System.getProperty("os.name").toLowerCase();
+    if (os.contains("win")) {
+      System.out.println("This code will not work for Windows");
+    }
   }
 }

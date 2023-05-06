@@ -91,7 +91,7 @@ public class GenerateGraphLikePlan {
   }
 
   private Week generateWeek(int minutes, LocalDate startDay, LocalDate endDay, MarkovModel model)
-      throws InvalidDistributionException, FormatterFailureException {
+          throws InvalidDistributionException, FormatterFailureException, InvalidScheduleException {
 
     List<Emission> totalWeekEmissions = new ArrayList<>();
     List<Day> days = new ArrayList<>();

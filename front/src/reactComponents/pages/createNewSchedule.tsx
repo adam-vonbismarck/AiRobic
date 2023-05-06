@@ -174,8 +174,8 @@ function NewSchedule() {
       const durationObject = dayjs.duration(hours, "hours");
       const minutes = Math.floor(durationObject.asMinutes());
 
-      const startFormatted = moment(startDate).format("MM-DD-yyyy");
-      const endFormatted = moment(endDate).format("MM-DD-yyyy");
+      const startFormatted = moment(startDate).format("yyyy-MM-DD");
+      const endFormatted = moment(endDate).format("yyyy-MM-DD");
 
       // Create API url based on input values.
       let apiUrl = `http://localhost:3235/create-plan?model=${selectedOption}&hoursPerWeek=${minutes}&sport=${sport}&startDate=${startFormatted}&endDate=${endFormatted}&username=${localStorage.getItem(
@@ -186,6 +186,7 @@ function NewSchedule() {
         apiUrl += `&goal=${goal}`;
       }
 
+      console.log(apiUrl);
       // Call API to generate workout plan.
       const response = await fetch(apiUrl);
 

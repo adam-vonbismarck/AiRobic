@@ -1,6 +1,7 @@
 package edu.brown.cs.student;
 
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
+import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
@@ -21,7 +22,7 @@ public class ScheduleBuilderTests {
    * produces a valid schedule.
    */
   @Test
-  public void testScheduleBuilderMedium() {
+  public void testScheduleBuilderMedium() throws InvalidScheduleException {
     Schedule schedule = null;
     try {
       schedule =
@@ -34,7 +35,7 @@ public class ScheduleBuilderTests {
                   DayOfWeek.FRIDAY,
                   Workout.of("2k"),
                   Workout.of("UT2"));
-    } catch (InvalidDistributionException e) {
+    } catch (InvalidDistributionException | InvalidScheduleException e) {
       Assertions.assertEquals("All distributions were valid", e.getMessage());
     }
     Assertions.assertTrue(schedule.weeks().size() == 4);
@@ -102,7 +103,7 @@ public class ScheduleBuilderTests {
    * produces a valid schedule.
    */
   @Test
-  public void testScheduleBuilderMax() {
+  public void testScheduleBuilderMax() throws InvalidScheduleException {
     Schedule schedule = null;
     try {
       schedule =
@@ -115,7 +116,7 @@ public class ScheduleBuilderTests {
                   DayOfWeek.FRIDAY,
                   Workout.of("2k"),
                   Workout.of("UT2"));
-    } catch (InvalidDistributionException e) {
+    } catch (InvalidDistributionException | InvalidScheduleException e) {
       Assertions.assertEquals("All distributions were valid", e.getMessage());
     }
     Assertions.assertTrue(schedule.weeks().size() == 5);
@@ -183,7 +184,7 @@ public class ScheduleBuilderTests {
    * produces a valid schedule.
    */
   @Test
-  public void testScheduleBuilderMin() {
+  public void testScheduleBuilderMin() throws InvalidScheduleException {
     Schedule schedule = null;
     try {
       schedule =
@@ -196,7 +197,7 @@ public class ScheduleBuilderTests {
                   DayOfWeek.FRIDAY,
                   Workout.of("2k"),
                   Workout.of("UT2"));
-    } catch (InvalidDistributionException e) {
+    } catch (InvalidDistributionException | InvalidScheduleException e) {
       Assertions.assertEquals("All distributions were valid", e.getMessage());
     }
     Assertions.assertTrue(schedule.weeks().size() == 4);
@@ -232,10 +233,10 @@ public class ScheduleBuilderTests {
 
   /**
    * Tests that building a schedule with an allowed number of minutes (in the middle of the range)
-   * and varying the high intensity workout percentage produces a valid schedule.
+   * and varying the high workoutType workout percentage produces a valid schedule.
    */
   @Test
-  public void testScheduleBuilderMediumChangeHigh() {
+  public void testScheduleBuilderMediumChangeHigh() throws InvalidScheduleException {
     Schedule schedule = null;
     try {
       schedule =
@@ -248,7 +249,7 @@ public class ScheduleBuilderTests {
                   DayOfWeek.FRIDAY,
                   Workout.of("2k"),
                   Workout.of("UT2"));
-    } catch (InvalidDistributionException e) {
+    } catch (InvalidDistributionException | InvalidScheduleException e) {
       Assertions.assertEquals("All distributions were valid", e.getMessage());
     }
     Assertions.assertTrue(schedule.weeks().size() == 4);
@@ -322,7 +323,7 @@ public class ScheduleBuilderTests {
                   DayOfWeek.FRIDAY,
                   Workout.of("2k"),
                   Workout.of("UT2"));
-    } catch (InvalidDistributionException e) {
+    } catch (InvalidDistributionException | InvalidScheduleException e) {
       Assertions.assertEquals("All distributions were valid", e.getMessage());
     }
     Assertions.assertTrue(schedule.weeks().size() == 4);
@@ -388,7 +389,7 @@ public class ScheduleBuilderTests {
 
   /**
    * Tests that building a schedule with an allowed number of minutes (in the middle of the range)
-   * and varying the high intensity workout percentage produces a valid schedule.
+   * and varying the high workoutType workout percentage produces a valid schedule.
    */
   @Test
   public void testScheduleBuilderBadHigh() {
@@ -401,6 +402,6 @@ public class ScheduleBuilderTests {
             });
     Assertions.assertEquals(
         exn.getMessage(),
-        "The probability associated with the output " + "High intensity" + " was negative.");
+        "The probability associated with the output " + "High workoutType" + " was negative.");
   }
 }

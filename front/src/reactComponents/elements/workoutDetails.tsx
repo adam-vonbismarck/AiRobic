@@ -119,21 +119,21 @@ export const renderWorkoutDetails = ({
    * @param {Workout} updatedWorkout - Updated workout details
    * @param {number} index - Index of the workout in the workoutDetails array
    */
-  const updateWorkout = (updatedWorkout: Workout, index: number) => {
-    const updatedWorkoutDetails = [...workoutDetails];
-    updatedWorkoutDetails[index] = updatedWorkout;
-    setWorkoutDetails(updatedWorkoutDetails);
-
-    // Update workouts
-    const workoutIndex = workouts.findIndex(
-      (w) => w.date === updatedWorkout.date && w.title === updatedWorkout.title
-    );
-    if (workoutIndex > -1) {
-      const updatedWorkouts = [...workouts];
-      updatedWorkouts[workoutIndex] = updatedWorkout;
-      setWorkouts(updatedWorkouts);
-    }
-  };
+  // const updateWorkout = (updatedWorkout: Workout, index: number) => {
+  //   const updatedWorkoutDetails = [...workoutDetails];
+  //   updatedWorkoutDetails[index] = updatedWorkout;
+  //   setWorkoutDetails(updatedWorkoutDetails);
+  //
+  //   // Update workouts
+  //   const workoutIndex = workouts.findIndex(
+  //     (w) => w.date === updatedWorkout.date && w.title === updatedWorkout.title
+  //   );
+  //   if (workoutIndex > -1) {
+  //     const updatedWorkouts = [...workouts];
+  //     updatedWorkouts[workoutIndex] = updatedWorkout;
+  //     setWorkouts(updatedWorkouts);
+  //   }
+  // };
 
   if (workoutsForSelectedDate.length === 0) {
     return (
@@ -182,18 +182,18 @@ export const renderWorkoutDetails = ({
             key={index}
             aria-label={`Workout ${index + 1}`}
           >
-            <h3>{workout.title}</h3>
+            {/*<h3>{workout.title}</h3>*/}
             <p>
               <strong aria-label="Duration">Duration:</strong>{" "}
-              {workout.duration} minutes
+              {/*{workout.duration} minutes*/}
             </p>
             <p>
               <strong aria-label="Description">Description:</strong>{" "}
-              {workout.description}
+              {/*{workout.description}*/}
             </p>
             <p>
               <strong aria-label="Calories Burned">Calories Burned:</strong>{" "}
-              {workout.caloriesBurned}
+              {/*{workout.caloriesBurned}*/}
             </p>
             <div
               className="workout-details__split"
@@ -204,7 +204,7 @@ export const renderWorkoutDetails = ({
                 label="Distance (meters)"
                 type="text"
                 placeholder={"2000"}
-                value={workout.distance || ""}
+                // value={workout.distance || ""}
                 InputProps={{
                   inputComponent: NumericFormatCustom as any,
                   inputProps: {
@@ -214,20 +214,20 @@ export const renderWorkoutDetails = ({
                 onChange={(event) => {
                   const distance = parseInt(event.target.value);
                   const updatedWorkout = { ...workout, distance };
-                  updateWorkout(updatedWorkout, index);
+                  // updateWorkout(updatedWorkout, index);
                 }}
                 aria-label="Workout Distance"
               />
               <TextField
                 className="custom-textfield"
                 label="Avg /500m"
-                value={workout.avgSplit}
+                // value={workout.avgSplit}
                 placeholder={"1:30.0"}
-                defaultValue={workout.avgSplit}
+                // defaultValue={workout.avgSplit}
                 onChange={(event) => {
                   const avgSplit = event.target.value;
                   const updatedWorkout = { ...workout, avgSplit };
-                  updateWorkout(updatedWorkout, index);
+                  // updateWorkout(updatedWorkout, index);
                 }}
                 name="numberformat"
                 id="formatted-numberformat-input"
@@ -248,13 +248,13 @@ export const renderWorkoutDetails = ({
                 min={0}
                 max={10}
                 track={false}
-                value={workout.perceivedEffort}
-                defaultValue={workout.perceivedEffort}
+                // value={workout.perceivedEffort}
+                // defaultValue={workout.perceivedEffort}
                 onChange={(event) => {
                   // @ts-ignore
                   const perceivedEffort = parseInt(event.target.value);
                   const updatedWorkout = { ...workout, perceivedEffort };
-                  updateWorkout(updatedWorkout, index);
+                  // updateWorkout(updatedWorkout, index);
                 }}
                 sx={{
                   "& .MuiSlider-thumb": {

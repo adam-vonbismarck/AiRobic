@@ -32,6 +32,10 @@ public class MarkovModel {
    */
   public MarkovModel(@Json(name = "startdist") HashMap<HiddenState, Double> startDistribution)
       throws InvalidDistributionException {
+    if (startDistribution == null) {
+      throw new InvalidDistributionException("Start distribution was missing when generating a new MarkovModel.",
+              new HashMap());
+    }
     this.states = startDistribution.keySet();
     this.startDistribution = startDistribution;
     RandomGenerator.validateDistribution(HiddenState.class, startDistribution);
@@ -39,10 +43,12 @@ public class MarkovModel {
   }
 
   /**
-   * Unsure if this method will be necessary yet; hidden states may come pre-checked. Still
-   * deciding.
+   * This method verifies that all states in the listed start distribution include all other states in their
+   * transition distribution, for guaranteed success during random generation. Also ensures that all potential
+   * states have valid transition and emission distributions.
    *
-   * @throws InvalidDistributionException
+   * @throws InvalidDistributionException if a state has a transition distribution with the wrong keys or either
+   * of its distributions are invalid.
    */
   private void checkStateDistributions() throws InvalidDistributionException {
     for (HiddenState state : this.states) {
