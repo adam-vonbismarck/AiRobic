@@ -13,12 +13,8 @@ public class RowingWorkoutByName {
   WorkoutDistributionByName noGoal;
 
   public RowingWorkoutByName() throws IOException {
-    this.goal =
-        new WorkoutDistributionByName(
-            "./data/WorkoutDataGoal.json");
-    this.noGoal =
-        new WorkoutDistributionByName(
-            "./data/WorkoutDataNoGoal.json");
+    this.goal = new WorkoutDistributionByName("./data/WorkoutDataGoal.json");
+    this.noGoal = new WorkoutDistributionByName("./data/WorkoutDataNoGoal.json");
   }
 
   public HashMap<Emission, Double> getEmissionDistGoal(WorkoutDescription name)

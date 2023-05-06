@@ -46,8 +46,9 @@ public class WorkoutDistributionByName {
   }
 
   public record EmissionAndProb(
-      @Json(name = "emission") Emission emission, @Json(name = "probability") Double probability,
-      @Json(name="minutes") double minutes) {
+      @Json(name = "emission") Emission emission,
+      @Json(name = "probability") Double probability,
+      @Json(name = "minutes") double minutes) {
 
     public Emission getTimedEmission() {
       return this.emission.setTime(this.minutes);

@@ -5,7 +5,8 @@ import com.squareup.moshi.JsonClass;
 import java.util.Objects;
 
 /**
- * The Emission class contains all workout data of a workout produced by a MarkovModel random generation run.
+ * The Emission class contains all workout data of a workout produced by a MarkovModel random
+ * generation run.
  */
 public class Emission {
 
@@ -13,15 +14,14 @@ public class Emission {
   private final double time;
 
   /**
-   * The constructor for the Emission class, which takes in a number of parameters representing a workout.
+   * The constructor for the Emission class, which takes in a number of parameters representing a
+   * workout.
    *
    * @param workout - the string description of the workout.
    * @param time - the time it takes to complete the workout.
    */
   @JsonClass(generateAdapter = true)
-  public Emission(
-      @Json(name = "workout") String workout,
-      @Json(name = "minutes") double time) {
+  public Emission(@Json(name = "workout") String workout, @Json(name = "minutes") double time) {
     this.workout = workout;
     this.time = time;
   }
@@ -93,17 +93,13 @@ public class Emission {
   }
 
   /**
-   * Overridden toString method, so Emission.toString() returns a string with the relevant fields displayed.
+   * Overridden toString method, so Emission.toString() returns a string with the relevant fields
+   * displayed.
+   *
    * @return the string version of this instance.
    */
   @Override
   public String toString() {
-    return "Emission{"
-        + "workout='"
-        + this.workout
-        + '\''
-        + ", time="
-        + this.time
-        + '}';
+    return "Emission{" + "workout='" + this.workout + '\'' + ", time=" + this.time + '}';
   }
 }

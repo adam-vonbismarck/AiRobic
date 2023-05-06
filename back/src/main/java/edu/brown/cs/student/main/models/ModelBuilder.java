@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * The ModelBuilder class contains code for building a MarkovModel, with helpful storage of HiddenStates by a
- * string name for easy generation.
+ * The ModelBuilder class contains code for building a MarkovModel, with helpful storage of
+ * HiddenStates by a string name for easy generation.
  */
 public class ModelBuilder {
 
@@ -19,9 +19,7 @@ public class ModelBuilder {
   private final HashMap<String, HiddenState> nameMap;
   private final HashMap<HiddenState, Double> startDist;
 
-  /**
-   * The constructor for the ModelBuilder class, which initializes all of its storage fields.
-   */
+  /** The constructor for the ModelBuilder class, which initializes all of its storage fields. */
   public ModelBuilder() {
     this.states = new ArrayList<>();
     this.nameMap = new HashMap<>();
@@ -32,8 +30,8 @@ public class ModelBuilder {
    * Given the current data in states, nameMap, and startDist, attempts to build a MarkovModel.
    *
    * @return the MarkovModel, if successful.
-   * @throws InvalidDistributionException if there are any problems with any of the distributions associated
-   * with the new MarkovModel (including state distributions).
+   * @throws InvalidDistributionException if there are any problems with any of the distributions
+   *     associated with the new MarkovModel (including state distributions).
    */
   public MarkovModel build() throws InvalidDistributionException {
 

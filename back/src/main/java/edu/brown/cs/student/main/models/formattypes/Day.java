@@ -11,10 +11,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * The Day class, which models a singular day in a workout program. This class has the basic set of fields we expect
- * a workout plan to need, but more could be added by extending this class for a particular sport. This class has many
- * accessors and mutators, which we would normally consider poor design, but we are merely using this class as an
- * intermediary before serialization (we do not expect to compute with any of its fields in a meaningful way).
+ * The Day class, which models a singular day in a workout program. This class has the basic set of
+ * fields we expect a workout plan to need, but more could be added by extending this class for a
+ * particular sport. This class has many accessors and mutators, which we would normally consider
+ * poor design, but we are merely using this class as an intermediary before serialization (we do
+ * not expect to compute with any of its fields in a meaningful way).
  */
 public class Day {
 
@@ -26,17 +27,17 @@ public class Day {
   private Optional<LocalDate> date;
 
   /**
-   * The constructor for the Day class, which takes in a number of parameters modelling a given day in a workout
-   * plan.
+   * The constructor for the Day class, which takes in a number of parameters modelling a given day
+   * in a workout plan.
    *
-   * @param type             - the type of this object (when serialized), usually day (but could be changed for extensibility
-   *                         purposes on the front end).
-   * @param workouts         - the list of workouts on this given day, after a model run.
+   * @param type - the type of this object (when serialized), usually day (but could be changed for
+   *     extensibility purposes on the front end).
+   * @param workouts - the list of workouts on this given day, after a model run.
    * @param numberOfWorkouts - the number of workouts this day has.
-   * @param day              - the day of the week that this instance models.
-   * @param date             - the date of this instance.
-   * @param workoutPlan      - good for making linear models, this list models the types of workout that should occur on
-   *                         this day.
+   * @param day - the day of the week that this instance models.
+   * @param date - the date of this instance.
+   * @param workoutPlan - good for making linear models, this list models the types of workout that
+   *     should occur on this day.
    * @throws InvalidScheduleException if the day is initialized with unexpected null fields.
    */
   public Day(
@@ -45,7 +46,8 @@ public class Day {
       int numberOfWorkouts,
       DayOfWeek day,
       Optional<LocalDate> date,
-      List<WorkoutDescription> workoutPlan) throws InvalidScheduleException {
+      List<WorkoutDescription> workoutPlan)
+      throws InvalidScheduleException {
     this.type = type;
     this.workouts = workouts;
     this.numberOfWorkouts = numberOfWorkouts;
@@ -54,28 +56,32 @@ public class Day {
     this.date = date;
 
     if (type == null || workouts == null || day == null || workoutPlan == null || date == null) {
-      throw new InvalidScheduleException("Day was initialized with bad parameters",
-              new Schedule("schedule", List.of(new Week("week", List.of(this))),
-                      new Week("week", List.of())));
-
+      throw new InvalidScheduleException(
+          "Day was initialized with bad parameters",
+          new Schedule(
+              "schedule", List.of(new Week("week", List.of(this))), new Week("week", List.of())));
     }
   }
 
   /**
-   * This method copies the current Day instance into a new Day instance, for defensive programming purposes.
+   * This method copies the current Day instance into a new Day instance, for defensive programming
+   * purposes.
+   *
    * @return the copied Day.
    */
   public Day copy() throws InvalidScheduleException {
-    return new Day(this.type,
-            this.getEmissions(),
-            this.numberOfWorkouts,
-            this.day,
-            this.date,
-            this.getPlanCopy());
+    return new Day(
+        this.type,
+        this.getEmissions(),
+        this.numberOfWorkouts,
+        this.day,
+        this.date,
+        this.getPlanCopy());
   }
 
   /**
    * This method returns a defensive copy of the emissions list.
+   *
    * @return the defensive copy.
    */
   public List<Emission> getEmissions() {
@@ -95,15 +101,14 @@ public class Day {
     return this.date.isEmpty() ? Optional.empty() : Optional.of(this.date.get());
   }
 
-  /**
-   * This method increments the number of workouts on this Day.
-   */
+  /** This method increments the number of workouts on this Day. */
   public void incrementNumWorkouts() {
     this.numberOfWorkouts++;
   }
 
   /**
-   * This method adds a new workout to the completed workouts list (for use during model translation).
+   * This method adds a new workout to the completed workouts list (for use during model
+   * translation).
    *
    * @param toAdd - the workout to add.
    */
@@ -130,9 +135,9 @@ public class Day {
   }
 
   /**
-   * This method verifies that the plan for a given day, given the intensities, aligns with the number of workouts
-   * listed. Useful for defensive programming, and can be called to ensure that a Day has the expected values
-   * before using it to create or store model results.
+   * This method verifies that the plan for a given day, given the intensities, aligns with the
+   * number of workouts listed. Useful for defensive programming, and can be called to ensure that a
+   * Day has the expected values before using it to create or store model results.
    *
    * @return if the day has the same number of workouts as it is planned to.
    */
@@ -231,22 +236,21 @@ public class Day {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(this.type, this.workouts, this.numberOfWorkouts, this.day, this.workoutPlan);
+    return Objects.hash(
+        this.type, this.workouts, this.numberOfWorkouts, this.day, this.workoutPlan);
   }
 
   /**
    * A record for describing a certain workout in the workoutPlan field.
    *
-   * @param workoutType - the type of given workout in the plan (useful for getting static emission distributions,
-   *                    as this enum aids).
+   * @param workoutType - the type of given workout in the plan (useful for getting static emission
+   *     distributions, as this enum aids).
    * @param minutes - the length of the specified workout, if applicable.
    */
-  public record WorkoutDescription(
-          Workout workoutType, int minutes) {
+  public record WorkoutDescription(Workout workoutType, int minutes) {
 
     public WorkoutDescription copy() {
       return new WorkoutDescription(this.workoutType, this.minutes);
     }
-
   }
 }

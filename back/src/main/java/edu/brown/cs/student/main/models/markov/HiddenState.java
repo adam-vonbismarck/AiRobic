@@ -6,13 +6,12 @@ import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 /**
- * The HiddenState class, which models a hidden state in the hidden markov model that MarkovModel represents.
- * In particular, this class contains a state distribution (for transitioning) and an emission distribution
- * (for outputting workouts). When MarkovModel runs, it has its current HiddenState emit a workout based
- * on its distribution, and then transition.
+ * The HiddenState class, which models a hidden state in the hidden markov model that MarkovModel
+ * represents. In particular, this class contains a state distribution (for transitioning) and an
+ * emission distribution (for outputting workouts). When MarkovModel runs, it has its current
+ * HiddenState emit a workout based on its distribution, and then transition.
  */
 public class HiddenState {
 
@@ -21,8 +20,8 @@ public class HiddenState {
   private final String name;
 
   /**
-   * The constructor for the HiddenState class, which takes in the name of the state, its transitions, and
-   * its emission distribution.
+   * The constructor for the HiddenState class, which takes in the name of the state, its
+   * transitions, and its emission distribution.
    *
    * @param name - the name of the state.
    * @param transitionDistribution - the transition distribution of the state.
@@ -31,10 +30,11 @@ public class HiddenState {
   public HiddenState(
       @Json(name = "category") String name,
       @Json(name = "transitions") HashMap<HiddenState, Double> transitionDistribution,
-      @Json(name = "emissions") HashMap<Emission, Double> emissionDistribution) throws InvalidDistributionException {
+      @Json(name = "emissions") HashMap<Emission, Double> emissionDistribution)
+      throws InvalidDistributionException {
     if (transitionDistribution == null || emissionDistribution == null) {
-      throw new InvalidDistributionException("Missing one of the distributions when generating a hidden state (null).",
-              new HashMap());
+      throw new InvalidDistributionException(
+          "Missing one of the distributions when generating a hidden state (null).", new HashMap());
     }
     this.transitionDistribution = transitionDistribution;
     this.emissionDistribution = emissionDistribution;
@@ -67,9 +67,10 @@ public class HiddenState {
   }
 
   /**
-   * Returns the set of potential hidden states this state can transition to. Should be equal to
-   * the list of states in a given model (i.e. has defined probabilities for all other states in the
+   * Returns the set of potential hidden states this state can transition to. Should be equal to the
+   * list of states in a given model (i.e. has defined probabilities for all other states in the
    * model).
+   *
    * @return the set of potential states to transition to.
    */
   public Set<HiddenState> potentialStates() {
@@ -103,8 +104,8 @@ public class HiddenState {
   }
 
   /**
-   * Adds a new emission to the emission distribution. Safe, as the distribution is always
-   * verified before it is used. Must be used cautiously; fillEmissions is preferred (and safer).
+   * Adds a new emission to the emission distribution. Safe, as the distribution is always verified
+   * before it is used. Must be used cautiously; fillEmissions is preferred (and safer).
    *
    * @param emission - the emission to add to the distribution.
    * @param prob - the probability of emitting the new emission.
@@ -133,7 +134,7 @@ public class HiddenState {
    * in time.
    *
    * @throws InvalidDistributionException if either of the distributions (emission or transition) is
-   * not valid.
+   *     not valid.
    */
   public void checkDistributions() throws InvalidDistributionException {
     RandomGenerator.validateDistribution(HiddenState.class, this.transitionDistribution);
@@ -141,9 +142,9 @@ public class HiddenState {
   }
 
   /**
-   * Overridden equals method, so each HiddenState is compared on the basis of its fields.
-   * Uses flattened transition distribution (keys on HiddenState names instead of HiddenStates)
-   * to avoid infinitely looping when verifying two HiddenStates are equal.
+   * Overridden equals method, so each HiddenState is compared on the basis of its fields. Uses
+   * flattened transition distribution (keys on HiddenState names instead of HiddenStates) to avoid
+   * infinitely looping when verifying two HiddenStates are equal.
    *
    * @param o - the object to check equality with.
    * @return true if this instance is equal to o.

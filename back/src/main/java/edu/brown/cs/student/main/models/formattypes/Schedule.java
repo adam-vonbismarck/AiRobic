@@ -1,17 +1,15 @@
 package edu.brown.cs.student.main.models.formattypes;
 
-import com.squareup.moshi.Json;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Schedule record models a given workout schedule, with a list of weeks, each of which contains a list of days.
- * It contains an example week for modelling purposes, but this field need not always be used.
+ * The Schedule record models a given workout schedule, with a list of weeks, each of which contains
+ * a list of days. It contains an example week for modelling purposes, but this field need not
+ * always be used.
  */
-public record Schedule(
-    String type, List<Week> weeks, Week example) {
+public record Schedule(String type, List<Week> weeks, Week example) {
 
   /**
    * Gets the total number of workouts in the schedule.
@@ -42,5 +40,4 @@ public record Schedule(
     }
     return new FlatSchedule(days);
   }
-
 }

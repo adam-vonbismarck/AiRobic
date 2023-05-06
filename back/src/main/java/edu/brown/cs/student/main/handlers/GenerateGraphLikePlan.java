@@ -51,14 +51,16 @@ public class GenerateGraphLikePlan {
 
     if (endDate.isBefore(firstSunday.plusDays(1))) {
       weeks.add(
-              this.generateWeek(
-                      Math.floorDiv(
-                              minutes * (endDate.getDayOfWeek().getValue() - startDate.getDayOfWeek().getValue() + (
-                                      endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1
-                              )), 6),
-                      startDate,
-                      endDate,
-                      varModel));
+          this.generateWeek(
+              Math.floorDiv(
+                  minutes
+                      * (endDate.getDayOfWeek().getValue()
+                          - startDate.getDayOfWeek().getValue()
+                          + (endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1)),
+                  6),
+              startDate,
+              endDate,
+              varModel));
       return new Schedule("schedule", weeks, weeks.get(0));
     }
 
@@ -80,9 +82,11 @@ public class GenerateGraphLikePlan {
     weeks.add(
         this.generateWeek(
             Math.floorDiv(
-                minutes * (endDate.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue() + (
-                        endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1
-                        )), 6),
+                minutes
+                    * (endDate.getDayOfWeek().getValue()
+                        - DayOfWeek.MONDAY.getValue()
+                        + (endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1)),
+                6),
             currDate.plusDays(1),
             endDate,
             varModel));
@@ -91,7 +95,7 @@ public class GenerateGraphLikePlan {
   }
 
   private Week generateWeek(int minutes, LocalDate startDay, LocalDate endDay, MarkovModel model)
-          throws InvalidDistributionException, FormatterFailureException, InvalidScheduleException {
+      throws InvalidDistributionException, FormatterFailureException, InvalidScheduleException {
 
     List<Emission> totalWeekEmissions = new ArrayList<>();
     List<Day> days = new ArrayList<>();
@@ -102,9 +106,7 @@ public class GenerateGraphLikePlan {
             .count();
 
     LocalDate dummyDate = startDay.minusDays(1);
-    for (int i = 0; i < startDay
-            .datesUntil(endDay.plusDays(1))
-            .count(); i++) {
+    for (int i = 0; i < startDay.datesUntil(endDay.plusDays(1)).count(); i++) {
       dummyDate = dummyDate.plusDays(1);
       days.add(
           new Day(
