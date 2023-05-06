@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.models.formatters;
 
 import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
-import edu.brown.cs.student.main.models.markov.Emission;
+import edu.brown.cs.student.main.models.markov.model.Emission;
 import java.util.List;
 
 /**

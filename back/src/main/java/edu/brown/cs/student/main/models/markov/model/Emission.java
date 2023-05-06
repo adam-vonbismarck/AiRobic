@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.models.markov;
+package edu.brown.cs.student.main.models.markov.model;
 
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonClass;

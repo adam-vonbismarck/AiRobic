@@ -1,6 +1,6 @@
 package edu.brown.cs.student;
 
-import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.formattypes.Day;

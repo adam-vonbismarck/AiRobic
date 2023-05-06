@@ -1,10 +1,10 @@
-package edu.brown.cs.student.main.models;
+package edu.brown.cs.student.main.models.markov.modelbuilding;
 
-import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
-import edu.brown.cs.student.main.models.markov.Emission;
-import edu.brown.cs.student.main.models.markov.HiddenState;
-import edu.brown.cs.student.main.models.markov.MarkovModel;
+import edu.brown.cs.student.main.models.markov.model.Emission;
+import edu.brown.cs.student.main.models.markov.model.HiddenState;
+import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

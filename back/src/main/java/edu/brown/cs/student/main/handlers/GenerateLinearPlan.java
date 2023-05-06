@@ -6,10 +6,10 @@ import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
-import edu.brown.cs.student.main.models.markov.MarkovModel;
-import edu.brown.cs.student.main.rowing.LinearModelBuilder;
-import edu.brown.cs.student.main.rowing.ScheduleBuilder;
-import edu.brown.cs.student.main.rowing.Workout;
+import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.rowing.modelbuilders.LinearModelBuilder;
+import edu.brown.cs.student.main.rowing.modelbuilders.ScheduleBuilder;
+import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import java.io.IOException;
 import java.time.LocalDate;
 

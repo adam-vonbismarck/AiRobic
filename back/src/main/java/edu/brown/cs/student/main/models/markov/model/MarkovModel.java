@@ -1,7 +1,7 @@
-package edu.brown.cs.student.main.models.markov;
+package edu.brown.cs.student.main.models.markov.model;
 
 import com.squareup.moshi.Json;
-import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.formatters.EmissionFormatter;
@@ -39,7 +39,6 @@ public class MarkovModel {
     this.states = startDistribution.keySet();
     this.startDistribution = startDistribution;
     RandomGenerator.validateDistribution(HiddenState.class, startDistribution);
-    System.out.println(startDistribution);
     this.checkStateDistributions();
   }
 

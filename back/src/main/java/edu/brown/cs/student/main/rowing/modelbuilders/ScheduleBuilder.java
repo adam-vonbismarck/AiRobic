@@ -1,12 +1,14 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.RandomGenerator;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
+import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -84,7 +86,9 @@ public class ScheduleBuilder {
       weekCounter++;
     }
 
-    weekCounter++;
+    if (numDays > 0) {
+      weekCounter++;
+    }
 
     // building schedule
     Schedule schedule =
@@ -96,6 +100,7 @@ public class ScheduleBuilder {
             endDay.getDayOfWeek(),
             highIntensityLabel,
             lowIntensityLabel);
+
 
     // reading in dates
     LocalDate dummyDate = startDay.minusDays(1);
@@ -243,6 +248,11 @@ public class ScheduleBuilder {
 
     // filling in each week
     Week exampleWeek = new Week("week", exampleDays);
+
+    if (numWeeks == 1) {
+      weeks.add(new Week("week", exampleWeek.getDaySubset(startDay.getValue() - 1, endDay.getValue())));
+      return new Schedule("schedule", weeks, exampleWeek);
+    }
 
     weeks.add(new Week("week", exampleWeek.getDaySubset(startDay.getValue() - 1, NUM_DAYS)));
 

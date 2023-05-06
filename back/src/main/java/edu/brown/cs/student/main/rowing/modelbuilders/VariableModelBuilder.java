@@ -1,14 +1,17 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.RandomGenerator;
-import edu.brown.cs.student.main.models.ModelBuilder;
+import edu.brown.cs.student.main.server.RandomGenerator;
+import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
-import edu.brown.cs.student.main.models.markov.MarkovModel;
+import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
+import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,7 +59,7 @@ public class VariableModelBuilder {
    *     to build the model.
    */
   public MarkovModel build(
-      Set<Workout> lowWorkouts, Set<Workout> highWorkouts, int minutes, double highPercent)
+          Set<Workout> lowWorkouts, Set<Workout> highWorkouts, int minutes, double highPercent)
       throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException {
 
     if (lowWorkouts == null || lowWorkouts.size() == 0 ||

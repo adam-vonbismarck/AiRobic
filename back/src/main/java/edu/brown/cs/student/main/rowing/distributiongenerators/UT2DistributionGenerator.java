@@ -1,6 +1,6 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.rowing.distributiongenerators;
 
-import edu.brown.cs.student.main.models.markov.Emission;
+import edu.brown.cs.student.main.models.markov.model.Emission;
 import java.util.HashMap;
 
 /**

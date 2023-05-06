@@ -1,13 +1,15 @@
-package edu.brown.cs.student.main.rowing;
+package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.models.ModelBuilder;
+import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
-import edu.brown.cs.student.main.models.markov.MarkovModel;
+import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
+
 import java.io.IOException;
 import java.time.DayOfWeek;
 
