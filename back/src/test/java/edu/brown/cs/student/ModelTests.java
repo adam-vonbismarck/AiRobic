@@ -31,15 +31,15 @@ public class ModelTests {
     this.validEmissionDist =
         new HashMap<>() {
           {
-            this.put(new Emission("workout", 60.0, true, 145.5, 1), 0.8);
-            this.put(new Emission("workout2", 80.0, false, 145.5, 1), 0.2);
+            this.put(new Emission("workout", 60.0), 0.8);
+            this.put(new Emission("workout2", 80.0), 0.2);
           }
         };
     this.invalidEmissionDist =
         new HashMap<>() {
           {
-            this.put(new Emission("workout", 60.0, true, 145.5, 1), 0.8);
-            this.put(new Emission("workout2", 80.0, true, 147.5, 10), 0.3);
+            this.put(new Emission("workout", 60.0), 0.8);
+            this.put(new Emission("workout2", 80.0), 0.3);
           }
         };
   }
@@ -63,6 +63,7 @@ public class ModelTests {
     Schedule schedule =
         model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     System.out.println(schedule);
+    System.out.println(Serializer.serializeSchedule(schedule.flatten()));
   }
 
   @Test
@@ -79,11 +80,11 @@ public class ModelTests {
                 Set.of(Workout.UT_2),
                 0.2);
     System.out.println(schedule);
-    System.out.println(Serializer.serializeSchedule(schedule));
+    System.out.println(Serializer.serializeSchedule(schedule.flatten()));
   }
 
   @Test
-  public void testBadStartDistLow() {
+  public void testBadStartDistLow() throws InvalidDistributionException {
     HashMap<HiddenState, Double> start = new HashMap<>();
     start.put(new HiddenState("hello", new HashMap<>(), new HashMap<>()), 0.7);
     Exception exn =
@@ -96,7 +97,7 @@ public class ModelTests {
   }
 
   @Test
-  public void testBadStartDistHigh() {
+  public void testBadStartDistHigh() throws InvalidDistributionException {
     HashMap<HiddenState, Double> start = new HashMap<>();
     start.put(new HiddenState("hello", new HashMap<>(), new HashMap<>()), 1.1);
     Exception exn =
@@ -109,7 +110,7 @@ public class ModelTests {
   }
 
   @Test
-  public void testBadStartDistNeg() {
+  public void testBadStartDistNeg() throws InvalidDistributionException {
     HashMap<HiddenState, Double> start = new HashMap<>();
     HiddenState state = new HiddenState("hello", new HashMap<>(), new HashMap<>());
     start.put(state, -0.4);
@@ -124,7 +125,7 @@ public class ModelTests {
   }
 
   @Test
-  public void testBadStateDistMissing() {
+  public void testBadStateDistMissing() throws InvalidDistributionException {
     HiddenState stateOne = new HiddenState("state 1", new HashMap<>(), new HashMap<>());
     HiddenState stateTwo = new HiddenState("state 2", new HashMap<>(), new HashMap<>());
     stateOne.addTransition(stateOne, 0.4);
@@ -160,7 +161,7 @@ public class ModelTests {
   }
 
   @Test
-  public void testBadStateDistForeign() {
+  public void testBadStateDistForeign() throws InvalidDistributionException {
     HiddenState stateOne = new HiddenState("state 1", new HashMap<>(), new HashMap<>());
     HiddenState stateTwo = new HiddenState("state 2", new HashMap<>(), new HashMap<>());
     stateOne.addTransition(stateOne, 0.4);
@@ -198,7 +199,7 @@ public class ModelTests {
   }
 
   @Test
-  public void testBadStateDistInvalid() {
+  public void testBadStateDistInvalid() throws InvalidDistributionException {
     HiddenState stateOne = new HiddenState("state 1", new HashMap<>(), new HashMap<>());
     HiddenState stateTwo = new HiddenState("state 2", new HashMap<>(), new HashMap<>());
     stateOne.addTransition(stateOne, 0.4);

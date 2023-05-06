@@ -28,19 +28,7 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
    */
   public ScheduleFormatter(Schedule toFill) throws InvalidScheduleException {
     this.schedule = toFill;
-    this.workoutCount = 0;
-
-    for (Week week : this.schedule.weeks()) {
-      for (Day day : week.days()) {
-        if (day.getNumberOfWorkouts() == null) {
-          throw new InvalidScheduleException(
-              "All days must have a number of workouts pre-listed, " + "but " + day + " does not.",
-              this.schedule);
-        }
-        this.workoutCount += day.getNumberOfWorkouts();
-      }
-    }
-    System.out.println(this.workoutCount);
+    this.workoutCount = this.schedule.getLength();
   }
 
   /**
@@ -62,7 +50,6 @@ public class ScheduleFormatter implements EmissionFormatter<Schedule> {
 
     for (Week week : this.schedule.weeks()) {
       for (Day day : week.days()) {
-        System.out.println(day);
         for (int i = 0; i < day.getNumberOfWorkouts(); i++) {
           day.addWorkout(emissions.remove(0));
         }

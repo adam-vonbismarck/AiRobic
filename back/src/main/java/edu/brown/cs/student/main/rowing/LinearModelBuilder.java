@@ -51,13 +51,13 @@ public class LinearModelBuilder {
     for (Day day : schedule.example().days()) {
       if (!day.verifyDay()) {
         throw new InvalidScheduleException(
-            "Day workout numbers and intensity labels do not match: " + day, schedule);
+            "Day workout numbers and workoutType labels do not match: " + day, schedule);
       }
       int workoutCounter = 0;
-      for (WorkoutDescription intensity : day.getIntensityCopy()) {
-        builder.generateNewState(this.encodeDay(day.getName(), workoutCounter));
+      for (WorkoutDescription intensity : day.getPlanCopy()) {
+        builder.generateNewState(this.encodeDay(day.getDay(), workoutCounter));
         builder.setEmissionDistribution(
-            this.encodeDay(day.getName(), workoutCounter),
+            this.encodeDay(day.getDay(), workoutCounter),
             this.dists.getEmissionDistNoGoal(intensity));
       }
     }

@@ -26,7 +26,7 @@ public class RowingWorkoutByName {
     try {
       return this.goal.generateEmissionDistribution(name);
     } catch (NoWorkoutTypeException e) {
-      if (name.intensity().equals(Workout.UT_2)) {
+      if (name.workoutType().equals(Workout.UT_2)) {
         return UT2DistributionGenerator.getLowIntensityDistributionByTime(name.minutes());
       }
       throw new NoWorkoutTypeException(e.getMessage());
@@ -38,7 +38,7 @@ public class RowingWorkoutByName {
     try {
       return this.noGoal.generateEmissionDistribution(name);
     } catch (NoWorkoutTypeException e) {
-      if (name.intensity().equals(Workout.UT_2)) {
+      if (name.workoutType().equals(Workout.UT_2)) {
         return UT2DistributionGenerator.getLowIntensityDistributionByTime(name.minutes());
       }
       throw new NoWorkoutTypeException(e.getMessage());

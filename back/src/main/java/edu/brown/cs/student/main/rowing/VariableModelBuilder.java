@@ -40,10 +40,10 @@ public class VariableModelBuilder {
     double numLow = lowWorkouts.size();
     double numHigh = highWorkouts.size();
 
-    // calculate high intensity minutes, with a minimum of 60
+    // calculate high workoutType minutes, with a minimum of 60
     long highIntensity = Math.round(Math.max(highPercent * minutes, 60));
 
-    // find the length of low intensity workouts, with a minimum of 60 minute sessions, and a
+    // find the length of low workoutType workouts, with a minimum of 60 minute sessions, and a
     // maximum
     // of 10 sessions per week
     int lowLength =
