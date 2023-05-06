@@ -1,10 +1,9 @@
 export interface Workout {
-  title: string;
+  workoutsNumber: number;
+  dayNumber: number;
   date: string;
-  duration: number;
-  description: string;
-  caloriesBurned: number;
-  distance?: number;
-  perceivedEffort?: number;
-  avgSplit?: string;
+  completed: boolean;
+  RPE?: number;
+  time: number;
+  workout: string;
 }
