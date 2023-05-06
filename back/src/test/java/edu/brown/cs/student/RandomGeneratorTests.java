@@ -2,6 +2,7 @@ package edu.brown.cs.student;
 
 import edu.brown.cs.student.main.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
+import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class RandomGeneratorTests {
 
   /** This method sets up some example probability distributions for testing. */
   @BeforeEach
-  public void setupDistributions() {
+  public void setupDistributions() throws InvalidScheduleException {
 
     this.validDistOne =
         new HashMap<>() {

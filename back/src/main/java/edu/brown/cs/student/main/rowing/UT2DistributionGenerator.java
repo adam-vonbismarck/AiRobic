@@ -40,9 +40,6 @@ public class UT2DistributionGenerator {
     int total = numIntervals * intervalLength;
     return new Emission(
         numIntervals + "x" + intervalLength + "min, " + restTime + "s rest at UT2 pace, rate 20.",
-        total,
-        false,
-        null,
-        5);
+        total);
   }
 }

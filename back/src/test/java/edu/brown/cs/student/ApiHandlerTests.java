@@ -63,12 +63,12 @@ public class ApiHandlerTests {
                 });
 
         // Setting up the handler for the GET /order endpoint
-        CsvLoader csvContainer = new CsvLoader();
+        /*CsvLoader csvContainer = new CsvLoader();
 
         Spark.get("loadcsv", new CsvLoadHandler(csvContainer));
         Spark.get("searchcsv", new CsvSearchHandler(csvContainer));
         Spark.get("viewcsv", new CsvViewHandler(csvContainer));
-        Spark.init();
+        Spark.init();*/
         Spark.awaitInitialization(); // don't continue until the server is listening
     }
 
