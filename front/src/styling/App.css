@@ -155,14 +155,24 @@ button {
 
 .workout-calendar{
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 5px;
+    /*padding: 5px;*/
     border-radius: 10px;
     /*display: flex;*/
-    flex-direction: row;
+    /*flex-direction: row;*/
     width: 100%;
     max-width: 60vw;
     -webkit-backdrop-filter: blur(7px); /* add vendor prefix for Safari */
     backdrop-filter: blur(7px); /* add a slight blur effect to the background */
+
+}
+
+.workout-calendar-container-animated {
+    width: 90%;
+    flex-direction: row;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
 }
 
 .register-window {
