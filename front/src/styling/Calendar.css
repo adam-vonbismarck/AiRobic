@@ -14,7 +14,7 @@
     background-color: #f38418;
 }
 .fc-daygrid-day-top{
-    background-color: rgba(0, 0, 0, 0.24);
+    /*background-color: rgba(0, 0, 0, 0.24);*/
 }
 
 .fc-col-header, .fc-daygrid-day-number {

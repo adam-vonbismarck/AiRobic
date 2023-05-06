@@ -24,7 +24,7 @@ interface Props {
   selectedDate: string | null;
   workoutDetails: Workout[];
   setWorkoutDetails: React.Dispatch<React.SetStateAction<Workout[]>>;
-  workouts: Workout[];
+  events: Workout[];
   setWorkouts: React.Dispatch<React.SetStateAction<Workout[]>>;
   closeFullscreen: () => void;
 }
@@ -100,7 +100,7 @@ export const renderWorkoutDetails = ({
   selectedDate,
   workoutDetails,
   setWorkoutDetails,
-  workouts,
+  events,
   setWorkouts,
   closeFullscreen,
 }: Props) => {

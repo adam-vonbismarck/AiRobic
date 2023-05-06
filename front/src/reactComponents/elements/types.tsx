@@ -4,6 +4,8 @@ export interface Workout {
   date: string;
   completed: boolean;
   RPE?: number;
+  distance?: number;
+  split?: string;
   time: number;
   workout: string;
 }
