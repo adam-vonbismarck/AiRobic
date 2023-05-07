@@ -1,10 +1,10 @@
 package edu.brown.cs.student.main.models.markov.model;
 
 import com.squareup.moshi.Json;
-import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.FormatterFailureException;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.formatters.EmissionFormatter;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

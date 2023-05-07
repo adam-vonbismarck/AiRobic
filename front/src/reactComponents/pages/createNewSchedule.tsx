@@ -72,7 +72,7 @@ function NewSchedule() {
      Validates the hours per week input and sets the error state accordingly.
      @param {string|number} value - The value of the hours per week input.
      */
-  const validateHoursPerWeek = (value: string | number) => {
+  const validateHoursPerWeek = (value: number) => {
     if (value < 3.0) {
       setHoursPerWeekError("Minimum 3 hours per week");
     } else if (value > 30.0) {
@@ -186,7 +186,6 @@ function NewSchedule() {
         apiUrl += `&goal=${goal}`;
       }
 
-      console.log(apiUrl);
       // Call API to generate workout plan.
       const response = await fetch(apiUrl);
 
@@ -200,7 +199,6 @@ function NewSchedule() {
         setLoading(false);
         setSubmitIssue(true);
         setSubmitError("Error creating workout plan");
-        console.log(`${hours} hours = ${minutes} minutes`);
       }
     } catch (error) {
       setLoading(false);
@@ -418,7 +416,7 @@ function NewSchedule() {
                       value={hoursPerWeek}
                       onChange={(event) => setHoursPerWeek(event.target.value)}
                       onBlur={(event) =>
-                        validateHoursPerWeek(event.target.value)
+                        validateHoursPerWeek(Number(event.target.value))
                       }
                       error={Boolean(hoursPerWeekError) || hoursPerWeekEmpty}
                       helperText={hoursPerWeekError}

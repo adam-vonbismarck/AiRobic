@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 public class TerminalCommand {
   private final String input;
 
-  public TerminalCommand(String input) {this.input = input;}
+  public TerminalCommand(String input) {
+    this.input = input;
+  }
 
   // This method runs a terminal command and gets its output
   public String get() throws IOException, InterruptedException {
@@ -16,7 +18,7 @@ public class TerminalCommand {
     String os = System.getProperty("os.name").toLowerCase();
     if (os.contains("win")) {
       System.out.println("Windows get");
-      command = new String[]{"cmd.exe", "/c", this.input};
+      command = new String[] {"cmd.exe", "/c", this.input};
     }
     System.out.println(this.input);
     ProcessBuilder builder = new ProcessBuilder(command);
@@ -26,7 +28,6 @@ public class TerminalCommand {
     String r = reader.readLine();
     System.out.println(r);
     return r;
-
   }
 
   // This method runs a terminal command
@@ -35,10 +36,9 @@ public class TerminalCommand {
     String os = System.getProperty("os.name").toLowerCase();
     if (os.contains("win")) {
       System.out.println("Windows run");
-      command = new String[]{"cmd.exe", "/c", this.input};
+      command = new String[] {"cmd.exe", "/c", this.input};
     }
     ProcessBuilder builder = new ProcessBuilder(command);
     builder.start();
-
   }
 }

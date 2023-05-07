@@ -1,10 +1,10 @@
 package edu.brown.cs.student.main.models.markov.modelbuilding;
 
-import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.markov.model.Emission;
 import edu.brown.cs.student.main.models.markov.model.HiddenState;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,8 +50,8 @@ public class ModelBuilder {
    *
    * @param name - the name of the new state.
    * @return an instance of the newly generated state.
-   * @throws InvalidDistributionException if either of the Maps passed into HiddenState are null, which they never
-   * should be.
+   * @throws InvalidDistributionException if either of the Maps passed into HiddenState are null,
+   *     which they never should be.
    */
   public HiddenState generateNewState(String name) throws InvalidDistributionException {
     HiddenState state = new HiddenState(name, new HashMap<>(), new HashMap<>());
@@ -70,8 +70,9 @@ public class ModelBuilder {
   public void setStateDistribution(String originName, HashMap<HiddenState, Double> potentialStates)
       throws InvalidDistributionException {
     if (this.nameMap.get(originName) == null) {
-      throw new InvalidDistributionException("State: " + originName + "was not a registered state " +
-              "to add transitions to.", potentialStates);
+      throw new InvalidDistributionException(
+          "State: " + originName + "was not a registered state " + "to add transitions to.",
+          potentialStates);
     }
     RandomGenerator.validateDistribution(HiddenState.class, potentialStates);
     this.nameMap.get(originName).fillTransitions(potentialStates);
@@ -98,14 +99,17 @@ public class ModelBuilder {
    * @param prob - the probability of transitioning to the destination.
    * @throws InvalidDistributionException if either state names were not registered in the map.
    */
-  public void addTransition(String originName, String destName, Double prob) throws InvalidDistributionException {
+  public void addTransition(String originName, String destName, Double prob)
+      throws InvalidDistributionException {
     if (this.nameMap.get(originName) == null) {
-      throw new InvalidDistributionException("State: " + originName + "was not a registered state " +
-              "to add a transition to.", new HashMap());
+      throw new InvalidDistributionException(
+          "State: " + originName + "was not a registered state " + "to add a transition to.",
+          new HashMap());
     }
     if (this.nameMap.get(destName) == null) {
-      throw new InvalidDistributionException("State: " + destName + "was not a registered state " +
-              "to add a transition to.", new HashMap());
+      throw new InvalidDistributionException(
+          "State: " + destName + "was not a registered state " + "to add a transition to.",
+          new HashMap());
     }
     this.nameMap.get(originName).addTransition(this.nameMap.get(destName), prob);
   }
@@ -127,14 +131,18 @@ public class ModelBuilder {
    * @param originName - the name of the state for the new distribution.
    * @param potentialEmissions - the new emission distribution.
    * @throws InvalidDistributionException if the new distribution is not valid or the state name is
-   * not registered.
+   *     not registered.
    */
   public void setEmissionDistribution(
       String originName, HashMap<Emission, Double> potentialEmissions)
       throws InvalidDistributionException {
     if (this.nameMap.get(originName) == null) {
-      throw new InvalidDistributionException("State: " + originName + "was not a registered state " +
-              "to fill its emission distribution.", potentialEmissions);
+      throw new InvalidDistributionException(
+          "State: "
+              + originName
+              + "was not a registered state "
+              + "to fill its emission distribution.",
+          potentialEmissions);
     }
     RandomGenerator.validateDistribution(Emission.class, potentialEmissions);
     this.nameMap.get(originName).fillEmissions(potentialEmissions);
@@ -162,10 +170,15 @@ public class ModelBuilder {
    * @param prob - the probability of emitting the emission.
    * @throws InvalidDistributionException if originName is not registered in the nameMap.
    */
-  public void addEmission(String originName, Emission emission, Double prob) throws InvalidDistributionException {
+  public void addEmission(String originName, Emission emission, Double prob)
+      throws InvalidDistributionException {
     if (this.nameMap.get(originName) == null) {
-      throw new InvalidDistributionException("State: " + originName + "was not a registered state " +
-              "to add an emission to its distribution.", new HashMap());
+      throw new InvalidDistributionException(
+          "State: "
+              + originName
+              + "was not a registered state "
+              + "to add an emission to its distribution.",
+          new HashMap());
     }
     this.nameMap.get(originName).addEmission(emission, prob);
   }
@@ -203,10 +216,15 @@ public class ModelBuilder {
    * @param prob - the probability with which the state should be transitioned to at the start.
    * @throws InvalidDistributionException if the stateName is not a registered state name.
    */
-  public void addStartProbability(String stateName, Double prob) throws InvalidDistributionException {
+  public void addStartProbability(String stateName, Double prob)
+      throws InvalidDistributionException {
     if (this.nameMap.get(stateName) == null) {
-      throw new InvalidDistributionException("State: " + stateName + "was not a registered state " +
-              "to add to the start distribution.", this.startDist);
+      throw new InvalidDistributionException(
+          "State: "
+              + stateName
+              + "was not a registered state "
+              + "to add to the start distribution.",
+          this.startDist);
     }
     this.startDist.put(this.nameMap.get(stateName), prob);
   }
@@ -222,17 +240,19 @@ public class ModelBuilder {
   }
 
   /**
-   * A utility method that overwrites all state transition distributions, filling them with
-   * linear transitions; i.e. state i in the list of potential states transitions to state i + 1
-   * with probability 1. The last state in the list is special-cased to loop back to the first state.
+   * A utility method that overwrites all state transition distributions, filling them with linear
+   * transitions; i.e. state i in the list of potential states transitions to state i + 1 with
+   * probability 1. The last state in the list is special-cased to loop back to the first state.
    *
-   * @throws InvalidDistributionException if any of the generated transition distributions turn
-   * out to be invalid or if there are not enough states.
+   * @throws InvalidDistributionException if any of the generated transition distributions turn out
+   *     to be invalid or if there are not enough states.
    */
   public void addLinearTransitions() throws InvalidDistributionException {
     if (this.states.size() < 2) {
-      throw new InvalidDistributionException("To add linear transitions to a model, " +
-              "there must be at least two states registered.", new HashMap());
+      throw new InvalidDistributionException(
+          "To add linear transitions to a model, "
+              + "there must be at least two states registered.",
+          new HashMap());
     }
 
     for (int i = 0; i < this.states.size() - 1; i++) {

@@ -2,31 +2,40 @@ import * as React from "react";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import TextField from "@mui/material/TextField";
 import { Workout } from "./types";
-import { IconButton, Slider } from "@mui/material";
+import { Alert, IconButton, Slider } from "@mui/material";
 import { IMaskInput } from "react-imask";
 import moment from "moment";
 import "../../styling/WorkoutDetails.css";
 import CloseIcon from "@mui/icons-material/Close";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 /**
-
  Renders workout details for the selected date.
  @param {Props} props - The props object containing workout details and other related information.
  @param {string | null} props.selectedDate - The selected date for which workout details need to be displayed.
  @param {Workout[]} props.workoutDetails - An array of objects containing workout details.
- @param {React.Dispatch<React.SetStateAction<Workout[]>>} props.setWorkoutDetails - The state update function for workoutDetails.
+ @param {React.Dispatch<React.SetStateAction<Workout[]>>} props.setWorkoutDetails - The state update function for
+ workoutDetails.
  @param {Workout[]} props.workouts - An array of objects containing workout data.
  @param {React.Dispatch<React.SetStateAction<Workout[]>>} props.setWorkouts - The state update function for workouts.
  @param {() => void} props.closeFullscreen - The function for closing the fullscreen view of a workout detail.
- @return {JSX.Element | null} The JSX element representing the workout details for the selected date, or null if no date is selected.
+ @return {JSX.Element | null} The JSX element representing the workout details for the selected date, or null if no
+ date is selected.
  */
 interface Props {
   selectedDate: string | null;
   workoutDetails: Workout[];
   setWorkoutDetails: React.Dispatch<React.SetStateAction<Workout[]>>;
-  events: Workout[];
+  workouts: Workout[];
   setWorkouts: React.Dispatch<React.SetStateAction<Workout[]>>;
   closeFullscreen: () => void;
+  splitError: boolean;
+  setSplitError: React.Dispatch<React.SetStateAction<boolean>>;
+  distanceError: boolean;
+  setDistanceError: React.Dispatch<React.SetStateAction<boolean>>;
+  errorText: string;
+  setErrorText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -100,14 +109,22 @@ export const renderWorkoutDetails = ({
   selectedDate,
   workoutDetails,
   setWorkoutDetails,
-  events,
+  workouts,
   setWorkouts,
   closeFullscreen,
+  splitError,
+  setSplitError,
+  distanceError,
+  setDistanceError,
+  errorText,
+  setErrorText,
 }: Props) => {
   // Return null if selectedDate is falsy
   if (!selectedDate) {
     return null;
   }
+
+  // const [saveClicked, setSaveClicked] = useState(false);
 
   // Filter workoutDetails by date
   const workoutsForSelectedDate = workoutDetails.filter(
@@ -119,21 +136,56 @@ export const renderWorkoutDetails = ({
    * @param {Workout} updatedWorkout - Updated workout details
    * @param {number} index - Index of the workout in the workoutDetails array
    */
-  // const updateWorkout = (updatedWorkout: Workout, index: number) => {
-  //   const updatedWorkoutDetails = [...workoutDetails];
-  //   updatedWorkoutDetails[index] = updatedWorkout;
-  //   setWorkoutDetails(updatedWorkoutDetails);
-  //
-  //   // Update workouts
-  //   const workoutIndex = workouts.findIndex(
-  //     (w) => w.date === updatedWorkout.date && w.title === updatedWorkout.title
-  //   );
-  //   if (workoutIndex > -1) {
-  //     const updatedWorkouts = [...workouts];
-  //     updatedWorkouts[workoutIndex] = updatedWorkout;
-  //     setWorkouts(updatedWorkouts);
-  //   }
-  // };
+  const updateWorkout = (updatedWorkout: Workout, index: number) => {
+    const updatedWorkoutDetails = [...workoutDetails];
+    updatedWorkoutDetails[index] = updatedWorkout;
+    setWorkoutDetails(updatedWorkoutDetails);
+
+    // Update workouts
+    const workoutIndex = workouts.findIndex(
+      (w) =>
+        w.date === updatedWorkout.date &&
+        w.workoutsNumber === updatedWorkout.workoutsNumber
+    );
+
+    if (workoutIndex > -1) {
+      const updatedWorkouts = [...workouts];
+      updatedWorkouts[workoutIndex] = updatedWorkout;
+      setWorkouts(updatedWorkouts);
+    }
+  };
+
+  const saveWorkouts = () => {
+    const baseUrl = "http://localhost:3235";
+    const username = localStorage.getItem("userID"); // Replace with your own username
+    let saveError = false;
+    setDistanceError(false);
+
+    workoutDetails.forEach((workout) => {
+      if (workout.distance !== undefined && workout.split !== undefined) {
+        const url = `${baseUrl}/updateworkout?username=${username}&day=${
+          workout.dayNumber - 1
+        }&workout=${workout.workoutsNumber - 1}&rpe=${workout.RPE}&split=${
+          workout.split
+        }&distance=${workout.distance}`;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      } else if (workout.distance === undefined && workout.split == undefined) {
+        // Do nothing
+      } else {
+        saveError = true;
+        setErrorText("Please enter a distance and split for each workout.");
+        setDistanceError(true);
+      }
+    });
+
+    if (!saveError) {
+      setWorkoutDetails([]);
+      closeFullscreen();
+    }
+  };
 
   if (workoutsForSelectedDate.length === 0) {
     return (
@@ -182,10 +234,11 @@ export const renderWorkoutDetails = ({
             key={index}
             aria-label={`Workout ${index + 1}`}
           >
-            <h3>{`Workout ${workout.workoutsNumber} for day ${workout.dayNumber}`}</h3>
+            <h3>
+              Workout {workout.workoutsNumber} for day {workout.dayNumber}
+            </h3>
             <p>
-              <strong aria-label="Duration">Duration:</strong> {workout.time}{" "}
-              minutes
+              <strong aria-label="Duration">Duration:</strong> {workout.time}
             </p>
             <p>
               <strong aria-label="Description">Description:</strong>{" "}
@@ -210,22 +263,22 @@ export const renderWorkoutDetails = ({
                 onChange={(event) => {
                   const distance = parseInt(event.target.value);
                   const updatedWorkout = { ...workout, distance };
-                  // updateWorkout(updatedWorkout, index);
+                  updateWorkout(updatedWorkout, index);
                 }}
                 aria-label="Workout Distance"
               />
               <TextField
                 className="custom-textfield"
                 label="Avg /500m"
+                type="text"
                 value={workout.split}
                 placeholder={"1:30.0"}
                 defaultValue={workout.split}
                 onChange={(event) => {
-                  const avgSplit = event.target.value;
-                  const updatedWorkout = { ...workout, avgSplit };
-                  // updateWorkout(updatedWorkout, index);
+                  const split = event.target.value;
+                  const updatedWorkout = { ...workout, split };
+                  updateWorkout(updatedWorkout, index);
                 }}
-                name="numberformat"
                 id="formatted-numberformat-input"
                 InputProps={{
                   inputComponent: TextMaskCustom as any,
@@ -239,7 +292,7 @@ export const renderWorkoutDetails = ({
               <Slider
                 className="custom-slider"
                 aria-label="Perceived Effort"
-                valueLabelDisplay="on"
+                valueLabelDisplay="auto"
                 step={1}
                 min={0}
                 max={10}
@@ -248,9 +301,9 @@ export const renderWorkoutDetails = ({
                 defaultValue={workout.RPE}
                 onChange={(event) => {
                   // @ts-ignore
-                  const perceivedEffort = parseInt(event.target.value);
-                  const updatedWorkout = { ...workout, perceivedEffort };
-                  // updateWorkout(updatedWorkout, index);
+                  const RPE = parseInt(event.target.value);
+                  const updatedWorkout = { ...workout, RPE };
+                  updateWorkout(updatedWorkout, index);
                 }}
                 sx={{
                   "& .MuiSlider-thumb": {
@@ -278,11 +331,33 @@ export const renderWorkoutDetails = ({
         ))}
         <button
           className={"content-button"}
-          onClick={closeFullscreen}
+          onClick={saveWorkouts}
           aria-label="Save Button"
         >
           Save
         </button>
+        {splitError ||
+          (distanceError && (
+            <AnimatePresence>
+              <motion.div
+                className="error-row"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+              >
+                <div className="form-error-message" aria-label="Error message">
+                  <Alert
+                    severity="error"
+                    variant="filled"
+                    sx={{ fontFamily: "Muli" }}
+                    aria-label="Error: Workout plan submission unsuccessful"
+                  >
+                    {errorText}
+                  </Alert>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          ))}
       </div>
     );
   }
