@@ -98,7 +98,10 @@ function NewSchedule() {
      @param {string} dateToCheck - The value of the date input.
      */
   const checkBeforeToday = (dateToCheck: string) => {
-    if (now.isAfter(dateToCheck)) {
+    const now = moment();
+    const selectedDate = moment(dateToCheck);
+
+    if (selectedDate.isBefore(now, "day")) {
       setDateBeforeTodayError("Start cannot be before today");
     } else {
       setDateBeforeTodayError("");
@@ -149,7 +152,8 @@ function NewSchedule() {
       hoursPerWeek === "" ||
       (selectedOption === "model3" && goal === "") ||
       startDate === "" ||
-      endDate === ""
+      endDate === "" ||
+      sport === ""
     ) {
       setSubmitIssue(true);
       setSubmitError("Please fill out all required fields");
@@ -157,7 +161,7 @@ function NewSchedule() {
     }
 
     setLoading(true);
-
+    setSubmitIssue(false);
     try {
       let hours = Number(hoursPerWeek);
 
@@ -303,6 +307,7 @@ function NewSchedule() {
                         aria-label="Select the sport for the workout plan"
                         aria-invalid={ageEmpty}
                         aria-describedby="sport-error"
+                        data-testid="sport-select"
                       >
                         <MenuItem value={"Rowing"}>Rowing</MenuItem>
                       </Select>

@@ -104,7 +104,7 @@ const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
  * @param {Props} Props - Component props
  * @returns Workout details for the selected date
  */
-export const renderWorkoutDetails = ({
+export const RenderWorkoutDetails = ({
   selectedDate,
   workoutDetails,
   setWorkoutDetails,
@@ -205,8 +205,8 @@ export const renderWorkoutDetails = ({
     return (
       <div className="workout-details">
         <div className="workout-details__header">
-          <IconButton className="info-icon">
-            <CloseIcon sx={{ color: "#c61924" }} onClick={closeFullscreen} />
+          <IconButton className="info-icon" onClick={closeFullscreen}>
+            <CloseIcon sx={{ color: "#c61924" }} />
           </IconButton>
         </div>
         <h2>
@@ -227,12 +227,12 @@ export const renderWorkoutDetails = ({
           className="workout-details__header"
           aria-label="Workout Details Header"
         >
-          <IconButton className="info-icon" aria-label="Close Icon Button">
-            <CloseIcon
-              sx={{ color: "#c61924" }}
-              onClick={closeFullscreen}
-              aria-label="Close Icon"
-            />
+          <IconButton
+            className="info-icon"
+            aria-label="Close Icon Button"
+            onClick={closeFullscreen}
+          >
+            <CloseIcon sx={{ color: "#c61924" }} aria-label="Close Icon" />
           </IconButton>
         </div>
         <h2
@@ -265,7 +265,7 @@ export const renderWorkoutDetails = ({
                 label="Distance (meters)"
                 type="text"
                 placeholder={"2000"}
-                value={workout.distance || ""}
+                defaultValue={workout.distance || ""}
                 InputProps={{
                   inputComponent: NumericFormatCustom as any,
                   inputProps: {
@@ -285,7 +285,7 @@ export const renderWorkoutDetails = ({
                 type="text"
                 value={workout.split}
                 placeholder={"1:30.0"}
-                defaultValue={workout.split}
+                // defaultValue={workout.split}
                 onChange={(event) => {
                   const split = event.target.value;
                   const updatedWorkout = { ...workout, split };
@@ -309,7 +309,6 @@ export const renderWorkoutDetails = ({
                 min={0}
                 max={10}
                 track={false}
-                value={workout.RPE}
                 defaultValue={workout.RPE}
                 onChange={(event) => {
                   // @ts-ignore

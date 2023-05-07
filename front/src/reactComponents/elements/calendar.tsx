@@ -2,7 +2,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { renderWorkoutDetails } from "./workoutDetails";
+import { RenderWorkoutDetails } from "./workoutDetails";
 import { Day, Workout } from "./types";
 import { useEffect, useState } from "react";
 import "../../styling/Calendar.css";
@@ -117,7 +117,7 @@ const WorkoutCalendar: React.FC = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {renderWorkoutDetails({
+              {RenderWorkoutDetails({
                 selectedDate,
                 workoutDetails,
                 setWorkoutDetails,
