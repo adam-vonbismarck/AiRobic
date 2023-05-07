@@ -63,7 +63,7 @@ Every page was tested using ReactDOM testing and any possible user inputs were a
 Authentication methods were extensively tested to ensure no unexpected responses that may result in an incorrect login and we fuzzed the getCredentialResponse to prove that only a valid google response would result in a login.
 Database unit tests ensured that database methods worked as expected and how the database responds to the calls.
 API handlers were tested to ensure integration between front end api calls and database commands was error free, with each api method tested plus edgecases ensured no unexpected responses were given.
-Models tested to ensure functionality and give correct response and random generation tests which tests efficiency of models. Also format tests to test specific formatting (date formatting, string formatting, etc) that we used throughout our code.
+All models tested to ensure functionality and give correct response and random generation tests which tests efficiency of models. Also format tests to test specific formatting (date formatting, string formatting, etc) that we used throughout our code.
 
 ## How to
 **Build and run your program**<br />
