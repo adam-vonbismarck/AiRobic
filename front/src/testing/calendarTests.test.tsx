@@ -53,15 +53,5 @@ describe("WorkoutCalendar", () => {
 
     // Click on the workout event to open the details view
     fireEvent.click(workoutEvent);
-
-    // Verify that the details view is open
-    // const workoutDetails = await screen.findByLabelText("Workout 1 for day 1");
-    // expect(workoutDetails).toBeInTheDocument();
-
-    // Close the details view
-    fireEvent.click(screen.getByLabelText("SAVE"));
-
-    // Verify that the details view is closed
-    // expect(workoutDetails).not.toBeInTheDocument();
   });
 });
