@@ -28,6 +28,7 @@ The project aims to simplify the taks of creating a workout schedule for users b
 
 ## Design Choices
 
+**Workout deisplay** <br />
 The front end calendar display was created using a full-calendar react component. This allowed us to focus on styling without having to build a calendar from scratch. This calendar allowed us to import the workkouts from the database and convert them into an events array. This array coupd then be used to display information about the workouts on the calendar itself and could also be updated such as when the user wanted to save information about their workouts.
 
 **Colin stuff** <br />
@@ -58,7 +59,11 @@ Registration required the user to not have an account already in our database an
 None found
 
 ## Tests
-Explain the testing suites that you implemented for your program and how each test ensures that a part of the program works. 
+Every page was tested using ReactDOM testing and any possible user inputs were accounted for to ensure that no unexpected errors occurred.
+Authentication methods were extensively tested to ensure no unexpected responses that may result in an incorrect login and we fuzzed the getCredentialResponse to prove that only a valid google response would result in a login.
+Database unit tests ensured that database methods worked as expected and how the database responds to the calls.
+API handlers were tested to ensure integration between front end api calls and database commands was error free, with each api method tested plus edgecases ensured no unexpected responses were given.
+Models tested to ensure functionality and give correct response and random generation tests which tests efficiency of models. Also format tests to test specific formatting (date formatting, string formatting, etc) that we used throughout our code.
 
 ## How to
 **Build and run your program**<br />
