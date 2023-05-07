@@ -28,10 +28,7 @@ The project aims to simplify the taks of creating a workout schedule for users b
 
 ## Design Choices
 
-**Adam stuff** <br />
-Explain the relationships between classes/interfaces.
-Discuss any specific data structures you used, why you created it, and other high level explanations.
-Runtime/ space optimizations you made (if applicable).
+The front end calendar display was created using a full-calendar react component. This allowed us to focus on styling without having to build a calendar from scratch. This calendar allowed us to import the workkouts from the database and convert them into an events array. This array coupd then be used to display information about the workouts on the calendar itself and could also be updated such as when the user wanted to save information about their workouts.
 
 **Colin stuff** <br />
 Explain the relationships between classes/interfaces.
