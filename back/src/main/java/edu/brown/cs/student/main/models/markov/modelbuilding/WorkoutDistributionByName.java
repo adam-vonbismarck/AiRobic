@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The WorkoutDistributionByName class uses our preconceived workout data from the data folders in order to allow us
- * to query it for emission distributions. Contains code to deserialize these files and use Workout types to query
- * for emission distributions.
+ * The WorkoutDistributionByName class uses our preconceived workout data from the data folders in
+ * order to allow us to query it for emission distributions. Contains code to deserialize these
+ * files and use Workout types to query for emission distributions.
  */
 public class WorkoutDistributionByName {
 
@@ -33,7 +33,8 @@ public class WorkoutDistributionByName {
    *
    * @param name - the Workout type to key on.
    * @return the found emission distribution.
-   * @throws NoWorkoutTypeException if the workout type does not have an associated distribution in the read file.
+   * @throws NoWorkoutTypeException if the workout type does not have an associated distribution in
+   *     the read file.
    */
   public HashMap<Emission, Double> generateEmissionDistribution(Workout name)
       throws NoWorkoutTypeException {
@@ -56,7 +57,8 @@ public class WorkoutDistributionByName {
       @Json(name = "categories") Map<String, List<EmissionAndProb>> allData) {
 
     /**
-     * This method gets an emission distribution given a string key, if that key exists in the read file.
+     * This method gets an emission distribution given a string key, if that key exists in the read
+     * file.
      *
      * @param key - the string key.
      * @return the emission distribution
@@ -65,10 +67,7 @@ public class WorkoutDistributionByName {
     public HashMap<Emission, Double> getDist(String key) throws NoWorkoutTypeException {
       if (!this.allData.containsKey(key)) {
         throw new NoWorkoutTypeException(
-                "Type: "
-                        + key
-                        + "was not found in the loaded set of workout"
-                        + "distributions.");
+            "Type: " + key + "was not found in the loaded set of workout" + "distributions.");
       }
 
       HashMap<Emission, Double> dist = new HashMap<>();
@@ -81,8 +80,8 @@ public class WorkoutDistributionByName {
 
   /**
    * A record for storing an emission and its associated probability. We had trouble getting moshi
-   * to deserialize the individual fields in the emission class, so we included the duration of the given
-   * emission in this class as well.
+   * to deserialize the individual fields in the emission class, so we included the duration of the
+   * given emission in this class as well.
    *
    * @param emission - an emission.
    * @param probability - the emission's associated probability in its distribution.

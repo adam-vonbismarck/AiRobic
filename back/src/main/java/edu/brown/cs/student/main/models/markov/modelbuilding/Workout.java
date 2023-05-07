@@ -1,8 +1,8 @@
 package edu.brown.cs.student.main.models.markov.modelbuilding;
 
 /**
- * The Workout enum associates an integer (from the enum) with a string key in our workout files. Useful for
- * searching classes like RowingWorkoutByName for a specific workout type.
+ * The Workout enum associates an integer (from the enum) with a string key in our workout files.
+ * Useful for searching classes like RowingWorkoutByName for a specific workout type.
  */
 public enum Workout {
   _2K,

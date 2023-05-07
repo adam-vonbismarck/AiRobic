@@ -2,11 +2,10 @@ package edu.brown.cs.student.main.handlers;
 
 import edu.brown.cs.student.main.database.DatabaseCommands;
 import edu.brown.cs.student.main.server.serializing.Serializer;
+import java.util.HashMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
-import java.util.HashMap;
 
 public class UpdateWorkout implements Route {
 
@@ -20,17 +19,24 @@ public class UpdateWorkout implements Route {
     String distance = request.queryParams("distance");
     HashMap<String, Object> output = new HashMap<>();
     if (username == null
-            || day == null
-            || workout == null
-            || rpe == null
-            || split == null
-            || distance == null) {
+        || day == null
+        || workout == null
+        || rpe == null
+        || split == null
+        || distance == null) {
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: Invalid input.");
       return Serializer.serialize(output);
     }
-    String info = "{\"rpe\":\"" + rpe + "\",\"split\":\"" + split +"\"," +
-            "\"distance\":\"" + distance + "\"}";
+    String info =
+        "{\"rpe\":\""
+            + rpe
+            + "\",\"split\":\""
+            + split
+            + "\","
+            + "\"distance\":\""
+            + distance
+            + "\"}";
     String where = "users/" + username + "/schedule/days/" + day + "/workouts/" + workout + "/data";
     new DatabaseCommands().update(info, where);
     output.put("result", "success");

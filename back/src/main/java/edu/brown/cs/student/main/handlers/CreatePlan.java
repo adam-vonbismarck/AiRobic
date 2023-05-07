@@ -10,7 +10,6 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -119,7 +118,8 @@ public class CreatePlan implements Route {
         try {
           Schedule built =
               new GenerateLinearPlan()
-                  .generate(parsedHours, parsedStart, parsedEnd, Workout.OVERALL, Workout.UT_2, 0.2);
+                  .generate(
+                      parsedHours, parsedStart, parsedEnd, Workout.OVERALL, Workout.UT_2, 0.2);
           System.out.println(Serializer.serializeSchedule(built.flatten()));
           new DatabaseCommands()
               .put(
@@ -143,11 +143,13 @@ public class CreatePlan implements Route {
           high.add(Workout._2K);
           Set<Workout> low = new HashSet<>();
           low.add(Workout.UT_2);
-          Schedule built = new GenerateGraphLikePlan().generate(parsedHours, parsedStart,
-                  parsedEnd, high, low, 0.2);
+          Schedule built =
+              new GenerateGraphLikePlan()
+                  .generate(parsedHours, parsedStart, parsedEnd, high, low, 0.2);
           System.out.println(Serializer.serializeSchedule(built.flatten()));
-          new DatabaseCommands().put(Serializer.serializeSchedule(built.flatten()), "users/" +
-                  username + "/schedule");
+          new DatabaseCommands()
+              .put(
+                  Serializer.serializeSchedule(built.flatten()), "users/" + username + "/schedule");
         } catch (Exception e) {
           System.out.println(e.getMessage());
           output.put("result", "error_bad_request");

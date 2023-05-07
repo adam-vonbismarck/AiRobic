@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import okio.Buffer;
 
 /** A static class containing utility methods for serializing and deserializing API responses. */

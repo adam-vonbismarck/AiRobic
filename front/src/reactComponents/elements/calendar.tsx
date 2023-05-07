@@ -12,8 +12,10 @@ import moment from "moment";
 const WorkoutCalendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [workoutDetails, setWorkoutDetails] = useState<Workout[]>([]);
-
-  const [events, setEvents] = useState<Workout[]>([]);
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [splitError, setSplitError] = useState<boolean>(false);
+  const [distanceError, setDistanceError] = useState<boolean>(false);
+  const [errorText, setErrorText] = useState<string>("");
 
   const fetchWorkouts = async (): Promise<Workout[]> => {
     const response = await fetch(
@@ -45,12 +47,10 @@ const WorkoutCalendar: React.FC = () => {
     return workouts;
   };
 
-  const [workouts, setWorkouts] = useState<Workout[]>([]);
-
   useEffect(() => {
     fetchWorkouts().then((workouts) => {
-      setWorkouts(workouts);
-      setEvents(createEventsArray(workouts));
+      setWorkouts(createEventsArray(workouts));
+      console.log("useeffect");
     });
   }, []);
 
@@ -85,7 +85,7 @@ const WorkoutCalendar: React.FC = () => {
     let calendarApi = selectInfo.view.calendar;
     setSelectedDate(selectInfo.startStr);
     setWorkoutDetails(
-      events.filter((workout) => workout.date === selectInfo.startStr)
+      workouts.filter((workout) => workout.date === selectInfo.startStr)
     );
     calendarApi.unselect();
   };
@@ -120,9 +120,15 @@ const WorkoutCalendar: React.FC = () => {
                 selectedDate,
                 workoutDetails,
                 setWorkoutDetails,
-                events,
+                workouts,
                 setWorkouts,
                 closeFullscreen,
+                splitError,
+                setSplitError,
+                distanceError,
+                setDistanceError,
+                errorText,
+                setErrorText,
               })}
             </motion.div>
           </div>
@@ -148,7 +154,7 @@ const WorkoutCalendar: React.FC = () => {
               selectMirror={true}
               dayMaxEvents={true}
               firstDay={1}
-              events={events}
+              events={workouts}
               select={handleDateSelect}
               aria-label="Interactive calendar of workout events"
               aria-roledescription="Calendar"

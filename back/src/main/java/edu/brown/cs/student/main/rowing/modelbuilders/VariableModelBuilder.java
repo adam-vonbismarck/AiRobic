@@ -1,7 +1,5 @@
 package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.server.RandomGenerator;
-import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
@@ -9,9 +7,10 @@ import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
-
+import edu.brown.cs.student.main.server.RandomGenerator;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,9 +18,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The VariableModelBuilder class builds a MarkovModel where each hidden state is a particular workout type, with
- * its distribution read from our preconceived files or dynamically generated. Creates more randomness and less
- * structure in the plan.
+ * The VariableModelBuilder class builds a MarkovModel where each hidden state is a particular
+ * workout type, with its distribution read from our preconceived files or dynamically generated.
+ * Creates more randomness and less structure in the plan.
  */
 public class VariableModelBuilder {
 
@@ -34,24 +33,27 @@ public class VariableModelBuilder {
 
   public static int MAX_MINUTES = 1200;
 
-  /** The constructor for the VariableModelBuilder, which establishes the RowingWorkoutByName instance to get
-   * emission distributions from Workout keys.
+  /**
+   * The constructor for the VariableModelBuilder, which establishes the RowingWorkoutByName
+   * instance to get emission distributions from Workout keys.
    */
   public VariableModelBuilder() throws IOException {
     this.dists = new RowingWorkoutByName();
   }
 
   /**
-   * The build method takes in a set of high/low intensity workouts a number of minutes the caller has, and a
-   * high intensity percentage, and builds a "variable" MarkovModel that accommodates these constraints to model
-   * one week of training.
+   * The build method takes in a set of high/low intensity workouts a number of minutes the caller
+   * has, and a high intensity percentage, and builds a "variable" MarkovModel that accommodates
+   * these constraints to model one week of training.
    *
    * @param lowWorkouts - the set of low intensity workouts that make up the low intensity states.
-   * @param highWorkouts - the set of high intensity workouts that make up the high intensity states.
-   * @param minutes - the number of minutes the caller has in their schedule per week, in order to modulate
-   *                the length of low intensity sessions (similar process to that in the ScheduleBuilder).
-   * @param highPercent - the percentage of high intensity work the caller wants to do, roughly (informs the
-   *                    state transitions).
+   * @param highWorkouts - the set of high intensity workouts that make up the high intensity
+   *     states.
+   * @param minutes - the number of minutes the caller has in their schedule per week, in order to
+   *     modulate the length of low intensity sessions (similar process to that in the
+   *     ScheduleBuilder).
+   * @param highPercent - the percentage of high intensity work the caller wants to do, roughly
+   *     (informs the state transitions).
    * @return a completely built MarkovModel, ready for random generation.
    * @throws InvalidDistributionException if any distributions in the generation of the model do not
    *     sum to 1.
@@ -59,28 +61,32 @@ public class VariableModelBuilder {
    *     to build the model.
    */
   public MarkovModel build(
-          Set<Workout> lowWorkouts, Set<Workout> highWorkouts, int minutes, double highPercent)
+      Set<Workout> lowWorkouts, Set<Workout> highWorkouts, int minutes, double highPercent)
       throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException {
 
-    if (lowWorkouts == null || lowWorkouts.size() == 0 ||
-            highWorkouts == null || highWorkouts.size() == 0 ) {
-      throw new NoWorkoutTypeException("Low/high intensity workout sets for variable model building were " +
-              "null or contained no workout types.");
+    if (lowWorkouts == null
+        || lowWorkouts.size() == 0
+        || highWorkouts == null
+        || highWorkouts.size() == 0) {
+      throw new NoWorkoutTypeException(
+          "Low/high intensity workout sets for variable model building were "
+              + "null or contained no workout types.");
     }
 
     if (minutes < MIN_MINUTES || minutes > MAX_MINUTES) {
-      throw new InvalidScheduleException("All schedules must have a number of minutes between 120 and 1200.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have a number of minutes between 120 and 1200.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     RandomGenerator.validateDistribution(
-            String.class,
-            new HashMap<>() {
-              {
-                this.put("High workoutType", highPercent);
-                this.put("Low workoutType", 1 - highPercent);
-              }
-            });
+        String.class,
+        new HashMap<>() {
+          {
+            this.put("High workoutType", highPercent);
+            this.put("Low workoutType", 1 - highPercent);
+          }
+        });
 
     ModelBuilder builder = new ModelBuilder();
 
@@ -101,15 +107,15 @@ public class VariableModelBuilder {
             Math.max(
                 MIN_LOW_LENGTH,
                 (minutes - highIntensity)
-                    / (MAX_WORKOUTS_PER_WEEK -
-                        (Math.min(Math.floorDiv(highIntensity, HIGH_LENGTH), MAX_HIGH_WORKOUTS)))));
+                    / (MAX_WORKOUTS_PER_WEEK
+                        - (Math.min(
+                            Math.floorDiv(highIntensity, HIGH_LENGTH), MAX_HIGH_WORKOUTS)))));
 
     // generates emission distribution for all high intensity workouts
     for (Workout wo : lowWorkouts) {
       builder.generateNewState(Workout.value(wo));
       builder.setEmissionDistribution(
-          Workout.value(wo),
-          this.dists.getEmissionDist(new Day.WorkoutDescription(wo, lowLength)));
+          Workout.value(wo), this.dists.getEmissionDist(new Day.WorkoutDescription(wo, lowLength)));
     }
 
     // generates emission distribution for all low intensity workouts

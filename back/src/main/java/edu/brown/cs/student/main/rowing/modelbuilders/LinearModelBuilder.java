@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.exceptions.NoWorkoutTypeException;
@@ -8,8 +7,8 @@ import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
+import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
-
 import java.io.IOException;
 import java.time.DayOfWeek;
 
@@ -59,8 +58,7 @@ public class LinearModelBuilder {
       for (WorkoutDescription intensity : day.getPlanCopy()) {
         builder.generateNewState(this.encodeDay(day.getDay(), workoutCounter));
         builder.setEmissionDistribution(
-            this.encodeDay(day.getDay(), workoutCounter),
-            this.dists.getEmissionDist(intensity));
+            this.encodeDay(day.getDay(), workoutCounter), this.dists.getEmissionDist(intensity));
       }
     }
 
@@ -86,17 +84,19 @@ public class LinearModelBuilder {
   }
 
   /**
-   * This helper method finds the first day of the week with a workout, for the purposes of finding the first
-   * potential state in a linear model.
+   * This helper method finds the first day of the week with a workout, for the purposes of finding
+   * the first potential state in a linear model.
    *
    * @param startDay - the start day of the week of the potential schedule.
    * @param schedule - the schedule to check.
    * @return the DayOfWeek of the first workout of the schedule.
    * @throws InvalidScheduleException if the schedule has no workouts.
    */
-  private DayOfWeek findFirstWorkout(DayOfWeek startDay, Schedule schedule) throws InvalidScheduleException {
+  private DayOfWeek findFirstWorkout(DayOfWeek startDay, Schedule schedule)
+      throws InvalidScheduleException {
 
-    // runs through days in two passes, following the calendar from the startDay until a workout is found.
+    // runs through days in two passes, following the calendar from the startDay until a workout is
+    // found.
     for (Day day : schedule.example().days()) {
       if (day.getDay().getValue() < startDay.getValue()) {
         continue;
@@ -111,8 +111,7 @@ public class LinearModelBuilder {
         return day.getDay();
       }
     }
-    throw new InvalidScheduleException("Schedule had no workouts, so no model could be built.", schedule);
+    throw new InvalidScheduleException(
+        "Schedule had no workouts, so no model could be built.", schedule);
   }
-
-
 }

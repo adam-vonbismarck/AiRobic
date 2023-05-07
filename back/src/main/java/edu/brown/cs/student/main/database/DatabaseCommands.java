@@ -10,31 +10,29 @@ public class DatabaseCommands {
 
   // https://console.firebase.google.com/u/1/project/cs32airobic/database/cs32airobic-default-rtdb/data/~2F
 
-  public void put (String data, String where) throws IOException, InterruptedException {
+  public void put(String data, String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String PUT = "curl -X PUT -d '";
       String s = PUT + data + "' " + this.DATABASEWIN + where + this.ENDWIN;
       System.out.println(s);
       new TerminalCommand(PUT + data + "' " + this.DATABASEWIN + where + this.ENDWIN).run();
-    }
-    else {
+    } else {
       String PUT = "curl -X PUT -d '";
       String s = PUT + data + "' " + this.DATABASE + where + this.END;
       System.out.println(s);
       new TerminalCommand(PUT + data + "' " + this.DATABASE + where + this.END).run();
     }
   }
-  //if (System.getProperty("os.name").toLowerCase().contains("win"))
+  // if (System.getProperty("os.name").toLowerCase().contains("win"))
 
-  public void update (String data, String where) throws IOException, InterruptedException {
+  public void update(String data, String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String UPDATE = "curl -X PATCH -d \"";
-      String newData = data.replaceAll("\"","\\\\"+"\"");
+      String newData = data.replaceAll("\"", "\\\\" + "\"");
       String s = UPDATE + newData + "\" " + this.DATABASEWIN + where + this.ENDWIN;
       System.out.println(s);
       new TerminalCommand(s).run();
-    }
-    else {
+    } else {
       String UPDATE = "curl -X PATCH -d '";
       String s = UPDATE + data + "' " + this.DATABASE + where + this.END;
       System.out.println(s);
@@ -42,15 +40,13 @@ public class DatabaseCommands {
     }
   }
 
-  public void delete (String where) throws IOException, InterruptedException {
+  public void delete(String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String DELETE = "curl -X DELETE ";
       String s = DELETE + this.DATABASEWIN + where + this.ENDWIN;
       System.out.println(s);
       new TerminalCommand(DELETE + this.DATABASEWIN + where + this.ENDWIN).run();
-    }
-
-    else {
+    } else {
       String DELETE = "curl -X DELETE ";
       String s = DELETE + this.DATABASE + where + this.END;
       System.out.println(s);
@@ -58,7 +54,7 @@ public class DatabaseCommands {
     }
   }
 
-  public String get (String where) throws IOException, InterruptedException {
+  public String get(String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String GET = "curl ";
       String s = GET + this.DATABASEWIN + where + this.ENDWIN;

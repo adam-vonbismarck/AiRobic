@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.rowing.modelbuilders;
 
-import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.models.exceptions.InvalidDistributionException;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
 import edu.brown.cs.student.main.models.formattypes.Day;
@@ -8,7 +7,7 @@ import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
-
+import edu.brown.cs.student.main.server.RandomGenerator;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,8 +35,8 @@ public class ScheduleBuilder {
   public static int MAX_HIGH_WORKOUTS = 4;
 
   /**
-   * The minutesWithDates method uses the minutes method in order to build a full linear schedule plan, built
-   * in with dates.
+   * The minutesWithDates method uses the minutes method in order to build a full linear schedule
+   * plan, built in with dates.
    *
    * @param minutes - approximate minutes per week the user has
    * @param highPercent - the percentage of high workoutType work to be done
@@ -47,8 +46,9 @@ public class ScheduleBuilder {
    * @param lowIntensityLabel - the category of workout that should be low workoutType
    * @return a schedule that fits these constraints.
    * @throws InvalidDistributionException if the percentage of high workoutType work is not between
-   *         0 and 1.
-   * @throws InvalidScheduleException if the schedule cannot be generated reasonably given the constraints.
+   *     0 and 1.
+   * @throws InvalidScheduleException if the schedule cannot be generated reasonably given the
+   *     constraints.
    */
   public Schedule minutesWithDates(
       int minutes,
@@ -61,18 +61,19 @@ public class ScheduleBuilder {
 
     // checking inputs
     if (!startDay.isBefore(endDay)) {
-      throw new InvalidScheduleException("All schedules must have start days before end days in order to be built.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have start days before end days in order to be built.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     RandomGenerator.validateDistribution(
-            String.class,
-            new HashMap<>() {
-              {
-                this.put("High workoutType", highPercent);
-                this.put("Low workoutType", 1 - highPercent);
-              }
-            });
+        String.class,
+        new HashMap<>() {
+          {
+            this.put("High workoutType", highPercent);
+            this.put("Low workoutType", 1 - highPercent);
+          }
+        });
 
     // calculating number of weeks
     int weekCounter = 0;
@@ -100,7 +101,6 @@ public class ScheduleBuilder {
             endDay.getDayOfWeek(),
             highIntensityLabel,
             lowIntensityLabel);
-
 
     // reading in dates
     LocalDate dummyDate = startDay.minusDays(1);
@@ -131,7 +131,8 @@ public class ScheduleBuilder {
    * @return a schedule that fits these constraints.
    * @throws InvalidDistributionException if the percentage of high workoutType work is not between
    *     0 and 1.
-   * @throws InvalidScheduleException if the schedule cannot be generated reasonably given the constraints.
+   * @throws InvalidScheduleException if the schedule cannot be generated reasonably given the
+   *     constraints.
    */
   public Schedule minutes(
       int minutes,
@@ -154,13 +155,15 @@ public class ScheduleBuilder {
         });
 
     if (minutes < MIN_MINUTES || minutes > MAX_MINUTES) {
-      throw new InvalidScheduleException("All schedules must have a number of minutes between 120 and 1200.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have a number of minutes between 120 and 1200.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     if (numWeeks < 1) {
-      throw new InvalidScheduleException("All schedules must have a positive number of weeks.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have a positive number of weeks.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     // calculate high workoutType minutes, with a minimum of 60
@@ -175,7 +178,8 @@ public class ScheduleBuilder {
 
     // find the length of low workoutType workouts, with a minimum of 60 minute sessions, and a
     // maximum of 10 sessions per week
-    long lowIntensityWorkoutLength = Math.max(MIN_LOW_LENGTH, lowIntensity / (MAX_WORKOUTS_PER_WEEK - numHighIntensity));
+    long lowIntensityWorkoutLength =
+        Math.max(MIN_LOW_LENGTH, lowIntensity / (MAX_WORKOUTS_PER_WEEK - numHighIntensity));
 
     // use the low workoutType workout length and the number of low workoutType minutes to calculate
     // the number of low workoutType workouts
@@ -221,20 +225,24 @@ public class ScheduleBuilder {
 
     // checking inputs
     if (highIntensity < 0 || lowIntensity < 0 || numWeeks < 1) {
-      throw new InvalidScheduleException("All schedules must have a positive number of weeks, high intensity workouts" +
-              "and low intensity workouts.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have a positive number of weeks, high intensity workouts"
+              + "and low intensity workouts.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     if (lowLength < 0) {
-      throw new InvalidScheduleException("All schedules must have a positive low intensity workout length.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have a positive low intensity workout length.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
-    // checks the case where the start day is the before the end day, and only one week is being built.
+    // checks the case where the start day is the before the end day, and only one week is being
+    // built.
     if (numWeeks == 1 && startDay.getValue() >= endDay.getValue()) {
-      throw new InvalidScheduleException("All schedules must have start days before end days in order to be built.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "All schedules must have start days before end days in order to be built.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     long workouts = highIntensity + lowIntensity;
@@ -250,7 +258,8 @@ public class ScheduleBuilder {
     Week exampleWeek = new Week("week", exampleDays);
 
     if (numWeeks == 1) {
-      weeks.add(new Week("week", exampleWeek.getDaySubset(startDay.getValue() - 1, endDay.getValue())));
+      weeks.add(
+          new Week("week", exampleWeek.getDaySubset(startDay.getValue() - 1, endDay.getValue())));
       return new Schedule("schedule", weeks, exampleWeek);
     }
 
@@ -274,13 +283,13 @@ public class ScheduleBuilder {
    * @param days - the list of days over which to distribute
    * @param workouts - the number of workouts to distribute
    */
-  private void distributeWorkouts(List<Day> days, long workouts)
-      throws InvalidScheduleException {
+  private void distributeWorkouts(List<Day> days, long workouts) throws InvalidScheduleException {
 
     if (days == null || workouts < 0) {
-      throw new InvalidScheduleException("Workout distribution requires a list of days to fill and a positive number" +
-              "of workouts to distribute.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+      throw new InvalidScheduleException(
+          "Workout distribution requires a list of days to fill and a positive number"
+              + "of workouts to distribute.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     for (int j = 0; j < NUM_DAYS; j++) {
@@ -310,10 +319,14 @@ public class ScheduleBuilder {
       return;
     }
 
-    // once there are not enough workouts to span a week, we take 6/[number remaining], and look at the sequence
-    // of length [number remaining] of successive adds of 6/[number remaining] starting from 0. for example,
-    // if there are 4 days remaining, we consider the sequence 0, 1.5, 3, 4.5. We take the floor of each number
-    // in the sequence, and distribute to each day according to the resulting indices. This serves as an approximation
+    // once there are not enough workouts to span a week, we take 6/[number remaining], and look at
+    // the sequence
+    // of length [number remaining] of successive adds of 6/[number remaining] starting from 0. for
+    // example,
+    // if there are 4 days remaining, we consider the sequence 0, 1.5, 3, 4.5. We take the floor of
+    // each number
+    // in the sequence, and distribute to each day according to the resulting indices. This serves
+    // as an approximation
     // for distributing workouts evenly.
     int w = 0;
     long remainingWorkouts = workouts;
@@ -329,8 +342,8 @@ public class ScheduleBuilder {
   }
 
   /**
-   * This method distributes intensity labels over the course of a list of days (length of a week). Uses a similar
-   * distribution process to distributeWorkouts.
+   * This method distributes intensity labels over the course of a list of days (length of a week).
+   * Uses a similar distribution process to distributeWorkouts.
    *
    * @param days - the days to distribute over.
    * @param highIntensity - the number of high intensity workouts.
@@ -346,11 +359,12 @@ public class ScheduleBuilder {
       long lowLength) {
 
     // given the method is private, these should have been caught at a higher level.
-    assert(days.size() == NUM_DAYS);
-    assert(highIntensity >= 0);
-    assert(lowLength >= 0);
+    assert (days.size() == NUM_DAYS);
+    assert (highIntensity >= 0);
+    assert (lowLength >= 0);
 
-    // the next section distributes the high intensity workouts; once they are all distributed at any stage,
+    // the next section distributes the high intensity workouts; once they are all distributed at
+    // any stage,
     // fillInLow is called to complete filling out all workouts.
     if (highIntensity <= 0) {
       this.fillInLow(days, lowIntensityLabel, lowLength);
@@ -384,8 +398,9 @@ public class ScheduleBuilder {
   }
 
   /**
-   * The fillInLow method takes in a list of days and a low intensity label, and fills in all missing workouts
-   * with a low intensity workout (remainder left after distributing high intensity).
+   * The fillInLow method takes in a list of days and a low intensity label, and fills in all
+   * missing workouts with a low intensity workout (remainder left after distributing high
+   * intensity).
    *
    * @param days - the list of days to distribute over.
    * @param lowIntensityLabel - the low intensity workout type.
@@ -393,7 +408,8 @@ public class ScheduleBuilder {
    */
   private void fillInLow(List<Day> days, Workout lowIntensityLabel, long lowLength) {
 
-    // these conditions should already be checked once they reach here, similar to distributeIntensities
+    // these conditions should already be checked once they reach here, similar to
+    // distributeIntensities
     assert (days.size() == NUM_DAYS);
     assert (lowLength > 0);
 
