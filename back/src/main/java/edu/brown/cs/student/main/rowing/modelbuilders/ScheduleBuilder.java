@@ -183,7 +183,7 @@ public class ScheduleBuilder {
 
     // use the low workoutType workout length and the number of low workoutType minutes to calculate
     // the number of low workoutType workouts
-    long numLowIntensity = Math.floorDiv(lowIntensity, lowIntensityWorkoutLength);
+    long numLowIntensity = Math.round((double) lowIntensity / (double) lowIntensityWorkoutLength);
 
     // call on the rest of the schedule building
     return this.workouts(
@@ -284,7 +284,6 @@ public class ScheduleBuilder {
    * @param workouts - the number of workouts to distribute
    */
   private void distributeWorkouts(List<Day> days, long workouts) throws InvalidScheduleException {
-
     if (days == null || workouts < 0) {
       throw new InvalidScheduleException(
           "Workout distribution requires a list of days to fill and a positive number"

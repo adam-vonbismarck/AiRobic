@@ -125,4 +125,23 @@ public class LinearModelTests {
         model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     Assertions.assertTrue(validateSchedule(schedule, 120));
   }
+
+  @Test
+  public void testLinearAgain() throws InvalidDistributionException, InvalidScheduleException, IOException, FormatterFailureException, NoWorkoutTypeException {
+    ScheduleBuilder builder = new ScheduleBuilder();
+    Schedule toBuild = null;
+    toBuild =
+            builder.minutesWithDates(
+                    360,
+                    LocalDate.of(2023, 5, 14),
+                    LocalDate.of(2023, 6, 14),
+                    0.2,
+                    Workout.of("2k"),
+                    Workout.of("UT2"));
+    MarkovModel model =
+            new LinearModelBuilder().build(toBuild, LocalDate.of(2023, 5, 14).getDayOfWeek());
+    Schedule schedule =
+            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
+    System.out.println(schedule.flatten());
+  }
 }
