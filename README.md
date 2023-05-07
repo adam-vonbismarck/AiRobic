@@ -48,10 +48,8 @@ In terms of data structures, for our probability distributions, we used HashMaps
 probabilities (doubles). In addition, we used lists of Days, stored in lists of Weeks to represent a given schedule,
 with a single example week for relevant schedules.
 
-**Gordan stuff** <br />
-Explain the relationships between classes/interfaces.
-Discuss any specific data structures you used, why you created it, and other high level explanations.
-Runtime/ space optimizations you made (if applicable).
+**Database/API handlers** <br />
+We used Firebase Realtime Database to store our information. Firebase can take in information via Terminal commands, so the design choice was to create a class which would generate terminal commands for each action you can do for the Firebase. The methods allow reading and storing various information, formatted in Json file type. Each api call the frontend makes, there is a special class being called that takes in the query from the call and uses the specific database commands to work with it. One of the most complex ones is the CreatePlan() which generates the workout schedule using the Models and stores it in the Database.
 
 **Account Management:** <br />
 We used Google Oauth for authorization as it allowed for secure account creation and removed the need to have users to create or store any secure information such passwords on our end.
