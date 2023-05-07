@@ -53,6 +53,9 @@ public class LinearModelTests {
     return true;
   }
 
+  /**
+   * A method for testing the maximum number of minutes per week
+   */
   @Test
   public void testLinearModelMax() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
@@ -69,6 +72,9 @@ public class LinearModelTests {
     Assertions.assertEquals(model.getNumberOfStates(), 10);
   }
 
+  /**
+   * A method for testing the minimum number of minutes per week
+   */
   @Test
   public void testLinearModelMin() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
@@ -85,6 +91,9 @@ public class LinearModelTests {
     Assertions.assertEquals(model.getNumberOfStates(), 2);
   }
 
+  /**
+   * A method for testing the minimum number of days
+   */
   @Test
   public void testLinearModelMinVaryingStartEndDates() throws InvalidDistributionException,
           InvalidScheduleException, IOException, NoWorkoutTypeException {
@@ -106,6 +115,9 @@ public class LinearModelTests {
     }
   }
 
+  /**
+   * A method for validating a schedule with a big number of minutes
+   */
   @Test
   public void testLinearMax()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -127,6 +139,9 @@ public class LinearModelTests {
     Assertions.assertTrue(this.validateSchedule(schedule, 1200));
   }
 
+  /**
+   * A method for validating a schedule with a small number of minutes
+   */
   @Test
   public void testLinearMin()
           throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -148,6 +163,9 @@ public class LinearModelTests {
     Assertions.assertTrue(this.validateSchedule(schedule, 120));
   }
 
+  /**
+   * A method for validating a short workout plan
+   */
   @Test
   public void testLinearShortPlan()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -169,6 +187,10 @@ public class LinearModelTests {
     Assertions.assertTrue(this.validateSchedule(schedule, 600));
   }
 
+  /**
+   * An edge case test which validates a workout plan that ends on a Sunday,
+   * knowing that it is a rest day
+   */
   @Test
   public void testLinearEndsOnSunday()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -190,6 +212,10 @@ public class LinearModelTests {
     Assertions.assertTrue(this.validateSchedule(schedule, 120));
   }
 
+  /**
+   * An edge case test which validates a workout plan that ends with
+   * a high intensity workout
+   */
   @Test
   public void testLinearEndsHigherIntensity()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -211,6 +237,9 @@ public class LinearModelTests {
     Assertions.assertTrue(this.validateSchedule(schedule, 120));
   }
 
+  /**
+   * A fuzz test for validation of random generations within boundaries
+   */
   @Test
   public void fuzzLinearGeneratorValid() throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException, IOException, FormatterFailureException {
     for (int i = 0; i < NUM_TRIALS; i++) {
