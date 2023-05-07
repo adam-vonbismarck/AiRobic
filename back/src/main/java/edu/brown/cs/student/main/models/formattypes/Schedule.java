@@ -9,7 +9,7 @@ import java.util.List;
  * a list of days. It contains an example week for modelling purposes, but this field need not
  * always be used.
  */
-public record Schedule(String type, List<Week> weeks, Week example) {
+public record Schedule (String type, List<Week> weeks, Week example) {
 
   /**
    * Gets the total number of workouts in the schedule.
@@ -17,6 +17,9 @@ public record Schedule(String type, List<Week> weeks, Week example) {
    * @return the total number of workouts in the schedule.
    */
   public int getLength() {
+    if (this.weeks == null) {
+      return 0;
+    }
     int workoutCounter = 0;
     for (Week week : this.weeks) {
       for (Day day : week.days()) {
@@ -32,6 +35,9 @@ public record Schedule(String type, List<Week> weeks, Week example) {
    * @return the converted FlatSchedule.
    */
   public FlatSchedule flatten() throws InvalidScheduleException {
+    if (this.weeks == null) {
+      return new FlatSchedule(new ArrayList<>());
+    }
     List<Day> days = new ArrayList<>();
     for (Week week : this.weeks) {
       for (Day day : week.days()) {

@@ -16,7 +16,6 @@ import edu.brown.cs.student.main.rowing.modelbuilders.ScheduleBuilder;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import edu.brown.cs.student.main.server.serializing.Serializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -133,8 +132,8 @@ public class LinearModelTests {
     toBuild =
             builder.minutesWithDates(
                     360,
-                    LocalDate.of(2023, 5, 14),
-                    LocalDate.of(2023, 6, 14),
+                    LocalDate.of(2023, 5, 13),
+                    LocalDate.of(2023, 9, 10),
                     0.2,
                     Workout.of("2k"),
                     Workout.of("UT2"));
@@ -143,5 +142,7 @@ public class LinearModelTests {
     Schedule schedule =
             model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     System.out.println(schedule.flatten());
+    System.out.println(schedule.flatten().days().size());
+    System.out.println(LocalDate.of(2023, 5, 13).datesUntil(LocalDate.of(2023, 9, 10).plusDays(1)).count());
   }
 }
