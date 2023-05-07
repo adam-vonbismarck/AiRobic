@@ -119,20 +119,20 @@ public class GenerateGraphLikePlan {
       currDate = currDate.plusDays(7);
     }
 
-    // adds the final week, special casing for if Sunday is the last day (so it is not included in
-    // the minute-scaling
-    // computation)
-    weeks.add(
-        this.generateWeek(
-            Math.floorDiv(
-                minutes
-                    * (endDate.getDayOfWeek().getValue()
-                        - DayOfWeek.MONDAY.getValue()
-                        + (endDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) ? 0 : 1)),
-                6),
-            currDate.plusDays(1),
-            endDate,
-            varModel));
+    // adds the final week, special casing for if Sunday is the last day (so a new full week is not generated)
+    if (endDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+      weeks.add(
+              this.generateWeek(
+                      Math.floorDiv(
+                              minutes
+                                      * (endDate.getDayOfWeek().getValue()
+                                      - DayOfWeek.MONDAY.getValue()
+                                      + 1),
+                              6),
+                      currDate.plusDays(1),
+                      endDate,
+                      varModel));
+    }
 
     return new Schedule("schedule", weeks, ((weeks.size() <= 1) ? weeks.get(0) : weeks.get(1)));
   }
@@ -155,6 +155,9 @@ public class GenerateGraphLikePlan {
 
     List<Emission> totalWeekEmissions = new ArrayList<>();
     List<Day> days = new ArrayList<>();
+
+    System.out.println(startDay);
+    System.out.println(endDay);
 
     // number of days that include workouts
     long numDays =

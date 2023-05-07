@@ -9,8 +9,8 @@ public enum Workout {
   _30R_20,
   _6K,
   UT_2,
-  NONE,
-  OVERALL;
+  OVERALL,
+  NONE;
 
   /**
    * This method returns a Workout given its associated string.
