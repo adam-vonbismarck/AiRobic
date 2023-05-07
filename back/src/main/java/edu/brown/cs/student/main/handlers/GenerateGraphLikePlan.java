@@ -8,6 +8,7 @@ import edu.brown.cs.student.main.models.formattypes.Week;
 import edu.brown.cs.student.main.models.markov.model.Emission;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
+import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
 import edu.brown.cs.student.main.rowing.modelbuilders.VariableModelBuilder;
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -72,7 +73,7 @@ public class GenerateGraphLikePlan {
               + endDate.format(formatter));
     }
 
-    VariableModelBuilder builder = new VariableModelBuilder();
+    VariableModelBuilder builder = new VariableModelBuilder(new RowingWorkoutByName());
     MarkovModel varModel =
         builder.build(lowIntensityLabels, highIntensityLabels, minutes, highIntensityPercent);
 
@@ -155,9 +156,6 @@ public class GenerateGraphLikePlan {
 
     List<Emission> totalWeekEmissions = new ArrayList<>();
     List<Day> days = new ArrayList<>();
-
-    System.out.println(startDay);
-    System.out.println(endDay);
 
     // number of days that include workouts
     long numDays =

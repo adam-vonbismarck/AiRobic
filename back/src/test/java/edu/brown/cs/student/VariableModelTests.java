@@ -2,6 +2,7 @@ package edu.brown.cs.student;
 
 import edu.brown.cs.student.main.handlers.GenerateGraphLikePlan;
 import edu.brown.cs.student.main.models.exceptions.*;
+import edu.brown.cs.student.main.models.formatters.DefaultFormatter;
 import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
 import edu.brown.cs.student.main.models.formattypes.Day;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
@@ -12,15 +13,21 @@ import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
 import edu.brown.cs.student.main.rowing.modelbuilders.LinearModelBuilder;
 import edu.brown.cs.student.main.rowing.modelbuilders.ScheduleBuilder;
+import edu.brown.cs.student.main.rowing.modelbuilders.VariableModelBuilder;
 import edu.brown.cs.student.main.server.RandomGenerator;
 import edu.brown.cs.student.main.server.serializing.Serializer;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * VariableModelTests tests variable model generation, and fuzz tests our final use of the associated ModelBuilder
+ * in the GenerateGraphLikePlan class.
+ */
 public class VariableModelTests {
 
   /**
@@ -54,164 +61,156 @@ public class VariableModelTests {
 
   @Test
   public void testVariableModelMax() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    1200,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Assertions.assertEquals(model.getNumberOfStates(), 10);
+    MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+            1200, 0.2);
+    Assertions.assertEquals(model.getNumberOfStates(), 4);
   }
 
   @Test
-  public void testLinearModelMin() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    120,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("30r20"),
-                    Workout.of("UT2"));
-    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Assertions.assertEquals(model.getNumberOfStates(), 2);
+  public void testVariableModelMin() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
+    MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+            120, 0.2);
+    Assertions.assertEquals(model.getNumberOfStates(), 4);
   }
 
   @Test
-  public void testLinearModelMinVaryingStartEndDates() throws InvalidDistributionException,
-          InvalidScheduleException, IOException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    for (int i = 10; i < 17; i++) {
-      for (int j = 19; j < 26; j++) {
-        toBuild =
-                builder.minutesWithDates(
-                        120,
-                        LocalDate.of(2023, 5, i),
-                        LocalDate.of(2023, 5, j),
-                        0.2,
-                        Workout.of("30r20"),
-                        Workout.of("UT2"));
-        MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-        Assertions.assertEquals(model.getNumberOfStates(), 2);
+  public void testVariableModelOutOfBounds() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
+    Exception exn =
+            Assertions.assertThrows(
+                    InvalidScheduleException.class,
+                    () -> {
+                      MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+                              1201, 0.2);
+                    });
+    Assertions.assertEquals(
+            exn.getMessage(),
+            "All schedules must have a number of minutes between 120 and 1200.");
+    exn =
+            Assertions.assertThrows(
+                    InvalidScheduleException.class,
+                    () -> {
+                      MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+                              -1, 0.2);
+                    });
+    Assertions.assertEquals(
+            exn.getMessage(),
+            "All schedules must have a number of minutes between 120 and 1200.");
+    exn =
+            Assertions.assertThrows(
+                    InvalidDistributionException.class,
+                    () -> {
+                      MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+                              125, 1.1);
+                    });
+    Assertions.assertEquals(
+            exn.getMessage(),
+            "The probability associated with the output Low workoutType was negative.");
+  }
+
+  @Test
+  public void testVariableMax()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException {
+    MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+            1200, 0.2);
+    List<Emission> emissions = model.generateFormattedEmissions(20, new DefaultFormatter());
+  }
+
+  @Test
+  public void testVariableMin()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException {
+    MarkovModel model = new VariableModelBuilder(new RowingWorkoutByName()).build(Set.of(Workout.UT_2), Set.of(Workout._30R_20, Workout._6K, Workout._2K),
+            120, 0.2);
+    List<Emission> emissions = model.generateFormattedEmissions(20, new DefaultFormatter());
+  }
+
+  @Test
+  public void testVariableShortPlan()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
+    Schedule schedule =
+            new GenerateGraphLikePlan()
+                    .generate(
+                            420,
+                            LocalDate.of(2023, 5, 5),
+                            LocalDate.of(2023, 5, 6),
+                            Set.of(Workout._2K, Workout._6K),
+                            Set.of(Workout.UT_2),
+                            0.2);
+    Assertions.assertTrue(this.validateSchedule(schedule, 420));
+  }
+
+  @Test
+  public void testVariableBuiltMin()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
+    Schedule schedule =
+            new GenerateGraphLikePlan()
+                    .generate(
+                            120,
+                            LocalDate.of(2023, 5, 5),
+                            LocalDate.of(2023, 5, 6),
+                            Set.of(Workout._2K, Workout._6K),
+                            Set.of(Workout.UT_2),
+                            0.2);
+    Assertions.assertTrue(this.validateSchedule(schedule, 120));
+  }
+
+  @Test
+  public void testVariableBuiltMax()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
+    Schedule schedule =
+            new GenerateGraphLikePlan()
+                    .generate(
+                            1200,
+                            LocalDate.of(2023, 5, 5),
+                            LocalDate.of(2023, 5, 6),
+                            Set.of(Workout._2K, Workout._6K),
+                            Set.of(Workout.UT_2),
+                            0.2);
+    Assertions.assertTrue(this.validateSchedule(schedule, 1200));
+  }
+
+  @Test
+  public void testVariableLongPlan()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
+    Schedule schedule =
+            new GenerateGraphLikePlan()
+                    .generate(
+                            420,
+                            LocalDate.of(2023, 5, 5),
+                            LocalDate.of(2024, 5, 6),
+                            Set.of(Workout._2K, Workout._6K),
+                            Set.of(Workout.UT_2),
+                            0.2);
+    Assertions.assertTrue(this.validateSchedule(schedule, 420));
+  }
+
+  @Test
+  public void testVariableVaryingStartEndDates()
+          throws IOException, InvalidScheduleException, InvalidDistributionException,
+          FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
+    for (int i = 1; i < 8; i++) {
+      for (int j = 10; j < 17; j++) {
+        Schedule schedule =
+                new GenerateGraphLikePlan()
+                        .generate(
+                                600,
+                                LocalDate.of(2023, 5, i),
+                                LocalDate.of(2023, 5, j),
+                                Set.of(Workout._2K, Workout._6K),
+                                Set.of(Workout.UT_2),
+                                0.2);
+        Assertions.assertTrue(this.validateSchedule(schedule, 600));
       }
     }
   }
 
   @Test
-  public void testLinearMax()
-          throws IOException, InvalidScheduleException, InvalidDistributionException,
-          FormatterFailureException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    1200,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model =
-            new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Schedule schedule =
-            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
-    Assertions.assertTrue(this.validateSchedule(schedule, 1200));
-  }
-
-  @Test
-  public void testLinearMin()
-          throws IOException, InvalidScheduleException, InvalidDistributionException,
-          FormatterFailureException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    120,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model =
-            new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Schedule schedule =
-            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
-    Assertions.assertTrue(this.validateSchedule(schedule, 120));
-  }
-
-  @Test
-  public void testLinearShortPlan()
-          throws IOException, InvalidScheduleException, InvalidDistributionException,
-          FormatterFailureException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    600,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 4),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model =
-            new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Schedule schedule =
-            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
-    Assertions.assertTrue(this.validateSchedule(schedule, 600));
-  }
-
-  @Test
-  public void testLinearEndsOnSunday()
-          throws IOException, InvalidScheduleException, InvalidDistributionException,
-          FormatterFailureException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    600,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 13),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model =
-            new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Schedule schedule =
-            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
-    Assertions.assertTrue(this.validateSchedule(schedule, 120));
-  }
-
-  @Test
-  public void testLinearEndsHigherIntensity()
-          throws IOException, InvalidScheduleException, InvalidDistributionException,
-          FormatterFailureException, NoWorkoutTypeException {
-    ScheduleBuilder builder = new ScheduleBuilder();
-    Schedule toBuild = null;
-    toBuild =
-            builder.minutesWithDates(
-                    600,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 13),
-                    0.5,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model =
-            new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
-    Schedule schedule =
-            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
-    Assertions.assertTrue(this.validateSchedule(schedule, 120));
-  }
-
-  @Test
-  public void testVariable()
+  public void testVariableMedium()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
           FormatterFailureException, NoWorkoutTypeException, InvalidDatesException {
     Schedule schedule =
@@ -223,8 +222,7 @@ public class VariableModelTests {
                 Set.of(Workout._2K, Workout._6K),
                 Set.of(Workout.UT_2),
                 0.2);
-    System.out.println(schedule);
-    System.out.println(Serializer.serializeSchedule(schedule.flatten()));
+    Assertions.assertTrue(this.validateSchedule(schedule, 420));
   }
 
   @Test

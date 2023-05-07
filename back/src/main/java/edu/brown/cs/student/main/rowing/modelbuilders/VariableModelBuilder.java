@@ -10,6 +10,7 @@ import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
+import edu.brown.cs.student.main.rowing.distributiongenerators.SportWorkoutByName;
 import edu.brown.cs.student.main.server.RandomGenerator;
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ import java.util.Set;
  */
 public class VariableModelBuilder {
 
-  private RowingWorkoutByName dists;
+  private SportWorkoutByName dists;
   public static int MIN_LOW_LENGTH = 60;
   public static int HIGH_LENGTH = 60;
   public static int MAX_WORKOUTS_PER_WEEK = 10;
@@ -37,8 +38,8 @@ public class VariableModelBuilder {
    * The constructor for the VariableModelBuilder, which establishes the RowingWorkoutByName
    * instance to get emission distributions from Workout keys.
    */
-  public VariableModelBuilder() throws IOException {
-    this.dists = new RowingWorkoutByName();
+  public VariableModelBuilder(SportWorkoutByName dists) throws IOException {
+    this.dists = dists;
   }
 
   /**

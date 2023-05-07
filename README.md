@@ -31,13 +31,27 @@ The project aims to simplify the taks of creating a workout schedule for users b
 **Workout display** <br />
 The front end calendar display was created using a full-calendar react component. This allowed us to focus on styling without having to build a calendar from scratch. This calendar allowed us to import the workkouts from the database and convert them into an events array. This array coupd then be used to display information about the workouts on the calendar itself and could also be updated such as when the user wanted to save information about their workouts.
 
-**Workout Plan Generation/Model Building** <br />
+**Modelling** <br />
+
+In terms of model generation on the back end, we used a Hidden Markov Model as our base functionality,
+which has a set of hidden states, a transition matrix between these states, and each state has an emission distribution.
+Our MarkovModel class allows for a run through this model (i.e., starting in a state and transitioning/emitting
+repeatedly), and can load the resulting list of emissions (workouts, in our case) into a format of the user's
+choosing via the EmissionFormatter interface. The back end has a number of implementations of these models - in
+particular, it has the linear model (states are workouts in a preconceived schedule, and emissions are designated
+based on the intensity of these preconceived workouts) and the variable model (states are workout categories,
+which transition via more dynamic probability distributions). In order to build these models for the front end,
+we have JSON database of emission/workout distributions in our data folder, which we read in using the SportWorkoutByName
+interface.
+
+In terms of data structures, for our probability distributions, we used HashMaps of outputs of the distribution to their
+probabilities (doubles). In addition, we used lists of Days, stored in lists of Weeks to represent a given schedule,
+with a single example week for relevant schedules.
+
+**Gordan stuff** <br />
 Explain the relationships between classes/interfaces.
 Discuss any specific data structures you used, why you created it, and other high level explanations.
 Runtime/ space optimizations you made (if applicable).
-
-**Database/API handlers** <br />
-We used Firebase Realtime Database to store our information. Firebase can take in information via Terminal commands, so the design choice was to create a class which would generate terminal commands for each action you can do for the Firebase. The methods allow reading and storing various information, formatted in Json file type. Each api call the frontend makes, there is a special class being called that takes in the query from the call and uses the specific database commands to work with it. One of the most complex ones is the CreatePlan() which generates the workout schedule using the Models and stores it in the Database. 
 
 **Account Management:** <br />
 We used Google Oauth for authorization as it allowed for secure account creation and removed the need to have users to create or store any secure information such passwords on our end.

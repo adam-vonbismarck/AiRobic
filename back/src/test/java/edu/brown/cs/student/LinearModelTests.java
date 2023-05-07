@@ -251,8 +251,6 @@ public class LinearModelTests {
       int endDay = RandomGenerator.getRandomInt(1, 28);
       int endYear = startYear + RandomGenerator.getRandomInt(1, 3);
       double highPercent = RandomGenerator.getRandomPositiveDouble(0.0,1.0);
-      System.out.println(highPercent);
-      System.out.println(mins);
       Schedule schedule = new GenerateLinearPlan().generate(mins,
               LocalDate.of(startYear, startMonth, startDay),
               LocalDate.of(endYear, endMonth, endDay),

@@ -121,9 +121,6 @@ public class ScheduleBuilder {
       }
     }
 
-    System.out.println(dummyDate);
-    System.out.println(endDay);
-
     assert (dummyDate.equals(endDay));
     return schedule;
   }
