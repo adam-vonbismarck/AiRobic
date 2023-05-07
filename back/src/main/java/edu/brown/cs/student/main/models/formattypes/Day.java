@@ -249,6 +249,11 @@ public class Day {
    */
   public record WorkoutDescription(Workout workoutType, int minutes) {
 
+    /**
+     * This method returns a copy of a given WorkoutDescription.
+     *
+     * @return the copy.
+     */
     public WorkoutDescription copy() {
       return new WorkoutDescription(this.workoutType, this.minutes);
     }
