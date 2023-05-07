@@ -73,7 +73,7 @@ public class WorkoutDistributionByName {
 
       HashMap<Emission, Double> dist = new HashMap<>();
       for (EmissionAndProb joined : this.allData.get(key)) {
-        dist.put(joined.getTimedEmission(), joined.probability());
+        dist.put(joined.getEmission(), joined.probability());
       }
       return dist;
     }
@@ -81,8 +81,8 @@ public class WorkoutDistributionByName {
 
   /**
    * A record for storing an emission and its associated probability. We had trouble getting moshi
-   * to deserialize the individual fields in the emission class, so we included the duration of the given
-   * emission in this class as well.
+   * to deserialize the individual fields in the emission class, so we included the duration and title
+   * of the given emission in this class as well.
    *
    * @param emission - an emission.
    * @param probability - the emission's associated probability in its distribution.
@@ -90,16 +90,17 @@ public class WorkoutDistributionByName {
    */
   public record EmissionAndProb(
       @Json(name = "emission") Emission emission,
-      @Json(name = "probability") Double probability,
-      @Json(name = "minutes") double minutes) {
+      @Json(name = "probability") double probability,
+      @Json(name = "minutes") double minutes,
+      @Json(name = "title") String title) {
 
     /**
      * Returns an emission linked to its duration (minutes).
      *
      * @return the new emission.
      */
-    public Emission getTimedEmission() {
-      return this.emission.setTime(this.minutes);
+    public Emission getEmission() {
+      return this.emission.setTime(this.minutes).setTitle(this.title);
     }
   }
 }

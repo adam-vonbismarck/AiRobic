@@ -21,7 +21,7 @@ public class VariableModelTests {
                 new GenerateGraphLikePlan()
                         .generate(
                                 420,
-                                LocalDate.now().plusDays(2),
+                                LocalDate.of(2023, 5, 5),
                                 LocalDate.of(2023, 5, 9),
                                 Set.of(Workout._2K, Workout._6K),
                                 Set.of(Workout.UT_2),

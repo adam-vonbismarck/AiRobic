@@ -6,6 +6,7 @@
           "workout": "Erg 2000m test (suggested: warmup and cooldown)"
         },
         "minutes": 60.0,
+        "title": "2k",
         "probability": 0.02
       },
       {

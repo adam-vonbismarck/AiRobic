@@ -11,6 +11,7 @@ import java.util.Objects;
 public class Emission {
 
   private final String workout;
+  private final String title;
   private final double time;
 
   /**
@@ -19,11 +20,14 @@ public class Emission {
    *
    * @param workout - the string description of the workout.
    * @param time - the time it takes to complete the workout.
+   * @param title - the title of the workout
    */
   @JsonClass(generateAdapter = true)
-  public Emission(@Json(name = "workout") String workout, @Json(name = "minutes") double time) {
+  public Emission(@Json(name = "workout") String workout, @Json(name = "minutes") double time,
+                  @Json(name = "title") String title) {
     this.workout = workout;
     this.time = time;
+    this.title = title;
   }
 
   /**
@@ -32,7 +36,7 @@ public class Emission {
    * @return the copied Emission.
    */
   public Emission copy() {
-    return new Emission(this.workout, this.time);
+    return new Emission(this.workout, this.time, this.title);
   }
 
   /**
@@ -51,7 +55,17 @@ public class Emission {
    * @return the copied emission.
    */
   public Emission setTime(double time) {
-    return new Emission(this.workout, time);
+    return new Emission(this.workout, time, this.title);
+  }
+
+  /**
+   * Returns a copy of the current Emission with a new title.
+   *
+   * @param title - title of emission copy.
+   * @return the copied emission.
+   */
+  public Emission setTitle(String title) {
+    return new Emission(this.workout, this.time, title);
   }
 
   /**
@@ -79,7 +93,8 @@ public class Emission {
     }
     Emission emission = (Emission) o;
     return Objects.equals(this.workout, emission.workout)
-        && Objects.equals(this.time, emission.time);
+        && Objects.equals(this.time, emission.time)
+        && Objects.equals(this.title, emission.title);
   }
 
   /**
@@ -89,7 +104,7 @@ public class Emission {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(this.workout, this.time);
+    return Objects.hash(this.workout, this.time, this.title);
   }
 
   /**
@@ -100,6 +115,10 @@ public class Emission {
    */
   @Override
   public String toString() {
-    return "Emission{" + "workout='" + this.workout + '\'' + ", time=" + this.time + '}';
+    return "Emission{" +
+            "workout='" + this.workout + '\'' +
+            ", title='" + this.title + '\'' +
+            ", time=" + this.time +
+            '}';
   }
 }

@@ -28,22 +28,22 @@ public class ModelTests {
     this.validEmissionDist =
         new HashMap<>() {
           {
-            this.put(new Emission("workout", 60.0), 0.8);
-            this.put(new Emission("workout2", 80.0), 0.2);
+            this.put(new Emission("workout", 60.0, "title"), 0.8);
+            this.put(new Emission("workout2", 80.0, "title2"), 0.2);
           }
         };
     this.invalidEmissionDist =
         new HashMap<>() {
           {
-            this.put(new Emission("workout", 60.0), 0.8);
-            this.put(new Emission("workout2", 80.0), 0.3);
+            this.put(new Emission("workout", 60.0, "title"), 0.8);
+            this.put(new Emission("workout2", 80.0, "title2"), 0.3);
           }
         };
 
     this.emissionSet = new HashSet<>() {
         {
-            this.add(new Emission("workout", 60.0));
-            this.add(new Emission("workout2", 80.0));
+            this.add(new Emission("workout", 60.0, "title"));
+            this.add(new Emission("workout2", 80.0, "title2"));
         }
     };
   }
