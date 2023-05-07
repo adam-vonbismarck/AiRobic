@@ -9,7 +9,6 @@ import edu.brown.cs.student.main.models.formattypes.Week;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
-import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
 import edu.brown.cs.student.main.rowing.distributiongenerators.SportWorkoutByName;
 import edu.brown.cs.student.main.server.RandomGenerator;
 import java.io.IOException;

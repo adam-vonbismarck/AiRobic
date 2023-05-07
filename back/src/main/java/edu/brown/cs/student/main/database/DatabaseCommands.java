@@ -11,7 +11,8 @@ public class DatabaseCommands {
 
   // https://console.firebase.google.com/u/1/project/cs32airobic/database/cs32airobic-default-rtdb/data/~2F
 
-  // This method puts in information in the database, but deletes everything else in the current branch
+  // This method puts in information in the database, but deletes everything else in the current
+  // branch
   public void put(String data, String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String PUT = "curl -X PUT -d '";
@@ -26,7 +27,8 @@ public class DatabaseCommands {
     }
   }
 
-  // This method updates or adds information in the database, without deleting the current information
+  // This method updates or adds information in the database, without deleting the current
+  // information
   public void update(String data, String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String UPDATE = "curl -X PATCH -d \"";

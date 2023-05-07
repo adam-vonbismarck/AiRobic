@@ -8,7 +8,6 @@ import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.server.RandomGenerator;
-
 import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -21,9 +20,9 @@ import java.util.Optional;
  * The ScheduleBuilder class builds schedules given a number of minutes and a percentage of high
  * workoutType work OR a number of low workoutType/high workoutType workouts per week. From here,
  * the ScheduleBuilder class builds a reasonable schedule (with workoutType labels provided) for use
- * in generating a MarkovModel. One big limitation of this implementation is that it assumes low intensity
- * workouts can be scaled by time – this is not an unreasonable assumption, but it could create problems in
- * other sports.
+ * in generating a MarkovModel. One big limitation of this implementation is that it assumes low
+ * intensity workouts can be scaled by time – this is not an unreasonable assumption, but it could
+ * create problems in other sports.
  */
 public class ScheduleBuilder {
 
@@ -65,8 +64,8 @@ public class ScheduleBuilder {
 
     if (startDay == null || endDay == null) {
       throw new InvalidScheduleException(
-              "All schedules must have not null start days and end days in order to be built.",
-              new Schedule("schedule", List.of(), new Week("week", List.of())));
+          "All schedules must have not null start days and end days in order to be built.",
+          new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
 
     // checking inputs
@@ -391,7 +390,9 @@ public class ScheduleBuilder {
 
     while (highIntensity > numDays - 1) {
       for (int k = 0; k < numDays; k++) {
-        sublistWithWorkouts.get(k).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
+        sublistWithWorkouts
+            .get(k)
+            .addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
         highIntensity--;
       }
     }

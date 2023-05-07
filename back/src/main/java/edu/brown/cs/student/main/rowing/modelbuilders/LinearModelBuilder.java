@@ -8,9 +8,7 @@ import edu.brown.cs.student.main.models.formattypes.Day.WorkoutDescription;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
-import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
 import edu.brown.cs.student.main.rowing.distributiongenerators.SportWorkoutByName;
-
 import java.io.IOException;
 import java.time.DayOfWeek;
 
@@ -49,8 +47,8 @@ public class LinearModelBuilder {
       throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException {
 
     if (schedule.weeks().size() < 1 || schedule.weeks().get(0).days().size() < 1) {
-      throw new InvalidScheduleException("To build a linear model, the schedule must be at least one day long.",
-              schedule);
+      throw new InvalidScheduleException(
+          "To build a linear model, the schedule must be at least one day long.", schedule);
     }
 
     ModelBuilder builder = new ModelBuilder();

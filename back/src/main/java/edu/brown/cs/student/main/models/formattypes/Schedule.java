@@ -9,7 +9,7 @@ import java.util.List;
  * a list of days. It contains an example week for modelling purposes, but this field need not
  * always be used.
  */
-public record Schedule (String type, List<Week> weeks, Week example) {
+public record Schedule(String type, List<Week> weeks, Week example) {
 
   /**
    * Gets the total number of workouts in the schedule.

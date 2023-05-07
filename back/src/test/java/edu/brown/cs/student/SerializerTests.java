@@ -1,13 +1,5 @@
 package edu.brown.cs.student;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import com.beust.ah.A;
 import edu.brown.cs.student.genericdeserializertesting.types.BrownStudent;
 import edu.brown.cs.student.genericdeserializertesting.types.ComplexStar;
 import edu.brown.cs.student.main.models.exceptions.InvalidScheduleException;
@@ -16,12 +8,18 @@ import edu.brown.cs.student.main.models.formattypes.FlatSchedule;
 import edu.brown.cs.student.main.models.markov.model.Emission;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.server.serializing.Serializer;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * This class contains unit tests for the Serializer util class (FOR GENERIC JSON PARSING). Adapted from REPL
- * code that cbaker20 wrote.
+ * This class contains unit tests for the Serializer util class (FOR GENERIC JSON PARSING). Adapted
+ * from REPL code that cbaker20 wrote.
  */
 public class SerializerTests {
 
@@ -140,32 +138,40 @@ public class SerializerTests {
     }
   }
 
-  /**
-   * Tests serializing a valid schedule.
-   */
+  /** Tests serializing a valid schedule. */
   @Test
   public void testSerializeSchedule() throws InvalidScheduleException {
-    String serialized = Serializer.serializeSchedule(new FlatSchedule(List.of(
-            new Day("day", new ArrayList<>(), 5, DayOfWeek.FRIDAY, Optional.empty(),
-                    new ArrayList<>()),
-            new Day("day", List.of(new Emission("workout", 20, "workout1")),
-                    1, DayOfWeek.FRIDAY, Optional.empty(),
-                    List.of(new Day.WorkoutDescription(Workout._30R_20, 20)))
-            )));
-    Assertions.assertEquals(serialized, "{\"days\":[{\"date\":\"null\",\"day\":" +
-            "\"FRIDAY\",\"numberOfWorkouts\":5,\"type\":\"day\",\"workoutPlan\":[],\"workouts\":[]}," +
-            "{\"date\":\"null\",\"day\":\"FRIDAY\",\"numberOfWorkouts\":1,\"type\":\"day\"," +
-            "\"workoutPlan\":[{\"workoutType\":\"_30R_20\",\"minutes\":20}],\"workouts\":" +
-            "[{\"time\":20.0,\"title\":\"workout1\",\"workout\":\"workout\"}]}]}");
+    String serialized =
+        Serializer.serializeSchedule(
+            new FlatSchedule(
+                List.of(
+                    new Day(
+                        "day",
+                        new ArrayList<>(),
+                        5,
+                        DayOfWeek.FRIDAY,
+                        Optional.empty(),
+                        new ArrayList<>()),
+                    new Day(
+                        "day",
+                        List.of(new Emission("workout", 20, "workout1")),
+                        1,
+                        DayOfWeek.FRIDAY,
+                        Optional.empty(),
+                        List.of(new Day.WorkoutDescription(Workout._30R_20, 20))))));
+    Assertions.assertEquals(
+        serialized,
+        "{\"days\":[{\"date\":\"null\",\"day\":"
+            + "\"FRIDAY\",\"numberOfWorkouts\":5,\"type\":\"day\",\"workoutPlan\":[],\"workouts\":[]},"
+            + "{\"date\":\"null\",\"day\":\"FRIDAY\",\"numberOfWorkouts\":1,\"type\":\"day\","
+            + "\"workoutPlan\":[{\"workoutType\":\"_30R_20\",\"minutes\":20}],\"workouts\":"
+            + "[{\"time\":20.0,\"title\":\"workout1\",\"workout\":\"workout\"}]}]}");
   }
 
-  /**
-   * Tests serializing an empty schedule.
-   */
+  /** Tests serializing an empty schedule. */
   @Test
   public void testSerializeScheduleEmpty() throws InvalidScheduleException {
     String serialized = Serializer.serializeSchedule(new FlatSchedule(List.of()));
     Assertions.assertEquals(serialized, "{\"days\":[]}");
   }
-
 }

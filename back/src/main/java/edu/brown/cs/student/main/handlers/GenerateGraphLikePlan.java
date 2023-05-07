@@ -120,19 +120,17 @@ public class GenerateGraphLikePlan {
       currDate = currDate.plusDays(7);
     }
 
-    // adds the final week, special casing for if Sunday is the last day (so a new full week is not generated)
+    // adds the final week, special casing for if Sunday is the last day (so a new full week is not
+    // generated)
     if (endDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
       weeks.add(
-              this.generateWeek(
-                      Math.floorDiv(
-                              minutes
-                                      * (endDate.getDayOfWeek().getValue()
-                                      - DayOfWeek.MONDAY.getValue()
-                                      + 1),
-                              6),
-                      currDate.plusDays(1),
-                      endDate,
-                      varModel));
+          this.generateWeek(
+              Math.floorDiv(
+                  minutes * (endDate.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue() + 1),
+                  6),
+              currDate.plusDays(1),
+              endDate,
+              varModel));
     }
 
     return new Schedule("schedule", weeks, ((weeks.size() <= 1) ? weeks.get(0) : weeks.get(1)));

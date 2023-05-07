@@ -96,7 +96,12 @@ public class CreatePlan implements Route {
               Schedule built =
                   new GenerateLinearPlan()
                       .generate(
-                          parsedMinutes, parsedStart, parsedEnd, Workout.of(goal), Workout.UT_2, 0.2);
+                          parsedMinutes,
+                          parsedStart,
+                          parsedEnd,
+                          Workout.of(goal),
+                          Workout.UT_2,
+                          0.2);
               new DatabaseCommands()
                   .update(
                       Serializer.serializeSchedule(built.flatten()),

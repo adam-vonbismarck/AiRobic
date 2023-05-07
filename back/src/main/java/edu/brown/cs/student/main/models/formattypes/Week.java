@@ -25,8 +25,9 @@ public record Week(@Json(name = "type") String type, @Json(name = "days") List<D
         days.add(day.copy());
       }
     } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-      throw new InvalidScheduleException("Unable to get week sublist with overlapping or out of bounds indices.",
-              new Schedule("schedule", List.of(this), this));
+      throw new InvalidScheduleException(
+          "Unable to get week sublist with overlapping or out of bounds indices.",
+          new Schedule("schedule", List.of(this), this));
     }
     return days;
   }

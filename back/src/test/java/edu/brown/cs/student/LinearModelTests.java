@@ -15,10 +15,9 @@ import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
 import edu.brown.cs.student.main.rowing.modelbuilders.LinearModelBuilder;
 import edu.brown.cs.student.main.rowing.modelbuilders.ScheduleBuilder;
+import edu.brown.cs.student.main.server.RandomGenerator;
 import java.io.IOException;
 import java.time.LocalDate;
-
-import edu.brown.cs.student.main.server.RandomGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -53,71 +52,68 @@ public class LinearModelTests {
     return true;
   }
 
-  /**
-   * A method for testing the maximum number of minutes per week
-   */
+  /** A method for testing the maximum number of minutes per week */
   @Test
-  public void testLinearModelMax() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
+  public void testLinearModelMax()
+      throws InvalidDistributionException, InvalidScheduleException, IOException,
+          NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
     Schedule toBuild = null;
     toBuild =
-            builder.minutesWithDates(
-                    1200,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
+        builder.minutesWithDates(
+            1200,
+            LocalDate.of(2023, 5, 3),
+            LocalDate.of(2023, 5, 25),
+            0.2,
+            Workout.of("2k"),
+            Workout.of("UT2"));
     MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Assertions.assertEquals(model.getNumberOfStates(), 10);
   }
 
-  /**
-   * A method for testing the minimum number of minutes per week
-   */
+  /** A method for testing the minimum number of minutes per week */
   @Test
-  public void testLinearModelMin() throws InvalidDistributionException, InvalidScheduleException, IOException, NoWorkoutTypeException {
+  public void testLinearModelMin()
+      throws InvalidDistributionException, InvalidScheduleException, IOException,
+          NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
     Schedule toBuild = null;
     toBuild =
-            builder.minutesWithDates(
-                    120,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("30r20"),
-                    Workout.of("UT2"));
+        builder.minutesWithDates(
+            120,
+            LocalDate.of(2023, 5, 3),
+            LocalDate.of(2023, 5, 25),
+            0.2,
+            Workout.of("30r20"),
+            Workout.of("UT2"));
     MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Assertions.assertEquals(model.getNumberOfStates(), 2);
   }
 
-  /**
-   * A method for testing the minimum number of days
-   */
+  /** A method for testing the minimum number of days */
   @Test
-  public void testLinearModelMinVaryingStartEndDates() throws InvalidDistributionException,
-          InvalidScheduleException, IOException, NoWorkoutTypeException {
+  public void testLinearModelMinVaryingStartEndDates()
+      throws InvalidDistributionException, InvalidScheduleException, IOException,
+          NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
     Schedule toBuild = null;
     for (int i = 10; i < 17; i++) {
       for (int j = 19; j < 26; j++) {
         toBuild =
-                builder.minutesWithDates(
-                        120,
-                        LocalDate.of(2023, 5, i),
-                        LocalDate.of(2023, 5, j),
-                        0.2,
-                        Workout.of("30r20"),
-                        Workout.of("UT2"));
+            builder.minutesWithDates(
+                120,
+                LocalDate.of(2023, 5, i),
+                LocalDate.of(2023, 5, j),
+                0.2,
+                Workout.of("30r20"),
+                Workout.of("UT2"));
         MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
         Assertions.assertEquals(model.getNumberOfStates(), 2);
       }
     }
   }
 
-  /**
-   * A method for validating a schedule with a big number of minutes
-   */
+  /** A method for validating a schedule with a big number of minutes */
   @Test
   public void testLinearMax()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -132,40 +128,34 @@ public class LinearModelTests {
             0.2,
             Workout.of("2k"),
             Workout.of("UT2"));
-    MarkovModel model =
-        new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
+    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Schedule schedule =
         model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     Assertions.assertTrue(this.validateSchedule(schedule, 1200));
   }
 
-  /**
-   * A method for validating a schedule with a small number of minutes
-   */
+  /** A method for validating a schedule with a small number of minutes */
   @Test
   public void testLinearMin()
-          throws IOException, InvalidScheduleException, InvalidDistributionException,
+      throws IOException, InvalidScheduleException, InvalidDistributionException,
           FormatterFailureException, NoWorkoutTypeException {
     ScheduleBuilder builder = new ScheduleBuilder();
     Schedule toBuild = null;
     toBuild =
-            builder.minutesWithDates(
-                    120,
-                    LocalDate.of(2023, 5, 3),
-                    LocalDate.of(2023, 5, 25),
-                    0.2,
-                    Workout.of("2k"),
-                    Workout.of("UT2"));
-    MarkovModel model =
-            new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
+        builder.minutesWithDates(
+            120,
+            LocalDate.of(2023, 5, 3),
+            LocalDate.of(2023, 5, 25),
+            0.2,
+            Workout.of("2k"),
+            Workout.of("UT2"));
+    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Schedule schedule =
-            model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
+        model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     Assertions.assertTrue(this.validateSchedule(schedule, 120));
   }
 
-  /**
-   * A method for validating a short workout plan
-   */
+  /** A method for validating a short workout plan */
   @Test
   public void testLinearShortPlan()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -180,16 +170,15 @@ public class LinearModelTests {
             0.2,
             Workout.of("2k"),
             Workout.of("UT2"));
-    MarkovModel model =
-        new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
+    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Schedule schedule =
         model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     Assertions.assertTrue(this.validateSchedule(schedule, 600));
   }
 
   /**
-   * An edge case test which validates a workout plan that ends on a Sunday,
-   * knowing that it is a rest day
+   * An edge case test which validates a workout plan that ends on a Sunday, knowing that it is a
+   * rest day
    */
   @Test
   public void testLinearEndsOnSunday()
@@ -205,17 +194,13 @@ public class LinearModelTests {
             0.2,
             Workout.of("2k"),
             Workout.of("UT2"));
-    MarkovModel model =
-        new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
+    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Schedule schedule =
         model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     Assertions.assertTrue(this.validateSchedule(schedule, 120));
   }
 
-  /**
-   * An edge case test which validates a workout plan that ends with
-   * a high intensity workout
-   */
+  /** An edge case test which validates a workout plan that ends with a high intensity workout */
   @Test
   public void testLinearEndsHigherIntensity()
       throws IOException, InvalidScheduleException, InvalidDistributionException,
@@ -230,18 +215,17 @@ public class LinearModelTests {
             0.5,
             Workout.of("2k"),
             Workout.of("UT2"));
-    MarkovModel model =
-        new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
+    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     Schedule schedule =
         model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     Assertions.assertTrue(this.validateSchedule(schedule, 120));
   }
 
-  /**
-   * A fuzz test for validation of random generations within boundaries
-   */
+  /** A fuzz test for validation of random generations within boundaries */
   @Test
-  public void fuzzLinearGeneratorValid() throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException, IOException, FormatterFailureException {
+  public void fuzzLinearGeneratorValid()
+      throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException,
+          IOException, FormatterFailureException {
     for (int i = 0; i < NUM_TRIALS; i++) {
       int mins = RandomGenerator.getRandomInt(120, 1200);
       int startMonth = RandomGenerator.getRandomInt(1, 12);
@@ -250,18 +234,28 @@ public class LinearModelTests {
       int endMonth = RandomGenerator.getRandomInt(1, 12);
       int endDay = RandomGenerator.getRandomInt(1, 28);
       int endYear = startYear + RandomGenerator.getRandomInt(1, 3);
-      double highPercent = RandomGenerator.getRandomPositiveDouble(0.0,1.0);
-      Schedule schedule = new GenerateLinearPlan().generate(mins,
-              LocalDate.of(startYear, startMonth, startDay),
-              LocalDate.of(endYear, endMonth, endDay),
-              Workout._2K,
-              Workout.UT_2,
-              highPercent);
-      Assertions.assertEquals(schedule.weeks().get(0).days().get(0).getDate().get(),
-              LocalDate.of(startYear,startMonth,startDay));
-      Assertions.assertEquals(schedule.weeks().get(schedule.weeks().size() - 1)
-                      .days().get(schedule.weeks().get(schedule.weeks().size() - 1).days().size() - 1).getDate().get(),
-              LocalDate.of(endYear,endMonth,endDay));
+      double highPercent = RandomGenerator.getRandomPositiveDouble(0.0, 1.0);
+      Schedule schedule =
+          new GenerateLinearPlan()
+              .generate(
+                  mins,
+                  LocalDate.of(startYear, startMonth, startDay),
+                  LocalDate.of(endYear, endMonth, endDay),
+                  Workout._2K,
+                  Workout.UT_2,
+                  highPercent);
+      Assertions.assertEquals(
+          schedule.weeks().get(0).days().get(0).getDate().get(),
+          LocalDate.of(startYear, startMonth, startDay));
+      Assertions.assertEquals(
+          schedule
+              .weeks()
+              .get(schedule.weeks().size() - 1)
+              .days()
+              .get(schedule.weeks().get(schedule.weeks().size() - 1).days().size() - 1)
+              .getDate()
+              .get(),
+          LocalDate.of(endYear, endMonth, endDay));
     }
   }
 }

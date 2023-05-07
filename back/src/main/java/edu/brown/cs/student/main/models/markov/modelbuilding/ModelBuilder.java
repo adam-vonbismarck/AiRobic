@@ -250,8 +250,7 @@ public class ModelBuilder {
   public void addLinearTransitions() throws InvalidDistributionException {
     if (this.states.size() < 1) {
       throw new InvalidDistributionException(
-          "To add linear transitions to a model, "
-              + "there must be at least one state registered.",
+          "To add linear transitions to a model, " + "there must be at least one state registered.",
           new HashMap());
     }
 
