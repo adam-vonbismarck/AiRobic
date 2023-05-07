@@ -20,7 +20,9 @@ function NotFound() {
         </Link>
         <h1 role="heading">Sorry, this page doesn’t exist.</h1>
         <Link to="/" aria-label="Link to home page">
-          <button className="content-button">Go Home</button>
+          <button className="content-button" data-testid="home-link">
+            Go Home
+          </button>
         </Link>
       </div>
     </div>
