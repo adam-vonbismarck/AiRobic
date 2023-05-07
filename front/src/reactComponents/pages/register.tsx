@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LoggedOutMenu from "../elements/loggedOutMenu";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { Parallax } from "react-parallax";
 import { Alert } from "@mui/material";
 import {
+  addUser,
   getCredentialResponse,
   isNewUser,
-  addUser,
   Login,
 } from "../GoogleLogin";
 import { motion } from "framer-motion";
@@ -118,4 +116,5 @@ function Register() {
     </Parallax>
   );
 }
+
 export default Register;

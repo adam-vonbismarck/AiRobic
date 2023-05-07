@@ -7,7 +7,6 @@ import { IMaskInput } from "react-imask";
 import moment from "moment";
 import "../../styling/WorkoutDetails.css";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 /**
@@ -124,8 +123,6 @@ export const renderWorkoutDetails = ({
     return null;
   }
 
-  // const [saveClicked, setSaveClicked] = useState(false);
-
   // Filter workoutDetails by date
   const workoutsForSelectedDate = workoutDetails.filter(
     (workout) => workout.date === selectedDate
@@ -155,14 +152,31 @@ export const renderWorkoutDetails = ({
     }
   };
 
+  const timeRegex = /^([0-9]|[1-8][0-9]):[0-5][0-9]\.[0-9]$/;
+
+  function isValidTimeFormat(timeString: string): boolean {
+    return timeRegex.test(timeString);
+  }
+
   const saveWorkouts = () => {
     const baseUrl = "http://localhost:3235";
-    const username = localStorage.getItem("userID"); // Replace with your own username
+    const username = localStorage.getItem("userID");
     let saveError = false;
     setDistanceError(false);
 
     workoutDetails.forEach((workout) => {
-      if (workout.distance !== undefined && workout.split !== undefined) {
+      if (
+        workout.distance !== undefined &&
+        workout.split !== undefined &&
+        !isValidTimeFormat(workout.split)
+      ) {
+        saveError = true;
+        setErrorText("Please enter a valid split time.");
+        setDistanceError(true);
+      } else if (
+        workout.distance !== undefined &&
+        workout.split !== undefined
+      ) {
         const url = `${baseUrl}/updateworkout?username=${username}&day=${
           workout.dayNumber - 1
         }&workout=${workout.workoutsNumber - 1}&rpe=${workout.RPE}&split=${

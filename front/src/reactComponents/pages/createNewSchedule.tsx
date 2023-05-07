@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "../../styling/App.css";
 import LoggedInMenu from "../elements/loggedInMenu";
 import { Parallax } from "react-parallax";
@@ -6,26 +6,18 @@ import TextField from "@mui/material/TextField";
 import {
   Alert,
   CircularProgress,
-  Fade,
   FormControl,
-  FormControlLabel,
-  FormLabel,
-  IconButton,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
-  Slide,
-  Tooltip,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InfoIcon from "@mui/icons-material/Info";
 import "../../styling/GenerateWorkout.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import duration from "dayjs/plugin/duration";
 import moment from "moment";
+import { tooltips } from "../elements/tooltips";
 
 /**
 
@@ -34,7 +26,7 @@ import moment from "moment";
  */
 function NewSchedule() {
   // State for selected option and enabling/disabling goal input.
-  const [selectedOption, setSelectedOption] = useState("option1");
+  const [selectedOption, setSelectedOption] = useState("model1");
   const [enableGoal, setEnableGoaL] = useState(true);
   // Get current date using dayjs library.
   const now = dayjs();
@@ -73,10 +65,10 @@ function NewSchedule() {
      @param {string|number} value - The value of the hours per week input.
      */
   const validateHoursPerWeek = (value: number) => {
-    if (value < 3.0) {
-      setHoursPerWeekError("Minimum 3 hours per week");
-    } else if (value > 30.0) {
-      setHoursPerWeekError("Maximum 30 hours per week");
+    if (value < 2.0) {
+      setHoursPerWeekError("Minimum 2 hours per week");
+    } else if (value > 20.0) {
+      setHoursPerWeekError("Maximum 20 hours per week");
     } else {
       setHoursPerWeekError("");
     }
@@ -186,6 +178,8 @@ function NewSchedule() {
         apiUrl += `&goal=${goal}`;
       }
 
+      console.log(apiUrl);
+
       // Call API to generate workout plan.
       const response = await fetch(apiUrl);
 
@@ -258,146 +252,7 @@ function NewSchedule() {
           >
             <form className="form-container" aria-label="Workout plan form">
               <div className="form-row radios">
-                <div
-                  className="radio-group-container"
-                  role="radiogroup"
-                  aria-label="Radio group container for choosing the model for the workout plan"
-                >
-                  <div className="radio-group">
-                    <FormControl>
-                      <FormLabel
-                        style={{
-                          fontFamily: "Muli",
-                          fontSize: "13pt",
-                          color: "#ebe9e9",
-                        }}
-                        id="demo-row-radio-buttons-group-label"
-                        aria-label="Choose the model for your workout plan"
-                      >
-                        Choose the model for your workout plan
-                      </FormLabel>
-                      <RadioGroup
-                        className={"radio-group"}
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                        defaultValue={"model1"}
-                        onChange={handleOptionChange}
-                      >
-                        <FormControlLabel
-                          value="model1"
-                          control={
-                            <Radio
-                              sx={{
-                                "&, &.Mui-checked": {
-                                  color: "#f38418",
-                                },
-                                "&, &.Mui-unchecked": {
-                                  color: "#ebe9e9",
-                                },
-                              }}
-                            />
-                          }
-                          label={
-                            <div className="radio-label">
-                              Standard Model{" "}
-                              <Tooltip
-                                title="This training algorithm sets the standard by creating a
-                       comprehensive week-long plan, serving as the foundation for future weeks.
-                       Subsequent plans gradually intensify based on the initial week, ensuring
-                       progressive improvement in intensity."
-                                aria-label="Standard Model: This training algorithm sets the standard by creating a comprehensive week-long plan, serving as the foundation for future weeks. Subsequent plans gradually intensify based on the initial week, ensuring progressive improvement in intensity."
-                              >
-                                <IconButton
-                                  className="info-icon"
-                                  aria-label="More information about the Standard Model"
-                                >
-                                  <InfoIcon sx={{ color: "#ebe9e9" }} />
-                                </IconButton>
-                              </Tooltip>
-                            </div>
-                          }
-                          className={"form-control"}
-                        />
-                        <FormControlLabel
-                          value="model2"
-                          control={
-                            <Radio
-                              sx={{
-                                "&, &.Mui-checked": {
-                                  color: "#f38418",
-                                },
-                                "&, &.Mui-unchecked": {
-                                  color: "#ebe9e9",
-                                },
-                              }}
-                            />
-                          }
-                          label={
-                            <div className="radio-label">
-                              Variable Model{" "}
-                              <Tooltip
-                                title="Unlike the standard training algorithm, this model generates
-                      a unique plan every week, tailored to the individual's progress and needs.
-                       By adapting the plan to their changing abilities, the model ensures that
-                        the intensity of the workouts continues to challenge the individual and promote growth"
-                                aria-label="Variable Model: Unlike the standard training algorithm, this model generates a unique plan every week, tailored to the individual's progress and needs. By adapting the plan to their changing abilities, the model ensures that the intensity of the workouts continues to challenge the individual and promote growth"
-                              >
-                                <IconButton className="info-icon">
-                                  <InfoIcon sx={{ color: "#ebe9e9" }} />
-                                </IconButton>
-                              </Tooltip>
-                            </div>
-                          }
-                          className={"form-control"}
-                        />
-                        <FormControlLabel
-                          value="model3"
-                          control={
-                            <Radio
-                              role="radio"
-                              aria-checked={true}
-                              sx={{
-                                "&, &.Mui-checked": {
-                                  color: "#f38418",
-                                },
-                                "&, &.Mui-unchecked": {
-                                  color: "#ebe9e9",
-                                },
-                              }}
-                            />
-                          }
-                          label={
-                            <div className="radio-label">
-                              Goal Oriented{" "}
-                              <Tooltip
-                                title="Tailored towards a specific goal, such as a 2000m test,
-            this model generates a plan that focuses on the relevant skills and techniques
-            needed to achieve that goal. By emphasizing these areas of development, the plan
-            provides a clear path towards success, while also incorporating progressive challenges
-            to enhance overall fitness and performance."
-                                role="tooltip"
-                                aria-describedby="tooltip-info"
-                              >
-                                <IconButton
-                                  className="info-icon"
-                                  role="button"
-                                  aria-label="Information"
-                                  aria-describedby="tooltip-info"
-                                >
-                                  <InfoIcon sx={{ color: "#ebe9e9" }} />
-                                </IconButton>
-                              </Tooltip>
-                            </div>
-                          }
-                          className={"form-control"}
-                          role="presentation"
-                          aria-hidden={true}
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </div>
-                </div>
+                {tooltips({ setEnableGoaL, setSelectedOption })}
               </div>
               <div className="form-row dropdown">
                 <div
@@ -412,7 +267,7 @@ function NewSchedule() {
                       id="number-field"
                       type="number"
                       label="Hours/Week"
-                      placeholder={"2.5"}
+                      placeholder={"5"}
                       value={hoursPerWeek}
                       onChange={(event) => setHoursPerWeek(event.target.value)}
                       onBlur={(event) =>
@@ -551,6 +406,7 @@ function NewSchedule() {
                   </div>
                 </div>
               </div>
+
               <div className="button-row" aria-label="Submit button row">
                 {renderButton()}
               </div>
@@ -573,6 +429,30 @@ function NewSchedule() {
                         aria-label="Error: Workout plan submission unsuccessful"
                       >
                         {submitError}
+                      </Alert>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              )}
+              {loading && (
+                <AnimatePresence>
+                  <motion.div
+                    className="error-row"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                  >
+                    <div
+                      className="form-error-message"
+                      aria-label="Success message"
+                    >
+                      <Alert
+                        severity="success"
+                        variant="filled"
+                        sx={{ fontFamily: "Muli" }}
+                        aria-label="Your workout plan is being generated!"
+                      >
+                        {"Your workout plan is being generated!"}
                       </Alert>
                     </div>
                   </motion.div>
