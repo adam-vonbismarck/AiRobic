@@ -248,11 +248,17 @@ public class ModelBuilder {
    *     to be invalid or if there are not enough states.
    */
   public void addLinearTransitions() throws InvalidDistributionException {
-    if (this.states.size() < 2) {
+    if (this.states.size() < 1) {
+      System.out.println(this.states);
       throw new InvalidDistributionException(
           "To add linear transitions to a model, "
-              + "there must be at least two states registered.",
+              + "there must be at least one state registered.",
           new HashMap());
+    }
+
+    if (this.states.size() == 1) {
+      this.addTransition(this.states.get(0), this.states.get(0), 1.0);
+      return;
     }
 
     for (int i = 0; i < this.states.size() - 1; i++) {

@@ -8,6 +8,7 @@ import edu.brown.cs.student.main.models.formatters.ScheduleFormatter;
 import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
+import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
 import edu.brown.cs.student.main.rowing.modelbuilders.LinearModelBuilder;
 import edu.brown.cs.student.main.rowing.modelbuilders.ScheduleBuilder;
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class GenerateLinearPlan {
             highIntensityPercent,
             highIntensityLabel,
             lowIntensityLabel);
-    MarkovModel model = new LinearModelBuilder().build(toBuild, startDate.getDayOfWeek());
+    MarkovModel model = new LinearModelBuilder(new RowingWorkoutByName()).build(toBuild);
     model.generateFormattedEmissions(toBuild.getLength(), new ScheduleFormatter(toBuild));
     return toBuild;
   }

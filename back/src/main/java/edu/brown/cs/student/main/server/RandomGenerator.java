@@ -23,6 +23,18 @@ public class RandomGenerator {
   }
 
   /**
+   * Generates a random integer.
+   *
+   * @param min The minimum integer to be outputted
+   * @param max The maximum integer to be outputted
+   * @return The random integer
+   */
+  public static int getRandomInt(int min, int max) {
+    final ThreadLocalRandom r = ThreadLocalRandom.current();
+    return r.nextInt(min, max);
+  }
+
+  /**
    * **DIRECTLY TAKEN FROM PROF. NELSON'S CODE**
    *
    * <p>Returns a random string of length "length", where first and last defined the set of accepted
