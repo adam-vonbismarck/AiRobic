@@ -16,7 +16,7 @@ function getCredentialResponse(
       .then((response: Response) => response.json())
       .then((loginToken) => {
         if (!isLoginResponse(loginToken)) {
-          reject(errLoginResponse);
+          resolve(errLoginResponse);
         } else {
           resolve(loginToken);
         }
@@ -39,7 +39,7 @@ function addUser(userID: string): Promise<boolean> {
         if (isAddUserResponse(addResponse) && addResponse.result == "success") {
           resolve(true);
         } else {
-          reject(false);
+          resolve(false);
         }
       })
       .catch((err) => reject(false));

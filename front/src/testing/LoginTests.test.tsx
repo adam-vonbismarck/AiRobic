@@ -28,6 +28,7 @@ test("isNewUser: User does not exist", async () => {
 })
 
 test("addUser: new user added", async () => {
+    await(deleteUser("alexnotsofake").catch(err => console.log("Start Backend!")))
     let response: boolean | void = await(addUser("alexnotsofake")).catch(err => console.log("Start Backend!"))
     expect(response).toBe(true)
     await(deleteUser("alexnotsofake").catch(err => console.log("Start Backend!")))
@@ -39,7 +40,7 @@ test("addUser: user already exists", async () => {
 })
 
 test("getCredentialResponse: invalid credential", async () => {
-    let response: LoginResponse | void = await(getCredentialResponse("invalidCredential"))
+    let response: LoginResponse | void = await(getCredentialResponse("invalidCredential")).catch(err => errLoginResponse)
     expect(response).toBe(errLoginResponse)
 })
 
