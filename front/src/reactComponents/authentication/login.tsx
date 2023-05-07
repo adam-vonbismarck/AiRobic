@@ -10,7 +10,6 @@ function Login(loginToken: LoginResponse) {
   console.log(localStorage);
 }
 
-
 function getCredentialResponse(credential: string | undefined): LoginResponse {
   fetch("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + credential)
     .then((response: Response) => response.json())

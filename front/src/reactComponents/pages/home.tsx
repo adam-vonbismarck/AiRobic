@@ -7,6 +7,7 @@ import React from "react";
 import "../../styling/App.css";
 import LoggedOutMenu from "../elements/loggedOutMenu";
 import LoggedInMenu from "../elements/loggedInMenu";
+
 function Home() {
   if (localStorage.getItem("loggedIn") == "true") {
     return (
