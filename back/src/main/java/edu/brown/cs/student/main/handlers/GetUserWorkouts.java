@@ -7,6 +7,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/** This class returns the user workout schedule after it has been generated */
 public class GetUserWorkouts implements Route {
 
   @Override

@@ -230,7 +230,11 @@ public class LinearModelTests {
               Workout._2K,
               Workout.UT_2,
               highPercent);
-      this.validateSchedule(schedule, mins);
+      Assertions.assertEquals(schedule.weeks().get(0).days().get(0).getDate().get(),
+              LocalDate.of(startYear,startMonth,startDay));
+      Assertions.assertEquals(schedule.weeks().get(schedule.weeks().size() - 1)
+                      .days().get(schedule.weeks().get(schedule.weeks().size() - 1).days().size() - 1).getDate().get(),
+              LocalDate.of(endYear,endMonth,endDay));
     }
   }
 }

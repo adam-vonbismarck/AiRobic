@@ -8,6 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/** This class checks if the user already exists in the database */
 public class CheckUser implements Route {
 
   @Override
