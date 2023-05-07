@@ -6,6 +6,13 @@ import { Alert } from "@mui/material";
 import { getCredentialResponse, isNewUser, Login } from "../GoogleLogin";
 import { motion } from "framer-motion";
 
+/**
+ * Returns the sign in page with google login button.
+ * Using google Oauth2 the button authenticates the user using their google account and then will check with our
+ * back-end if the user exists. If so the user will then be logged in. If there are any errors such as google
+ * authentication failing, user has not been registered, or backend is not running, a error alert will pop up on the
+ * screen detailing what went wrong and the user will not be logged in
+ */
 function Signin() {
   const [submitIssue, setSubmitIssue] = useState(false);
   const [submitError, setSubmitError] = useState("");

@@ -12,8 +12,12 @@ import {
 import { motion } from "framer-motion";
 
 /**
- * https://www.youtube.com/watch?v=roxC8SMs7HU
- * google oauth for react 2023
+ * Returns the Register page with google sign up button.
+ * Using google Oauth2 the button authenticates the user using their google account and then will check with our
+ * back-end if the user exists. If the user does not exist they will then be logged in and the user will be created in
+ * our database. If there are any errors such as the user has already been registered, google authentication failing,
+ * or backend is not running, a error alert will pop up on the screen detailing what went wrong
+ * and the user will not be registered
  */
 
 function Register() {
