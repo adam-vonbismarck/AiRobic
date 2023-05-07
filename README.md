@@ -28,7 +28,7 @@ The project aims to simplify the taks of creating a workout schedule for users b
 
 ## Design Choices
 
-**Workout deisplay** <br />
+**Workout display** <br />
 The front end calendar display was created using a full-calendar react component. This allowed us to focus on styling without having to build a calendar from scratch. This calendar allowed us to import the workkouts from the database and convert them into an events array. This array coupd then be used to display information about the workouts on the calendar itself and could also be updated such as when the user wanted to save information about their workouts.
 
 **Colin stuff** <br />
