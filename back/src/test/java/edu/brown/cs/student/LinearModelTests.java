@@ -15,6 +15,8 @@ import edu.brown.cs.student.main.rowing.modelbuilders.LinearModelBuilder;
 import edu.brown.cs.student.main.rowing.modelbuilders.ScheduleBuilder;
 import java.io.IOException;
 import java.time.LocalDate;
+
+import edu.brown.cs.student.main.server.serializing.Serializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
