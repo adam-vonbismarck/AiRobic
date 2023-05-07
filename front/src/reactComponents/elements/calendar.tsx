@@ -108,7 +108,7 @@ const WorkoutCalendar: React.FC = () => {
     >
       <AnimatePresence mode={"wait"}>
         {selectedDate ? (
-          <div style={{ width: "50%" }}>
+          <div style={{ width: "70%" }}>
             <motion.div
               key="popup"
               initial={{ opacity: 0 }}
