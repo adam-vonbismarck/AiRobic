@@ -55,11 +55,18 @@ public class Day {
     this.workoutPlan = workoutPlan;
     this.date = date;
 
-    if (type == null || workouts == null || day == null || workoutPlan == null || date == null) {
+    if (type == null || workouts == null || day == null || workoutPlan == null || date == null || numberOfWorkouts < 0) {
       throw new InvalidScheduleException(
-          "Day was initialized with bad parameters",
+          "Day was initialized with bad parameters.",
           new Schedule(
               "schedule", List.of(new Week("week", List.of(this))), new Week("week", List.of())));
+    }
+
+    if (date.isPresent() && date.get().getDayOfWeek() != day) {
+      throw new InvalidScheduleException(
+              "Day was initialized with date not matching the day of the week.",
+              new Schedule(
+                      "schedule", List.of(new Week("week", List.of(this))), new Week("week", List.of())));
     }
   }
 
@@ -150,7 +157,13 @@ public class Day {
    *
    * @param date - the newly set date of this Day instance.
    */
-  public void setDate(LocalDate date) {
+  public void setDate(LocalDate date) throws InvalidScheduleException {
+    if (date.getDayOfWeek() != this.day) {
+      throw new InvalidScheduleException(
+              "Date did not match this Day's day of the week.",
+              new Schedule(
+                      "schedule", List.of(new Week("week", List.of(this))), new Week("week", List.of())));
+    }
     this.date = Optional.of(date);
   }
 
