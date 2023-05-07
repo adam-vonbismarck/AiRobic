@@ -23,8 +23,10 @@ public class Emission {
    * @param title - the title of the workout
    */
   @JsonClass(generateAdapter = true)
-  public Emission(@Json(name = "workout") String workout, @Json(name = "minutes") double time,
-                  @Json(name = "title") String title) {
+  public Emission(
+      @Json(name = "workout") String workout,
+      @Json(name = "minutes") double time,
+      @Json(name = "title") String title) {
     this.workout = workout;
     this.time = time;
     this.title = title;
@@ -115,10 +117,15 @@ public class Emission {
    */
   @Override
   public String toString() {
-    return "Emission{" +
-            "workout='" + this.workout + '\'' +
-            ", title='" + this.title + '\'' +
-            ", time=" + this.time +
-            '}';
+    return "Emission{"
+        + "workout='"
+        + this.workout
+        + '\''
+        + ", title='"
+        + this.title
+        + '\''
+        + ", time="
+        + this.time
+        + '}';
   }
 }

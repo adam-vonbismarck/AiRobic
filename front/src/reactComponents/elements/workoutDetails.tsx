@@ -234,9 +234,7 @@ export const renderWorkoutDetails = ({
             key={index}
             aria-label={`Workout ${index + 1}`}
           >
-            <h3>
-              Workout {workout.workoutsNumber} for day {workout.dayNumber}
-            </h3>
+            <h3>{workout.title}</h3>
             <p>
               <strong aria-label="Duration">Duration:</strong> {workout.time}
             </p>

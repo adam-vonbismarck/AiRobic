@@ -1,4 +1,5 @@
 export interface Workout {
+  title: string;
   workoutsNumber: number;
   dayNumber: number;
   date: string;
@@ -17,6 +18,7 @@ export interface Day {
   workouts?: {
     time: number;
     workout: string;
+    title: string;
     data?: {
       distance?: number;
       split?: string;

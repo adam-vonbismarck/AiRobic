@@ -31,6 +31,7 @@ const WorkoutCalendar: React.FC = () => {
       if (day.workouts) {
         day.workouts.forEach((workout, workoutIndex: number) => {
           workouts.push({
+            title: workout.title,
             workoutsNumber: workoutsNumber++,
             dayNumber: dayIndex + 1,
             date: day.date,
@@ -57,7 +58,7 @@ const WorkoutCalendar: React.FC = () => {
   function createEventsArray(data: Workout[]) {
     const eventsArray: Workout[] = data.map((item) => {
       const event = {
-        title: `Workout ${item.workoutsNumber} for day ${item.dayNumber}`,
+        title: item.title,
         date: moment(item.date, "MM-DD-YYYY").format("yyyy-MM-DD"),
         time: item.time,
         RPE: item.RPE,
