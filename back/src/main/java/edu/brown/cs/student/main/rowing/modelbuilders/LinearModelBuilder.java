@@ -9,6 +9,8 @@ import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.markov.model.MarkovModel;
 import edu.brown.cs.student.main.models.markov.modelbuilding.ModelBuilder;
 import edu.brown.cs.student.main.rowing.distributiongenerators.RowingWorkoutByName;
+import edu.brown.cs.student.main.rowing.distributiongenerators.SportWorkoutByName;
+
 import java.io.IOException;
 import java.time.DayOfWeek;
 
@@ -20,15 +22,15 @@ import java.time.DayOfWeek;
  */
 public class LinearModelBuilder {
 
-  private final RowingWorkoutByName dists;
+  private final SportWorkoutByName dists;
 
   /**
    * The constructor for the LinearModelBuilder class, which loads a RowingWorkoutByName instance
    * that will get an emission distribution given a key name (that represents what category of
    * workout the hidden state should emit).
    */
-  public LinearModelBuilder() throws IOException {
-    this.dists = new RowingWorkoutByName();
+  public LinearModelBuilder(SportWorkoutByName dists) throws IOException {
+    this.dists = dists;
   }
 
   /**
@@ -43,9 +45,16 @@ public class LinearModelBuilder {
    * @throws InvalidScheduleException if the schedule to be built does not have enough information
    *     to build the model.
    */
-  public MarkovModel build(Schedule schedule, DayOfWeek startDay)
+  public MarkovModel build(Schedule schedule)
       throws InvalidDistributionException, InvalidScheduleException, NoWorkoutTypeException {
+
+    if (schedule.weeks().size() < 1 || schedule.weeks().get(0).days().size() < 1) {
+      throw new InvalidScheduleException("To build a linear model, the schedule must be at least one day long.",
+              schedule);
+    }
+
     ModelBuilder builder = new ModelBuilder();
+    DayOfWeek startDay = schedule.weeks().get(0).days().get(0).getDay();
 
     // build up hidden states, with emission distributions based on provided key in the schedule
     // framework

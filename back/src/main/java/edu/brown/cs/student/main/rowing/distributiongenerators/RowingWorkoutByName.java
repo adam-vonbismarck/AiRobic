@@ -12,7 +12,7 @@ import java.util.HashMap;
  * This class reads in the main rowing workout file, and uses the WorkoutDistributionByName class to
  * access emission distributions based on Workout keys.
  */
-public class RowingWorkoutByName {
+public class RowingWorkoutByName implements SportWorkoutByName {
   WorkoutDistributionByName distributions;
 
   /**

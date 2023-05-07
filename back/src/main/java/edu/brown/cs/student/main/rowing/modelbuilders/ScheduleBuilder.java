@@ -8,6 +8,8 @@ import edu.brown.cs.student.main.models.formattypes.Schedule;
 import edu.brown.cs.student.main.models.formattypes.Week;
 import edu.brown.cs.student.main.models.markov.modelbuilding.Workout;
 import edu.brown.cs.student.main.server.RandomGenerator;
+
+import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +21,9 @@ import java.util.Optional;
  * The ScheduleBuilder class builds schedules given a number of minutes and a percentage of high
  * workoutType work OR a number of low workoutType/high workoutType workouts per week. From here,
  * the ScheduleBuilder class builds a reasonable schedule (with workoutType labels provided) for use
- * in generating a MarkovModel.
+ * in generating a MarkovModel. One big limitation of this implementation is that it assumes low intensity
+ * workouts can be scaled by time – this is not an unreasonable assumption, but it could create problems in
+ * other sports.
  */
 public class ScheduleBuilder {
 
@@ -59,6 +63,12 @@ public class ScheduleBuilder {
       Workout lowIntensityLabel)
       throws InvalidDistributionException, InvalidScheduleException {
 
+    if (startDay == null || endDay == null) {
+      throw new InvalidScheduleException(
+              "All schedules must have not null start days and end days in order to be built.",
+              new Schedule("schedule", List.of(), new Week("week", List.of())));
+    }
+
     // checking inputs
     if (!startDay.isBefore(endDay)) {
       throw new InvalidScheduleException(
@@ -77,7 +87,7 @@ public class ScheduleBuilder {
 
     // calculating number of weeks
     int weekCounter = 0;
-    int numDays = startDay.datesUntil(endDay).toList().size();
+    int numDays = startDay.datesUntil(endDay.plusDays(1)).toList().size();
 
     numDays -= NUM_DAYS - (startDay.getDayOfWeek().getValue() - 1);
     weekCounter++;
@@ -110,6 +120,9 @@ public class ScheduleBuilder {
         day.setDate(dummyDate);
       }
     }
+
+    System.out.println(dummyDate);
+    System.out.println(endDay);
 
     assert (dummyDate.equals(endDay));
     return schedule;
@@ -226,7 +239,7 @@ public class ScheduleBuilder {
     // checking inputs
     if (highIntensity < 0 || lowIntensity < 0 || numWeeks < 1) {
       throw new InvalidScheduleException(
-          "All schedules must have a positive number of weeks, high intensity workouts"
+          "All schedules must have a positive number of weeks, high intensity workouts "
               + "and low intensity workouts.",
           new Schedule("schedule", List.of(), new Week("week", List.of())));
     }
@@ -362,6 +375,15 @@ public class ScheduleBuilder {
     assert (highIntensity >= 0);
     assert (lowLength >= 0);
 
+    List<Day> sublistWithWorkouts = new ArrayList<>();
+    for (Day day : days) {
+      if (day.getNumberOfWorkouts() > 0) {
+        sublistWithWorkouts.add(day);
+      }
+    }
+
+    int numDays = sublistWithWorkouts.size();
+
     // the next section distributes the high intensity workouts; once they are all distributed at
     // any stage,
     // fillInLow is called to complete filling out all workouts.
@@ -370,9 +392,9 @@ public class ScheduleBuilder {
       return;
     }
 
-    while (highIntensity > NUM_WORKOUT_DAYS - 1) {
-      for (int k = 0; k < NUM_WORKOUT_DAYS; k++) {
-        days.get(k).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
+    while (highIntensity > numDays - 1) {
+      for (int k = 0; k < numDays; k++) {
+        sublistWithWorkouts.get(k).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
         highIntensity--;
       }
     }
@@ -386,10 +408,10 @@ public class ScheduleBuilder {
     int w = 0;
     long remainingHighInt = highIntensity;
     float cumulativeCounter = 0;
-    while (w < NUM_WORKOUT_DAYS) {
-      days.get(w).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
+    while (w < numDays) {
+      sublistWithWorkouts.get(w).addFirstIntensity(new WorkoutDescription(highIntensityLabel, 60));
       highIntensity--;
-      cumulativeCounter += ((float) NUM_WORKOUT_DAYS / remainingHighInt);
+      cumulativeCounter += ((float) numDays / remainingHighInt);
       w = Math.toIntExact(Math.round(Math.floor(cumulativeCounter)));
     }
 

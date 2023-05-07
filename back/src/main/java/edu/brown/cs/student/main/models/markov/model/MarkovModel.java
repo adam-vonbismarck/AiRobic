@@ -106,6 +106,15 @@ public class MarkovModel {
   }
 
   /**
+   * A method for getting data about the model for testing.
+   *
+   * @return the number of states in the model.
+   */
+  public int getNumberOfStates() {
+    return this.states.size();
+  }
+
+  /**
    * This method overrides the normal equals method, ensuring that two MarkovModels are equal if
    * their states and start distribution are the same.
    *
