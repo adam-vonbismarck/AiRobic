@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-/*
-Replace "path/to/your/serviceAccountKey.json" with the actual path to your Firebase service
-account key JSON file.json. This file.json can be obtained from the Firebase console.
- */
+/** This class is not used - just an attempt to use database in a different way */
 public class DatabaseCommandsSDK {
   private static final String DATABASE_URL = "https://cs32airobic-default-rtdb.firebaseio.com/";
   private DatabaseReference ref;

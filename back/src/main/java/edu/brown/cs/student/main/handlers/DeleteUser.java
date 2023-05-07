@@ -8,6 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/** This class deletes the user from the database */
 public class DeleteUser implements Route {
 
   public DeleteUser() throws IOException, InterruptedException {}

@@ -14,6 +14,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/** This class calls the Model builders and generates a workout plan for the user */
 public class CreatePlan implements Route {
 
   @Override

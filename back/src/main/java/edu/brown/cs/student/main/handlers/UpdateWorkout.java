@@ -7,6 +7,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/** This class updates the workout data for a specific workout after user completes it */
 public class UpdateWorkout implements Route {
 
   @Override

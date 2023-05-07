@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.database;
 
 import java.io.IOException;
 
+/** This class generates database commands which are being run in terminal */
 public class DatabaseCommands {
   private final String DATABASE = "'https://cs32airobic-default-rtdb.firebaseio.com/";
   private final String DATABASEWIN = "https://cs32airobic-default-rtdb.firebaseio.com/";
@@ -10,6 +11,7 @@ public class DatabaseCommands {
 
   // https://console.firebase.google.com/u/1/project/cs32airobic/database/cs32airobic-default-rtdb/data/~2F
 
+  // This method puts in information in the database, but deletes everything else in the current branch
   public void put(String data, String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String PUT = "curl -X PUT -d '";
@@ -23,8 +25,8 @@ public class DatabaseCommands {
       new TerminalCommand(PUT + data + "' " + this.DATABASE + where + this.END).run();
     }
   }
-  // if (System.getProperty("os.name").toLowerCase().contains("win"))
 
+  // This method updates or adds information in the database, without deleting the current information
   public void update(String data, String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String UPDATE = "curl -X PATCH -d \"";
@@ -40,6 +42,7 @@ public class DatabaseCommands {
     }
   }
 
+  // This method deletes the specific branch in the database
   public void delete(String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String DELETE = "curl -X DELETE ";
@@ -54,6 +57,7 @@ public class DatabaseCommands {
     }
   }
 
+  // This method returns the information from a specific branch in the database
   public String get(String where) throws IOException, InterruptedException {
     if (System.getProperty("os.name").toLowerCase().contains("win")) {
       String GET = "curl ";

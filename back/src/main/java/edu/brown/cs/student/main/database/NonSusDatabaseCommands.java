@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/** This class is not used - just an attempt to use database in a different way */
 public class NonSusDatabaseCommands {
 
   private final String DATABASE = "https://cs32airobic-default-rtdb.firebaseio.com/";

@@ -8,6 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/** This class adds a new user to the database */
 public class AddNewUser implements Route {
 
   @Override
