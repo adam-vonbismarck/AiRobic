@@ -47,7 +47,7 @@ public class CreatePlan implements Route {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate parsedStart;
     LocalDate parsedEnd;
-    int parsedHours;
+    int parsedMinutes;
     try {
       parsedStart = LocalDate.parse(startDate, formatter);
     } catch (DateTimeParseException e) {
@@ -63,7 +63,7 @@ public class CreatePlan implements Route {
       return Serializer.serialize(output);
     }
     try {
-      parsedHours = Integer.parseInt(hoursPerWeek);
+      parsedMinutes = Integer.parseInt(hoursPerWeek);
     } catch (NumberFormatException e) {
       output.put("result", "error_bad_request");
       output.put("message", "ERROR: Invalid input (hours per week).");
@@ -75,7 +75,7 @@ public class CreatePlan implements Route {
     System.out.println(parsedStart);
     System.out.println(parsedEnd);
     System.out.println(model);
-    System.out.println(parsedHours);
+    System.out.println(parsedMinutes);
     System.out.println(goal);
 
     new DatabaseCommands().update("{\"sport\":\"" + sport + "\"}", "users/" + username);
@@ -95,7 +95,7 @@ public class CreatePlan implements Route {
               Schedule built =
                   new GenerateLinearPlan()
                       .generate(
-                          parsedHours, parsedStart, parsedEnd, Workout.of(goal), Workout.UT_2, 0.2);
+                          parsedMinutes, parsedStart, parsedEnd, Workout.of(goal), Workout.UT_2, 0.2);
               new DatabaseCommands()
                   .update(
                       Serializer.serializeSchedule(built.flatten()),
@@ -119,7 +119,7 @@ public class CreatePlan implements Route {
           Schedule built =
               new GenerateLinearPlan()
                   .generate(
-                      parsedHours, parsedStart, parsedEnd, Workout.OVERALL, Workout.UT_2, 0.2);
+                      parsedMinutes, parsedStart, parsedEnd, Workout.OVERALL, Workout.UT_2, 0.2);
           System.out.println(Serializer.serializeSchedule(built.flatten()));
           new DatabaseCommands()
               .put(
@@ -145,7 +145,7 @@ public class CreatePlan implements Route {
           low.add(Workout.UT_2);
           Schedule built =
               new GenerateGraphLikePlan()
-                  .generate(parsedHours, parsedStart, parsedEnd, high, low, 0.2);
+                  .generate(parsedMinutes, parsedStart, parsedEnd, high, low, 0.2);
           System.out.println(Serializer.serializeSchedule(built.flatten()));
           new DatabaseCommands()
               .put(

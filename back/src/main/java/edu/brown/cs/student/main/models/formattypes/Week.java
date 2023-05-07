@@ -20,8 +20,13 @@ public record Week(@Json(name = "type") String type, @Json(name = "days") List<D
    */
   public List<Day> getDaySubset(int indexOne, int indexTwo) throws InvalidScheduleException {
     ArrayList<Day> days = new ArrayList<>();
-    for (Day day : this.days.subList(indexOne, indexTwo)) {
-      days.add(day.copy());
+    try {
+      for (Day day : this.days.subList(indexOne, indexTwo)) {
+        days.add(day.copy());
+      }
+    } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+      throw new InvalidScheduleException("Unable to get week sublist with overlapping or out of bounds indices.",
+              new Schedule("schedule", List.of(this), this));
     }
     return days;
   }
