@@ -17,10 +17,6 @@ The front end of the application is built with React and uses several libraries 
 
 The back end of the application handles api requests from the front end which in turn stores a users data for future access using Firebase. It also is responsible for generating the workout plan using a hidden markov modelbased which creates a personalized schedule based on the users desired specifications.<br />
 
-**Github repo:**<br />
-[https://github.com/cs0320-s2023/cs32-Final-Project-avonbism-gmilovac-mwinter02-cbaker37]
-
-
 ## Project Description
 
 The project aims to simplify the taks of creating a workout schedule for users by creating a computer generated personalized training plan. With intention to be expandable to more sports in the future, the project is indoor rowing specific and draws from the collective 20+ years of rowing experience from the team members to ensure end users are given high quality and effective training plans. The end users will be able to create new training programs tailored to their inputted specifications and will be able to view their workouts on a calendar for any given day. Their information will be stored such that they can access their workout plan at any time and also can create a new plan if their fitness goals change.
